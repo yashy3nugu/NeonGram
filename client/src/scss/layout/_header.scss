@@ -1,0 +1,117 @@
+// .navbar {
+//     position: fixed;
+//     top: 0;
+//     width: 100%;
+//     padding: 1.5rem 3rem;
+//     overflow: hidden;
+
+//     .logo {
+//         display: inline;
+//         color: #fff;
+//         font-size: 2rem;
+//         font-weight: 600;
+//         text-shadow: 0 0 0.08em #fff, 0 0 1rem #6b5aed, 0 0 1.5rem #7969f1, 0 0 1.8rem #7969f1;
+//     }
+
+//     .navLink {
+//         float: right;
+//         margin: 0 2rem;
+//         color: #ffff;
+//         font-weight: 600;
+//         vertical-align: middle;
+
+//         &:hover {
+//             // color: $color-cyan;
+//             text-shadow: 0 0 0.033em #fff, 0 0 0.08em #fff, 0 0 0.1em #26fff4, 0 0 0.15em #26f8ff, 0 0 0.2em #26f8ff, 0 0 0.4em #26f8ff;
+//             transition: text-shadow 0.2s ease-in-out;
+//         }
+
+//     }
+
+//     .signUp {
+//         float: right;
+//         color: #ffff;
+//         font-weight: 600;
+//         margin:  0 2rem;
+//         vertical-align: middle;
+
+//         &:hover {
+//             color: inherit;
+//             background-color: #26fff4;
+//             box-shadow: 0 0 1rem #26fff4;
+//             transition: all 0.2s ease-in-out;
+//         }
+//     }
+// }
+
+.navbar {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem 3rem;
+  overflow: hidden;
+
+  .logo {
+    display: inline;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 0.08em #fff, 0 0 1rem #6b5aed, 0 0 1.5rem #7969f1,
+      0 0 1.8rem #7969f1;
+  }
+
+  nav {
+    
+    
+    
+
+    padding: 1rem;
+
+    ul {
+        margin: 0;
+        padding: 0;
+      list-style: none;
+
+      li {
+        display: inline-block;
+        margin: 0 2rem;
+        
+        
+
+        a {
+          color: #ffff;
+          font-weight: 600;
+          
+
+          &:hover {
+            // color: $color-cyan;
+            text-shadow: 0 0 0.066em #fff, 0 0 0.1em #fff, 0 0 0.12em #26fff4,
+              0 0 0.17em #26f8ff, 0 0 0.6em #26f8ff, 0 0 1em #26f8ff;
+            transition: text-shadow 0.2s ease-in-out;
+          }
+
+          
+        }
+
+        .signUp {
+            
+            color: #ffff;
+            font-weight: 600;
+            
+            
+
+            &:hover {
+              color: inherit;
+              background-color: #26fff4;
+              box-shadow: 0 0 1rem #26fff4;
+              transition: all 0.2s ease-in-out;
+            }
+          }
+      }
+    }
+  }
+}
