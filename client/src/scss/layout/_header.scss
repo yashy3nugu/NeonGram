@@ -1,49 +1,3 @@
-// .navbar {
-//     position: fixed;
-//     top: 0;
-//     width: 100%;
-//     padding: 1.5rem 3rem;
-//     overflow: hidden;
-
-//     .logo {
-//         display: inline;
-//         color: #fff;
-//         font-size: 2rem;
-//         font-weight: 600;
-//         text-shadow: 0 0 0.08em #fff, 0 0 1rem #6b5aed, 0 0 1.5rem #7969f1, 0 0 1.8rem #7969f1;
-//     }
-
-//     .navLink {
-//         float: right;
-//         margin: 0 2rem;
-//         color: #ffff;
-//         font-weight: 600;
-//         vertical-align: middle;
-
-//         &:hover {
-//             // color: $color-cyan;
-//             text-shadow: 0 0 0.033em #fff, 0 0 0.08em #fff, 0 0 0.1em #26fff4, 0 0 0.15em #26f8ff, 0 0 0.2em #26f8ff, 0 0 0.4em #26f8ff;
-//             transition: text-shadow 0.2s ease-in-out;
-//         }
-
-//     }
-
-//     .signUp {
-//         float: right;
-//         color: #ffff;
-//         font-weight: 600;
-//         margin:  0 2rem;
-//         vertical-align: middle;
-
-//         &:hover {
-//             color: inherit;
-//             background-color: #26fff4;
-//             box-shadow: 0 0 1rem #26fff4;
-//             transition: all 0.2s ease-in-out;
-//         }
-//     }
-// }
-
 .navbar {
   position: sticky;
   top: 0;
@@ -62,65 +16,104 @@
     font-weight: 600;
     text-shadow: 0 0 0.08em #fff, 0 0 1rem #6b5aed, 0 0 1.5rem #7969f1,
       0 0 1.8rem #7969f1;
-    
-      transition: text-shadow 0.1s ease-in-out;
+
+    transition: text-shadow 0.1s ease-in-out;
 
     &:hover {
-        text-shadow: 0 0 0.08em #fff, 0 0 1rem #ed5ae1, 0 0 1.5rem #f169d4,
-      0 0 1.8rem #f169f1;
+      text-shadow: 0 0 0.08em #fff, 0 0 1rem #ed5ae1, 0 0 1.5rem #f169d4,
+        0 0 1.8rem #f169f1;
       transition: text-shadow 0.1s ease-in-out;
     }
   }
 
   nav {
-    
-    
-    
-
     padding: 1rem;
 
-    ul {
-        margin: 0;
-        padding: 0;
+    .navLinks {
+      margin: 0;
+      padding: 0;
       list-style: none;
+
+      .menuIcon {
+        color: #ffffff;
+
+        display: none;
+
+        @media only screen and (max-width: 640px) {
+          display: inline;
+        }
+      }
 
       li {
         display: inline-block;
         margin: 0 2rem;
-        
-        
+
+        @media only screen and (max-width: 640px) {
+          display: none;
+        }
 
         a {
           color: #ffff;
           font-weight: 600;
           transition: text-shadow 0.2s ease-in-out;
-          
 
           &:hover {
             // color: $color-cyan;
-            text-shadow: 0 0 0.066em #fff, 0 0 0.1em #fff, 0 0 0.12em $color-cyan,
-              0 0 0.17em $color-cyan, 0 0 0.6em $color-cyan, 0 0 1em $color-cyan;
-            
+            text-shadow: 0 0 0.066em #fff, 0 0 0.1em #fff,
+              0 0 0.12em $color-cyan, 0 0 0.17em $color-cyan,
+              0 0 0.6em $color-cyan, 0 0 1em $color-cyan;
           }
-
-          
         }
 
         .signUp {
-            
-            color: #ffff;
-            font-weight: 600;
-            
-            transition: all 0.2s ease-in-out;
+          color: #ffff;
+          font-weight: 600;
 
-            &:hover {
-              color: inherit;
-              background-color: $color-cyan;
-              box-shadow: 0 0 1rem $color-cyan;
-              
-            }
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            color: inherit;
+            background-color: $color-cyan;
+            box-shadow: 0 0 1rem $color-cyan;
           }
+        }
       }
     }
   }
+}
+
+.navDrawer {
+  height: 100%;
+  width: 30%;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  
+
+  .navDrawerContent {
+    padding-top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .crossIcon {
+        padding: 1rem 0;
+          color: #ffffff;
+      }
+    
+    
+      li {
+    
+        padding: 1rem 0;
+    
+        a {
+          color: #ffffff;
+        }
+      }
+  }
+  
 }
