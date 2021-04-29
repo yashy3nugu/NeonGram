@@ -1,0 +1,15 @@
+.logo {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 0.08em #fff, 0 0 1rem #6b5aed, 0 0 1.5rem #7969f1,
+      0 0 1.8rem #7969f1;
+
+    transition: text-shadow 0.1s ease-in-out;
+
+    &:hover {
+      text-shadow: 0 0 0.08em #fff, 0 0 1rem #ed5ae1, 0 0 1.5rem #f169d4,
+        0 0 1.8rem #f169f1;
+      transition: text-shadow 0.1s ease-in-out;
+    }
+  }
