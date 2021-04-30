@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const SignUpForm = () => {
 
@@ -20,9 +21,15 @@ const SignUpForm = () => {
         })
     }
 
+    const signUp = (event) => {
+        axios.post("/api/register",input);
+        
+        event.preventDefault();
+    }
+
     return (
         <div className="loginForm container mx-auto w-full max-w-md bg-gray-900">
-            <form className="px-10 py-10">
+            <form className="px-10 py-10" onSubmit={signUp}>
                 <div>
                     <h1 className="text-center logo">NeonGram</h1>
                 </div>
@@ -98,7 +105,12 @@ const SignUpForm = () => {
                     />
                 </div>
                 <div>
-                    <button className="w-full bg-purple-800 hover:bg-purple-900 transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none">Sign Up</button>
+                    <button
+                        type="submit"
+                        className="w-full bg-purple-800 hover:bg-purple-900 transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none"
+                        >
+                        Sign Up
+                    </button>
                 </div>
 
             </form>
