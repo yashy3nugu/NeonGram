@@ -18,16 +18,20 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: [true,"username cannot be empty"]
     },
-    password: {
+    hashedPassword: {
         type: String,
         minlength: 6,
         required: [true,"password is required"]
     },
-    password: {
-        type: String,
-        required: [true,"password confirmation required"],
-        validate: [function(pw) {
-            return this.password === pw
-        },"not matching passwords"]
-    }
-})
+    // confirmPassword: {
+    //     type: String,
+    //     required: [true,"password confirmation required"],
+    //     validate: [function(pw) {
+    //         return this.password === pw
+    //     },"not matching passwords"]
+    // }
+});
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

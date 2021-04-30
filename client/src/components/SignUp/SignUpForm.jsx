@@ -22,7 +22,7 @@ const SignUpForm = () => {
     }
 
     const signUp = (event) => {
-        axios.post("/api/register",input);
+        axios.post("/api/register",input).catch(err => console.log(err));
         
         event.preventDefault();
     }
