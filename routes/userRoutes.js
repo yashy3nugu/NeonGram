@@ -2,11 +2,11 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
-const {generateAccessToken} = require("../utils/jwt");
+const {generateAccessToken, generateRefreshToken} = require("../utils/jwt");
 
 const router = express.Router();
 
-const User = require("../models/userModel");
+const {User,refreshTokenDoc} = require("../models/userModel");
 
 router.post("/register", (req, res, next) => {
 
@@ -52,19 +52,68 @@ router.post("/login", (req,res,next) => {
             if(bcrypt.compareSync(password,foundUser.hashedPassword)){
 
                 const accessToken = generateAccessToken({name: username});
+                const refreshToken = generateRefreshToken({name: username});
 
-                console.log(accessToken)
+
+
+                console.log(accessToken);
+                console.log(refreshToken);
+
+                res.send({
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
+                });
+                next();
 
             }
+        else if(err){
+            console.log(err);
 
+            res.status(500).send("Internal server error");
+            next();
+        }
 
         }
         else {
-            res.status(400).send("Invalid username")
+            res.status(400).send("Invalid username");
+            next();
         }
     })
 
     
+
+});
+
+router.post("/token", (req,res,next) => {
+    const refreshToken = req.body.refreshToken;
+
+    if(refreshToken == null){
+        res.status(401).send("Refresh token required");
+    }
+    
+    refreshTokenDoc.findOne({token: refreshToken}, (err,foundToken) => {
+        if(err){
+            console.log(err);
+            res.status(500).send("Internal server error");
+            next();
+        }
+
+        if(foundToken){
+            
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) => {
+                if(err){
+                    console.log(err);
+                    res.status(403).send("Invalid refresh token");
+                    next();
+                }
+
+                const accessToken = generateAccessToken({name: user.name});
+
+                res.send(accessToken);
+                next();
+            })
+        }
+    })
 
 })
 

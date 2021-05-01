@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema({
     // }
 });
 
-const User = mongoose.model("User", userSchema);
+const refreshTokenSchema = new mongoose.Schema({
+    token: {
+        type: String,
+        required: [true,"token cannot be empty"]
+    }
+})
 
-module.exports = User;
+exports.User = mongoose.model("User", userSchema);
+exports.refreshTokenDoc = mongoose.model("refreshTokenDoc", refreshTokenSchema);

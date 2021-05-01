@@ -23,7 +23,11 @@ const LoginForm = () => {
     const login = (event) => {
 
         axios.post("/api/login",input)
-        .then(res => history.push("/home"))
+        .then(res => {
+            localStorage.setItem("accessToken",res.data.accessToken);
+            localStorage.setItem("refreshToken",res.data.refreshToken);
+            // history.push("/home")
+        })
         .catch(err => console.log(err));
 
         event.preventDefault();
