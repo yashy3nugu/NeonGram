@@ -6,7 +6,7 @@ const {generateAccessToken, generateRefreshToken} = require("../utils/jwt");
 
 const router = express.Router();
 
-const {User,refreshTokenDoc} = require("../models/userModel");
+const {User,RefreshToken} = require("../models/userModel");
 
 router.post("/register", (req, res, next) => {
 
@@ -54,10 +54,8 @@ router.post("/login", (req,res,next) => {
                 const accessToken = generateAccessToken({name: username});
                 const refreshToken = generateRefreshToken({name: username});
 
+                RefreshToken.create({token: refreshToken});
 
-
-                console.log(accessToken);
-                console.log(refreshToken);
 
                 res.send({
                     accessToken: accessToken,

@@ -40,4 +40,4 @@ const refreshTokenSchema = new mongoose.Schema({
 })
 
 exports.User = mongoose.model("User", userSchema);
-exports.refreshTokenDoc = mongoose.model("refreshTokenDoc", refreshTokenSchema);
+exports.RefreshToken = mongoose.model("RefreshToken", refreshTokenSchema);
