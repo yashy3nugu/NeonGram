@@ -1,32 +1,33 @@
-import React, {useContext, createContext, useState } from "react";
+import React, {createContext, useState } from "react";
 
 const AuthContext = createContext();
-const AuthUpdateContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
 
-    const [authenticated, setAuthenticated] = useState(false);
+    const [auth, setAuth] = useState(null);
 
-    const toggleAuth = () => {
-        setAuthenticated(prev => !prev);
+    const toggleAuth = (auth) => {
+
+        setAuth(auth);
+
     };
 
     return (
-        <AuthContext.Provider value={authenticated}>
-            <AuthUpdateContext.Provider value={toggleAuth}>
-                {children}
-            </AuthUpdateContext.Provider>
+        <AuthContext.Provider value={{
+            auth,
+            toggleAuth
+        }}>
+            {children}
         </AuthContext.Provider>
     )
 
 }
 
-const useAuth = () => useContext(AuthContext);
 
-const useAuthUpdate = () => useContext(AuthUpdateContext);
+
 
 
 export default AuthProvider;
 
-export {useAuth, useAuthUpdate};
+export { AuthContext };

@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import axios from "axios";
 import {useHistory}  from "react-router-dom";
-import {useAuth, useAuthUpdate} from "../contextProviders/authContext";
+import {AuthContext} from "../contextProviders/authContext";
 
 const LoginForm = () => {
 
     const history = useHistory();
 
-    const toggleAuth = useAuthUpdate();
+    const {toggleAuth} = useContext(AuthContext);
 
     const [input, setInput] = useState({
         username:"",
@@ -29,10 +29,12 @@ const LoginForm = () => {
         .then(res => {
             localStorage.setItem("accessToken",res.data.accessToken);
             localStorage.setItem("refreshToken",res.data.refreshToken);
-            toggleAuth();
+            toggleAuth(true);
             history.push("/home");
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+        });
 
         event.preventDefault();
     }

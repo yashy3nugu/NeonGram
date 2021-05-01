@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
-const {generateAccessToken, generateRefreshToken} = require("../utils/jwt");
+const {generateAccessToken, generateRefreshToken, authenticateToken} = require("../utils/jwt");
 
 const router = express.Router();
 
@@ -113,6 +113,12 @@ router.post("/token", (req,res,next) => {
         }
     })
 
+});
+
+router.post("/verify", authenticateToken, (req,res,next) => {
+    console.log("verified jwt")
+    res.sendStatus(200);
+    next();
 })
 
 module.exports = router;
