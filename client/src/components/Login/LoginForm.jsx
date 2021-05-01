@@ -1,6 +1,10 @@
 import React, {useState} from "react";
+import axios from "axios";
+import {useHistory}  from "react-router-dom";
 
 const LoginForm = () => {
+
+    const history = useHistory();
 
     const [input, setInput] = useState({
         username:"",
@@ -14,11 +18,20 @@ const LoginForm = () => {
                 [event.target.name]: event.target.value
             }
         })
-    } 
+    };
+    
+    const login = (event) => {
+
+        axios.post("/api/login",input)
+        .then(res => history.push("/home"))
+        .catch(err => console.log(err));
+
+        event.preventDefault();
+    }
 
     return (
         <div className="loginForm container mx-auto w-full max-w-md bg-gray-900">
-            <form className="px-10 py-10">
+            <form className="px-10 py-10" onSubmit={login}>
                 <div>
                 <h1 className="text-center logo">NeonGram</h1>
                 </div>
@@ -45,7 +58,7 @@ const LoginForm = () => {
                     />
                 </div>
                 <div>
-                    <button className="w-full bg-purple-800 hover:bg-purple-900 transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none">Sign In</button>
+                    <button type="submit" className="w-full bg-purple-800 hover:bg-purple-900 transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none">Sign In</button>
                 </div>
 
             </form>
