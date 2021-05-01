@@ -2,6 +2,7 @@ import React, { useEffect, useContext} from 'react';
 import { Route, Redirect } from 'react-router-dom'
 import axios from "axios";
 import {AuthContext} from "./authContext";
+import LoginPage from "../Login/LoginPage";
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -31,7 +32,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route {...rest} render={props =>
       !auth ? (
-        <Redirect to='/login'/>
+        <LoginPage/>
       ) : (
         <Component {...props} />
       )

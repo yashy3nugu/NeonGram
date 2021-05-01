@@ -30,7 +30,7 @@ const LoginForm = () => {
             localStorage.setItem("accessToken",res.data.accessToken);
             localStorage.setItem("refreshToken",res.data.refreshToken);
             toggleAuth(true);
-            history.push("/home");
+            history.push("/");
         })
         .catch(err => {
             console.log(err);

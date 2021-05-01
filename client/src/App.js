@@ -31,17 +31,14 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/login">
+          {/* <Route exact path="/login">
             <LoginPage />
           </Route>
-          {/* <Route exact path="/home">
-            {auth !== null ? <Home />: <h1>loading</h1>}
-            
-          </Route> */}
           <PrivateRoute exact path="/home" component={Home} />
           <Route exact path="/signup">
             <SignUpPage />
-          </Route>
+          </Route> */}
+          <PrivateRoute exact path="/" component={Home} />
         </Switch>
       </Router>
 
