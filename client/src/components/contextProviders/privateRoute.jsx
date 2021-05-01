@@ -1,5 +1,5 @@
 import React, { useEffect, useContext} from 'react';
-import { Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import axios from "axios";
 import {AuthContext} from "./authContext";
 import LoginPage from "../Login/LoginPage";
