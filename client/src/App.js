@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpPage from "./components/SignUp/SignUpPage";
 import Home from "./components/Home";
 import PrivateRoute from "./components/contextProviders/privateRoute";
+import CreatePost from "./components/Post/CreatePost";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute exact path="/post" component={CreatePost} />
           <Route exact path = "/signup">
             <SignUpPage />
           </Route>
