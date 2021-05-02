@@ -20,6 +20,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+app.use('/uploads', express.static('uploads'))
+
 //routes
 
 const userRoutes = require("./routes/userRoutes");
