@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contextProviders/authContext";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 const LoginForm = () => {
 
@@ -49,7 +49,7 @@ const LoginForm = () => {
                 }}
             >
                 {({ isSubmitting,isValid,dirty }) => (
-                    <Form className="px-10 py-10">
+                    <Form autoComplete="off" className="px-10 py-10">
                         <div>
                             <h1 className="text-center logo">NeonGram</h1>
                         </div>
