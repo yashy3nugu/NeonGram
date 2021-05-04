@@ -20,7 +20,7 @@ const Navbar = () => {
                 <ul className="navLinks">
                     <span className="menuIcon" onClick={toggleNavExpanded}><MenuIcon/></span>
                     <li><a href="/"><HomeIcon /></a></li>
-                    <li><a href="/"><PlusIcon /></a></li>
+                    <li><a href="/post"><PlusIcon /></a></li>
                     {/* <li><a href="/" className="signUp rounded-full py-2 px-5 bg-gray-800">Sign Up</a></li> */}
                     
                 </ul>

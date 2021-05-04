@@ -23,11 +23,14 @@ exports.authenticateToken = (req,res,next) => {
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err){
-            console.log(err);
+            
             res.sendStatus(403);
+            
+        }
+        else {
+            req.user = user;
             next();
         }
-        req.user = user;
-        next();
+        
     })
 }
