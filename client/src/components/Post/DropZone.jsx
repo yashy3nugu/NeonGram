@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import UploadIcon from "../icons/UploadIcon"
+import CrossIcon from "../icons/CrossIcon"
 import axios from 'axios';
+import PlusIcon from "../header/icons/PlusIcon";
 
 const DropZone = (props) => {
 
@@ -20,16 +21,20 @@ const DropZone = (props) => {
     });
 
     return (
-        <div>
+        <div className="w-full">
             {props.image ? props.image.map(file => {
-                return <div key={file.name} className="w-64">
-                    <img src={file.preview} alt="preview"  />
+                return <div key={file.name} className="relative max-h-96 overflow-auto">
+                    <img src={file.preview} alt="preview" className="w-full" />
+                    <button className="absolute top-0 right-0 text-red-600 mr-1 mt-2" onClick={() => props.setImage(null)}>
+                        <CrossIcon />
+                    </button>
+                    
                 </div>
             }) :
-                <div {...getRootProps()} className="dropzone h-64 border border-neon-purple bg-gray-800 container text-center w-64 py-14 hover:bg-gray-600 transition duration-300 ease-in-out">
+                <div {...getRootProps()} className="dropzone flex flex-col items-center justify-center w-full h-96 border border-neon-purple bg-gray-800 container hover:bg-gray-600 transition duration-300 ease-in-out">
                     <input {...getInputProps()} />
-                    {/* <UploadIcon /> */}
-                    <span className="text-gray-400">Drag and drop or click to upload</span>
+                    <span className="text-gray-400 mb-3"><PlusIcon /></span>
+                    <span className=" text-gray-400">Drag and drop or click to upload</span>
                 </div>}
         </div>
     )
