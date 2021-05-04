@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import {useDropzone} from "react-dropzone";
+import { useDropzone } from "react-dropzone";
+import UploadIcon from "../icons/UploadIcon"
 import axios from 'axios';
 
 const DropZone = (props) => {
 
     const [files, setFiles] = useState([]);
 
-    const {getRootProps, getInputProps} = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
 
         accept: "image/*",
-        // onDrop: (acceptedFiles) => {
-        //     setFiles(
-        //         acceptedFiles.map(file  => Object.assign(file, {
-        //             preview: URL.createObjectURL(file)
-        //         }))
-        //     )
-        // }
         onDrop: acceptedFiles => {
             props.setImage(
                 acceptedFiles.map(file => Object.assign(file, {
@@ -24,19 +18,20 @@ const DropZone = (props) => {
             )
         }
     });
-    
+
     return (
-        <>
-        <div {...getRootProps()} className="border border-purple-700 container text-center w-full">
-            <input {...getInputProps()}/>
-            <p>drop</p>
+        <div>
+            {props.image ? props.image.map(file => {
+                return <div key={file.name} className="w-64">
+                    <img src={file.preview} alt="preview"  />
+                </div>
+            }) :
+                <div {...getRootProps()} className="dropzone h-64 border border-neon-purple bg-gray-800 container text-center w-64 py-14 hover:bg-gray-600 transition duration-300 ease-in-out">
+                    <input {...getInputProps()} />
+                    {/* <UploadIcon /> */}
+                    <span className="text-gray-400">Drag and drop or click to upload</span>
+                </div>}
         </div>
-        {props.image && props.image.map(file => {
-            return <div key={file.name}>
-                <img src={file.preview} alt="preview" style={{width: '30px'}}/>
-            </div>
-        })}
-        </>
     )
 
 
