@@ -31,7 +31,7 @@ const DropZone = (props) => {
                     
                 </div>
             }) :
-                <div {...getRootProps()} className="dropzone flex flex-col items-center justify-center w-full h-96 border border-neon-purple bg-gray-800 container hover:bg-gray-600 transition duration-300 ease-in-out">
+                <div {...getRootProps()} className="dropzone flex flex-col items-center justify-center w-full h-96 border border-transparent hover:border-neon-purple bg-gray-800 container hover:bg-gray-600 transition duration-300 ease-in-out">
                     <input {...getInputProps()} />
                     <span className="text-gray-400 mb-3"><PlusIcon /></span>
                     <span className=" text-gray-400">Drag and drop or click to upload</span>

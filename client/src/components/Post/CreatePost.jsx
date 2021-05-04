@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Header from "../header/header";
 import DropZone from "./DropZone";
-import PlusIcon from "../icons/PlusIcon";
 import UploadIcon from "../icons/UploadIcon";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const CreatePost = () => {
 
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState("");
+
+    const history = useHistory();
 
     const handleImage = (image) => setImage(image);
 
@@ -23,6 +25,10 @@ const CreatePost = () => {
         axios.post("/api/posts/createPost",fd,{headers: {
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         }})
+        .then(res => history.push('/'))
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     return (
@@ -49,7 +55,7 @@ const CreatePost = () => {
                                     type="text"
                                     placeholder="Specify what the picture is about..."
                                     name="caption"
-                                    className="rounded resize-y text-white bg-gray-800 px-2 py-3 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:border-b focus:border-neon-purple h-32 max-h-96 w-full "
+                                    className="rounded resize-y text-white bg-gray-800 px-2 py-3 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:border-b focus:border-neon-purple h-32 max-h-96 w-full"
                                     value={caption}
                                     onChange={handleCaption}
                                     maxLength={100}
@@ -59,8 +65,7 @@ const CreatePost = () => {
                         </div>
 
                         <div className="col-span-2 text-right mt-6 px-4">
-                            <button type="submit" className="postButton text-neon-green text-sm border-2 border-neon-green text-md px-2 py-2 rounded-full hover:bg-neon-green hover:text-black transition duration-200 ease-out"><UploadIcon /></button>
-                            
+                            <button type="submit" disabled={!(caption && image)} style={{visibility:!(caption && image)?'hidden':'visible'}} className="postButton text-neon-green text-sm border-2 border-neon-green text-md px-2 py-2 rounded-full hover:bg-neon-green hover:text-black transition duration-200 ease-out"><UploadIcon /></button>
                         </div>
                         
                     </div>
