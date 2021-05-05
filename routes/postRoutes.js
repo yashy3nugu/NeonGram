@@ -60,4 +60,16 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 });
 
+router.get("/getAll", authenticateToken, (req,res,next) => {
+    Post.find({},(err,foundPosts) => {
+        if(err) {
+            res.sendStatus(500);
+            next();
+        } 
+
+        res.send(foundPosts);
+        next();
+    })
+})
+
 module.exports = router;

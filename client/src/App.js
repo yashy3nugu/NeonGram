@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpPage from "./components/SignUp/SignUpPage";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import PrivateRoute from "./components/contextProviders/privateRoute";
 import CreatePost from "./components/Post/CreatePost";
 
