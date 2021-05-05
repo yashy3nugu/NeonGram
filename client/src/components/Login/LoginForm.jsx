@@ -31,7 +31,6 @@ const LoginForm = () => {
                 validateOnMount = {false}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
-                    console.log(values);
                     axios.post("/api/login", {
                         username: values.username,
                         password: values.password
@@ -43,7 +42,9 @@ const LoginForm = () => {
                             history.push("/");
                         })
                         .catch(err => {
-                            console.log(err);
+                            if(err.response.status === 400){
+                                alert("wrong password")
+                            }
                         });
                     setSubmitting(false);
                 }}

@@ -64,14 +64,17 @@ router.post("/login", (req,res,next) => {
                 next();
 
             }
+            else {
+                res.sendStatus(400);
+            }
+        }
         else if(err){
             console.log(err);
 
-            res.status(500).send("Internal server error");
+            res.sendStatus(500);
             next();
         }
 
-        }
         else {
             res.status(400).send("Invalid username");
             next();
@@ -116,7 +119,6 @@ router.post("/token", (req,res,next) => {
 });
 
 router.post("/verify", authenticateToken, (req,res,next) => {
-    console.log("verified jwt")
     res.sendStatus(200);
     next();
 })
