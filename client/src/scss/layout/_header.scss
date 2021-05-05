@@ -53,30 +53,30 @@
         }
 
         a {
-          color: #ffff;
-          font-weight: 600;
-          transition: text-shadow 0.2s ease-in-out;
+          // color: #ffff;
+          // font-weight: 600;
+          // transition: text-shadow 0.2s ease-in-out;
 
-          &:hover {
-            // color: $color-cyan;
-            text-shadow: 0 0 0.066em #fff, 0 0 0.1em #fff,
-              0 0 0.12em $color-cyan, 0 0 0.17em $color-cyan,
-              0 0 0.6em $color-cyan, 0 0 1em $color-cyan;
-          }
+          // &:hover {
+          //   // color: $color-cyan;
+          //   text-shadow: 0 0 0.066em #fff, 0 0 0.1em #fff,
+          //     0 0 0.12em $color-cyan, 0 0 0.17em $color-cyan,
+          //     0 0 0.6em $color-cyan, 0 0 1em $color-cyan;
+          // }
         }
 
-        .signUp {
-          color: #ffff;
-          font-weight: 600;
+        // .signUp {
+        //   color: #ffff;
+        //   font-weight: 600;
 
-          transition: all 0.2s ease-in-out;
+        //   transition: all 0.2s ease-in-out;
 
-          &:hover {
-            color: inherit;
-            background-color: $color-cyan;
-            box-shadow: 0 0 1rem $color-cyan;
-          }
-        }
+        //   &:hover {
+        //     color: inherit;
+        //     background-color: $color-cyan;
+        //     box-shadow: 0 0 1rem $color-cyan;
+        //   }
+        // }
       }
     }
   }

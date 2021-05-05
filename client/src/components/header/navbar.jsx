@@ -1,12 +1,17 @@
 import React, {useState} from "react";
-import MenuIcon from "./icons/MenuIcon";
+import MenuIcon from "../icons/MenuIcon";
 import CrossIcon from "./icons/CrossIcon";
-import HomeIcon from "./icons/HomeIcon";
+import HomeIcon from "../icons/HomeIcon";
 import PlusIcon from "./icons/PlusIcon";
+import PlusIconSolid from "../icons/PlusIconSolid";
+import { useLocation } from "react-router-dom";
+import HomeIconSolid from "../icons/HomeIconSolid";
 
 const Navbar = () => {
 
     const [navExpanded, setNavExpanded] = useState(false);
+
+    const {pathname} = useLocation();
 
     function toggleNavExpanded() {
         setNavExpanded(prev => !prev)
@@ -19,9 +24,8 @@ const Navbar = () => {
             <nav>
                 <ul className="navLinks">
                     <span className="menuIcon" onClick={toggleNavExpanded}><MenuIcon/></span>
-                    <li><a href="/"><HomeIcon /></a></li>
-                    <li><a href="/post"><PlusIcon /></a></li>
-                    {/* <li><a href="/" className="signUp rounded-full py-2 px-5 bg-gray-800">Sign Up</a></li> */}
+                    <li><a href="/">{pathname === "/" ? <HomeIconSolid className="w-6"/> : <HomeIcon className="w-6" />}</a></li>
+                    <li><a href="/post" className="">{pathname === "/post"?<PlusIconSolid className="w-6" />:<PlusIcon className="w-6" />}</a></li>
                     
                 </ul>
                 
