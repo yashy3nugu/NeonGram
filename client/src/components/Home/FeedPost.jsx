@@ -35,7 +35,7 @@ const FeedPost = ({ post }) => {
     return (
         <div className="post rounded-xl mx-auto w-1/2 bg-gray-900 my-20 px-3 border border-neon-purple">
             <div className="text-left text-sm px-2 py-4">
-                <h1 className="text-white"><UserIcon className="w-8 mx-3 inline" />{post.user}</h1>
+                <h1 className="text-white"><UserIcon className="w-8 mx-3 inline" />{post.username}</h1>
             </div>
             <div className="pb-2">
                 <img src={post.postImage} alt={post.text} />

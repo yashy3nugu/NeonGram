@@ -12,6 +12,11 @@ const postSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId
     },
+    username: {
+        type: String,
+        required: [true,"username cannot be empty"]
+    },
+
     time: {
         type: Date,
         default: Date.now
