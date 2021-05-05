@@ -13,7 +13,9 @@ module.exports = {
       extend: {
         colors: {
           'neon-purple': '#7a27ff',
-          'neon-green' : '#26ffae'
+          'neon-green' : '#26ffae',
+          'neon-red' : '#ff3366',
+          'neon-blue' : '#1a6ff6'
         }
       }
     }
