@@ -11,6 +11,10 @@ const postSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Types.ObjectId
+    },
+    time: {
+        type: Date,
+        default: Date.now
     }
 
 });
