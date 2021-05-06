@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserIcon from "../icons/UserIcon";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
@@ -24,7 +24,12 @@ const FeedPost = ({ post }) => {
             }).then(res => setLiked(true));
 
         } else {
-            setLiked(false);
+            axios.post(`api/posts/${post._id}/removeReaction/likes`,{},{
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(res => setLiked(false))
+            
         }
 
         if (disliked) {
@@ -44,7 +49,11 @@ const FeedPost = ({ post }) => {
             }).then(res => setDisliked(true));
         
         } else {
-            setDisliked(false);
+            axios.post(`api/posts/${post._id}/removeReaction/dislikes`,{},{
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(res => setDisliked(false))
         }
 
         if (liked) {

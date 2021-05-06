@@ -134,6 +134,35 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
     })
 
 
+});
+
+router.post("/:postId/removeReaction/:reaction", authenticateToken, (req,res,next) => {
+    const {postId, reaction} = req.params;
+
+    User.findOne({ username: req.user.name }, (err, foundUser) => {
+
+        if (err) {
+            res.sendStatus(500);
+        }
+
+
+
+        Post.updateOne({ _id: postId }, { $pull: { [reaction] : mongoose.Types.ObjectId(foundUser._id)} }, (err) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(500);
+                next();
+            } else {
+                res.sendStatus(200);
+                next();
+            }
+
+        })
+
+
+
+
+    })
 })
 
 module.exports = router;
