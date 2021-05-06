@@ -43,7 +43,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
         }
 
         if (foundUser) {
-            Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username: req.user.name }, (err) => {
+            Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
                 if (err) {
                     console.log(err);
                     res.sendStatus(500);
