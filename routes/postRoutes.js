@@ -35,7 +35,7 @@ const router = express.Router();
 router.post("/createPost", authenticateToken, upload.single('postImage'), (req, res, next) => {
 
 
-    User.findOne({ username: req.user.name }, (err, foundUser) => {
+    User.findOne({ _id: req.user._id }, (err, foundUser) => {
         if (err) {
             console.log(err);
             res.sendStatus(500);
@@ -76,7 +76,7 @@ router.post("/:postId/like", authenticateToken, (req, res, next) => {
     const { postId } = req.params;
 
 
-    User.findOne({ username: req.user.name }, (err, foundUser) => {
+    User.findOne({ _id: req.user._id }, (err, foundUser) => {
 
         if (err) {
             res.sendStatus(500);
@@ -108,7 +108,7 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
     const { postId } = req.params;
 
 
-    User.findOne({ username: req.user.name }, (err, foundUser) => {
+    User.findOne({ _id: req.user._id }, (err, foundUser) => {
 
         if (err) {
             res.sendStatus(500);
@@ -139,7 +139,7 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
 router.post("/:postId/removeReaction/:reaction", authenticateToken, (req,res,next) => {
     const {postId, reaction} = req.params;
 
-    User.findOne({ username: req.user.name }, (err, foundUser) => {
+    User.findOne({ _id: req.user._id }, (err, foundUser) => {
 
         if (err) {
             res.sendStatus(500);

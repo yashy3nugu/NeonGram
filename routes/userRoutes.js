@@ -51,8 +51,8 @@ router.post("/login", (req,res,next) => {
 
             if(bcrypt.compareSync(password,foundUser.hashedPassword)){
 
-                const accessToken = generateAccessToken({name: username});
-                const refreshToken = generateRefreshToken({name: username});
+                const accessToken = generateAccessToken({_id: foundUser._id});
+                const refreshToken = generateRefreshToken({_id: foundUser._id });
 
                 RefreshToken.create({token: refreshToken});
 
