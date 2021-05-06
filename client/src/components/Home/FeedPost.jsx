@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import UserIcon from "../icons/UserIcon";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
@@ -15,9 +16,18 @@ const FeedPost = ({ post }) => {
 
         e.preventDefault();
 
-        setLiked(prev => !prev);
+        if (!liked) {
+            axios.post(`api/posts/${post._id}/like`, {}, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(res => setLiked(true));
 
-        if(disliked){
+        } else {
+            setLiked(false);
+        }
+
+        if (disliked) {
             setDisliked(false);
         }
     }
@@ -25,9 +35,19 @@ const FeedPost = ({ post }) => {
     const handleDisliked = (e) => {
         e.preventDefault()
 
-        setDisliked(prev => !prev)
 
-        if(liked){
+        if(!disliked){
+            axios.post(`api/posts/${post._id}/dislike`, {}, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            }).then(res => setDisliked(true));
+        
+        } else {
+            setDisliked(false);
+        }
+
+        if (liked) {
             setLiked(false);
         }
     }

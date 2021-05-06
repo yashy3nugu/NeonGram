@@ -43,7 +43,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
         }
 
         if (foundUser) {
-            Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username:req.user.name }, (err) => {
+            Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username: req.user.name }, (err) => {
                 if (err) {
                     console.log(err);
                     res.sendStatus(500);
@@ -60,16 +60,80 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 });
 
-router.get("/getAll", authenticateToken, (req,res,next) => {
-    Post.find({},(err,foundPosts) => {
-        if(err) {
-            res.sendStatus(500);
+router.get("/getAll", authenticateToken, (req, res, next) => {
+    Post.find({}, (err, foundPosts) => {
+        if (err) {
+            res.sendStatus(400);
             next();
-        } 
+        }
 
         res.send(foundPosts);
         next();
     })
+})
+
+router.post("/:postId/like", authenticateToken, (req, res, next) => {
+    const { postId } = req.params;
+
+
+    User.findOne({ username: req.user.name }, (err, foundUser) => {
+
+        if (err) {
+            res.sendStatus(500);
+        }
+
+
+
+        Post.updateOne({ _id: postId }, { $addToSet: { likes: mongoose.Types.ObjectId(foundUser._id) }, $pull: { dislikes: mongoose.Types.ObjectId(foundUser._id)} }, (err) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(500);
+                next();
+            } else {
+                res.sendStatus(200);
+                next();
+            }
+
+        })
+
+
+
+
+    })
+
+
+});
+
+router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
+    const { postId } = req.params;
+
+
+    User.findOne({ username: req.user.name }, (err, foundUser) => {
+
+        if (err) {
+            res.sendStatus(500);
+        }
+
+
+
+        Post.updateOne({ _id: postId }, { $addToSet: { dislikes: mongoose.Types.ObjectId(foundUser._id) }, $pull: { likes: mongoose.Types.ObjectId(foundUser._id)} }, (err) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(500);
+                next();
+            } else {
+                res.sendStatus(200);
+                next();
+            }
+
+        })
+
+
+
+
+    })
+
+
 })
 
 module.exports = router;
