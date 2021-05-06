@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import {AuthContext} from "../contextProviders/authContext"
 import UserIcon from "../icons/UserIcon";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../icons/ThumbDownIcon";
 import ThumbUpIcon from "../icons/ThumbUpIcon";
+import { set } from "mongoose";
 
 const FeedPost = ({ post }) => {
 
+    const { auth } = useContext(AuthContext);
 
-    const [liked, setLiked] = useState(false);
-    const [disliked, setDisliked] = useState(false);
+    const [liked, setLiked] = useState(post.likes.includes(auth._id));
+    const [disliked, setDisliked] = useState(post.dislikes.includes(auth._id));
+    
+    const [numLikes,setNumLikes] = useState(post.likes.length);
+    const [numDislikes,setNumDislikes] = useState(post.dislikes.length);
+
+
 
     const handleLiked = (e) => {
 
@@ -21,19 +29,29 @@ const FeedPost = ({ post }) => {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => setLiked(true));
+            })
+            .then(res => {
+                setLiked(true);
+                setNumLikes(prev => prev + 1);
+
+            });
 
         } else {
             axios.post(`api/posts/${post._id}/removeReaction/likes`,{},{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => setLiked(false))
+            })
+            .then(res => {
+                setLiked(false);
+                setNumLikes(prev => prev - 1);
+            })
             
         }
 
         if (disliked) {
             setDisliked(false);
+            setNumDislikes(prev => prev - 1);
         }
     }
 
@@ -46,18 +64,25 @@ const FeedPost = ({ post }) => {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => setDisliked(true));
+            }).then(res => {
+                setDisliked(true);
+                setNumDislikes(prev => prev + 1);
+            });
         
         } else {
             axios.post(`api/posts/${post._id}/removeReaction/dislikes`,{},{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => setDisliked(false))
+            }).then(res => {
+                setDisliked(false);
+                setNumDislikes(prev => prev - 1);
+            })
         }
 
         if (liked) {
             setLiked(false);
+            setNumLikes(prev => prev - 1);
         }
     }
 
@@ -71,7 +96,9 @@ const FeedPost = ({ post }) => {
             </div>
             <div className="flex">
                 <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="thumbUp" />}</button>
+                <span className="text-neon-blue">{numLikes}</span>
                 <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="thumbDown" />}</button>
+                <span className="text-neon-red">{numDislikes}</span>
             </div>
             <div>
                 <p className="text-white text-left">{post.text}</p>

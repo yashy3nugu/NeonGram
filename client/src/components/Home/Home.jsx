@@ -25,7 +25,7 @@ const Home = () => {
             history.push("/");
         }
     })
-    })
+    },[])
     
 
     return(

@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     axios.post("/api/verify",{},{headers: {
       "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
   }} ).then(res => {
-      toggleAuth(true);
+      toggleAuth(res.data);
   })
   .catch(err => {
     toggleAuth(false);

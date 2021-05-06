@@ -119,8 +119,22 @@ router.post("/token", (req,res,next) => {
 });
 
 router.post("/verify", authenticateToken, (req,res,next) => {
-    res.sendStatus(200);
-    next();
+
+    User.findOne({_id:req.user._id}, (err,foundUser) => {
+
+        if(err){
+            res.sendStatus(500);
+        }
+
+        else {
+            const {_id,email,fname,lname,username} = foundUser;
+
+            res.send({_id,email,fname,lname,username});
+            next();
+        }
+        
+    })
+    
 })
 
 module.exports = router;
