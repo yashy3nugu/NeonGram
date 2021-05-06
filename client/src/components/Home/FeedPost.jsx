@@ -41,8 +41,8 @@ const FeedPost = ({ post }) => {
                 <img src={post.postImage} alt={post.text} />
             </div>
             <div className="flex">
-                <button onClick={handleLiked} className="mx-2 outline-none">{liked ? <ThumbUpIconFilled className="w-6 text-neon-blue" /> : <ThumbUpIcon className="w-6 text-neon-blue" />}</button>
-                <button onClick={handleDisliked} className="mx-2 outline-none">{disliked ? <ThumbDownIconFilled className="w-6 text-neon-red" /> : <ThumbDownIcon className="w-6 text-neon-red" />}</button>
+                <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="thumbUp" />}</button>
+                <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="thumbDown" />}</button>
             </div>
             <div>
                 <p className="text-white text-left">{post.text}</p>
