@@ -25,34 +25,48 @@ const FeedPost = ({ post }) => {
         e.preventDefault();
 
         if (!liked) {
+
+            setLiked(true);
+            setNumLikes(prev => prev + 1);
+
+            
+            if (disliked) {
+                setDisliked(false);
+                setNumDislikes(prev => prev - 1);
+            }
+
             axios.post(`api/posts/${post._id}/like`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
             })
-            .then(res => {
-                setLiked(true);
-                setNumLikes(prev => prev + 1);
+            .catch(err => {
+                setLiked(false);
+                setNumLikes(prev => prev - 1);
 
-            });
+                setDisliked(true);
+                setNumDislikes(prev => prev + 1);
+                
+            })
 
         } else {
+
+            setLiked(false);
+            setNumLikes(prev => prev - 1);
+
             axios.post(`api/posts/${post._id}/removeReaction/likes`,{},{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
             })
-            .then(res => {
-                setLiked(false);
-                setNumLikes(prev => prev - 1);
+            .catch(err => {
+                setLiked(true);
+                setNumLikes(prev => prev + 1);
+                return;
             })
             
         }
 
-        if (disliked) {
-            setDisliked(false);
-            setNumDislikes(prev => prev - 1);
-        }
     }
 
     const handleDisliked = (e) => {
@@ -60,30 +74,47 @@ const FeedPost = ({ post }) => {
 
 
         if(!disliked){
+
+            setDisliked(true);
+            setNumDislikes(prev => prev + 1);
+
+            if (liked) {
+                setLiked(false);
+                setNumLikes(prev => prev - 1);
+            }
+
             axios.post(`api/posts/${post._id}/dislike`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => {
-                setDisliked(true);
-                setNumDislikes(prev => prev + 1);
+            }).catch(err => {
+                
+                setDisliked(false);
+                setNumDislikes(prev => prev - 1);
+                
+                setLiked(true);
+                setNumLikes(prev => prev + 1);
+
+                return
             });
         
         } else {
+
+            setDisliked(false);
+            setNumDislikes(prev => prev - 1);
             axios.post(`api/posts/${post._id}/removeReaction/dislikes`,{},{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
-            }).then(res => {
-                setDisliked(false);
-                setNumDislikes(prev => prev - 1);
+            }).catch(err => {
+
+                setDisliked(true);
+                setNumDislikes(prev => prev + 1);
+
+                return
             })
         }
 
-        if (liked) {
-            setLiked(false);
-            setNumLikes(prev => prev - 1);
-        }
     }
 
     return (
@@ -95,9 +126,9 @@ const FeedPost = ({ post }) => {
                 <img src={post.postImage} alt={post.text} />
             </div>
             <div className="flex">
-                <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="thumbUp" />}</button>
+                <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="" />}</button>
                 <span className="text-neon-blue">{numLikes}</span>
-                <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="thumbDown" />}</button>
+                <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="" />}</button>
                 <span className="text-neon-red">{numDislikes}</span>
             </div>
             <div>
