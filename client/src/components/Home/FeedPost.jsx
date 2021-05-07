@@ -158,7 +158,7 @@ const FeedPost = ({ post }) => {
             </div>
 
             <div className="mb-3">
-                <PostCommentSection />
+                <PostCommentSection post={post} />
             </div>
 
         </div>

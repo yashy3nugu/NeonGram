@@ -26,9 +26,11 @@ app.use('/uploads', express.static('uploads'))
 
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 app.use("/api",userRoutes);
 app.use("/api/posts",postRoutes);
+app.use("/api/comment",commentRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
