@@ -8,6 +8,7 @@ import ThumbDownIcon from "../icons/ThumbDownIcon";
 import ThumbUpIcon from "../icons/ThumbUpIcon";
 import CommentIcon from "../icons/CommentIcon";
 import BookMarkIcon from "../icons/BookMarkIcon";
+import DotsHorizontalIcon from "../icons/DotsHorizontalIcon";
 
 const FeedPost = ({ post }) => {
 
@@ -120,8 +121,14 @@ const FeedPost = ({ post }) => {
 
     return (
         <div className="post rounded-xl mx-auto w-1/2 bg-gray-900 my-20 px-3 border-2 border-neon-purple">
-            <div className="text-left text-sm px-0 py-4">
-                <h1 className="text-white"><UserIcon className="w-8 mr-2 inline text-gray-400" />{post.username}</h1>
+            <div className="text-left text-sm px-0 py-4 flex justify-between">
+                <div>
+                    <UserIcon className="w-8 mr-2 inline text-gray-400" /><a href={`/${post.username}`} className="text-white">{post.username}</a>
+                </div>
+                <div>
+                    <button className="w-6 inline text-right text-white relative py-1"><DotsHorizontalIcon/></button>
+                </div>
+                
             </div>
             <div className="mb-3">
                 <p className="text-white text-left">{post.text}</p>
