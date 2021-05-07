@@ -65,7 +65,7 @@ const CreatePost = () => {
                         </div>
 
                         <div className="col-span-2 text-right mt-6 px-4">
-                            <button type="submit" disabled={!(caption && image)} style={{visibility:!(caption && image)?'hidden':'visible'}} className="postButton text-neon-green text-sm border-2 border-neon-green text-md px-2 py-2 rounded-full hover:bg-neon-green hover:text-black transition duration-200 ease-out"><UploadIcon /></button>
+                            <button type="submit" disabled={!(caption && image)} style={{visibility:!(caption && image)?'hidden':'visible'}} className="postButton text-neon-green w-12 border-2 rounded-full px-1.5 py-1.5 border-neon-green hover:bg-neon-green hover:text-black transition duration-200 ease-out"><UploadIcon/></button>
                         </div>
                         
                     </div>
