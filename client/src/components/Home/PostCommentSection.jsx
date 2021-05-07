@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from 'formik';
 import axios from "axios";
 import PlusIcon from "../icons/PlusIcon";
 
 const PostCommentSection = ({post}) => {
+
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(`api/comment/${post._id}`,{
+            headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }}).then(res => setComments(res.data));
+
+    }, [])
 
     return (
         <Formik
@@ -39,6 +50,7 @@ const PostCommentSection = ({post}) => {
                     <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="w-8 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"><PlusIcon className=""/></button>
                 </Form>
             )}
+            
 
         </Formik>
     )
