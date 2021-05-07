@@ -25,7 +25,7 @@ const DropZone = (props) => {
             {props.image ? props.image.map(file => {
                 return <div key={file.name} className="relative max-h-96 overflow-auto">
                     <img src={file.preview} alt="preview" className="w-full" />
-                    <button className="absolute top-0 right-0 text-red-600 mr-1 mt-2" onClick={() => props.setImage(null)}>
+                    <button className="absolute w-6 top-0 right-0 text-red-600 mr-1 mt-2" onClick={() => props.setImage(null)}>
                         <CrossIcon />
                     </button>
                     
