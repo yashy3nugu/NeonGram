@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import {AuthContext} from "../contextProviders/authContext"
+import {AuthContext} from "../contextProviders/authContext";
 import UserIcon from "../icons/UserIcon";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
@@ -9,6 +9,7 @@ import ThumbUpIcon from "../icons/ThumbUpIcon";
 import CommentIcon from "../icons/CommentIcon";
 import BookMarkIcon from "../icons/BookMarkIcon";
 import DotsHorizontalIcon from "../icons/DotsHorizontalIcon";
+import PostCommentSection from "./PostCommentSection"
 
 const FeedPost = ({ post }) => {
 
@@ -139,13 +140,13 @@ const FeedPost = ({ post }) => {
             <div className="flex justify-between align-middle mt-2 mb-3">
                 <div className="flex">
                     <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="" />}</button>
-                    <p className="text-neon-blue mr-1 relative top-1.5">{numLikes}</p>
+                    <p className="text-neon-blue font-semibold mr-1 relative top-1.5">{numLikes}</p>
                 
                     <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red relative top-0.5">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="" />}</button>
-                    <span className="text-neon-red mr-1 relative top-1.5">{numDislikes}</span>
+                    <span className="text-neon-red font-semibold mr-1 relative top-1.5">{numDislikes}</span>
 
                     <button className="mx-2 outline-none w-8 text-purple-600 relative"><CommentIcon className=""/></button>
-                    <span className="text-neon-purple relative top-1.5">3</span>
+                    <span className="text-neon-purple font-semibold relative top-1.5">3</span>
                 </div>
 
                 <div>
@@ -154,6 +155,10 @@ const FeedPost = ({ post }) => {
                 </div>
                 
                 
+            </div>
+
+            <div className="mb-3">
+                <PostCommentSection />
             </div>
 
         </div>
