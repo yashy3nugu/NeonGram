@@ -137,4 +137,31 @@ router.post("/verify", authenticateToken, (req,res,next) => {
     
 })
 
+// get details of user from username
+router.get("/details/:username", authenticateToken, (req,res,next) => {
+    
+    const { username } = req.params;
+
+
+    User.findOne({username: username})
+    .select("username fname lname email")
+    .exec((err, foundUser) => {
+            if(foundUser) {
+
+                res.send(foundUser);
+                next();
+
+            }
+            else if(err) {
+                res.sendStatus(500);
+                next();
+            }
+            else {
+                res.sendStatus(400);
+                next();
+            }
+    })
+
+})
+
 module.exports = router;
