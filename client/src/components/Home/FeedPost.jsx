@@ -145,8 +145,8 @@ const FeedPost = ({ post }) => {
                     <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red relative top-0.5">{disliked ? <ThumbDownIconFilled className="thumbDown" /> : <ThumbDownIcon className="" />}</button>
                     <span className="text-neon-red font-semibold mr-1 relative top-1.5">{numDislikes}</span>
 
-                    <button className="mx-2 outline-none w-8 text-purple-600 relative"><CommentIcon className=""/></button>
-                    <span className="text-neon-purple font-semibold relative top-1.5">3</span>
+                    {/* <button className="mx-2 outline-none w-8 text-purple-600 relative"><CommentIcon className=""/></button>
+                    <span className="text-neon-purple font-semibold relative top-1.5">3</span> */}
                 </div>
 
                 <div>
