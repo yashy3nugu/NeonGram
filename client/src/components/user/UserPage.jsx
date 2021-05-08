@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Header from "../header/header";
+import ProfileDetails from "./ProfileDetails";
+import PostGallery from "./PostGallery";
 
 const UserPage = () => {
 
     const [posts,setPosts] = useState([]);
+    const [userDetails, setUserDetails] = useState({});
 
     const { user } = useParams();
 
@@ -20,13 +24,19 @@ const UserPage = () => {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
-        }).then(res => console.log(res.data));
+        }).then(res => setUserDetails(res.data));
 
 
     }, [user])
 
 
-    return <pre className="text-white">{JSON.stringify(posts,null,2)}</pre>
+    return (
+        <>
+        <Header />
+        <ProfileDetails userDetails={userDetails}/>
+        <PostGallery posts={posts} />
+        </>
+    )
 
 }
 
