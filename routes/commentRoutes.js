@@ -43,7 +43,6 @@ router.get("/:postID", authenticateToken, (req, res, next) => {
     Comment.find({post: postID})
     .populate('user', 'username')
     .then( comment => {
-        console.log(comment);
         res.send(comment);
         next();
     })

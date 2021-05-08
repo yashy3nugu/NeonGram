@@ -32,6 +32,7 @@ const upload = multer({
 });
 const router = express.Router();
 
+// create a post
 router.post("/createPost", authenticateToken, upload.single('postImage'), (req, res, next) => {
 
 
@@ -60,6 +61,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 });
 
+// get all posts for a user's feed. (Needs to be changed for pagination)
 router.get("/getAll", authenticateToken, (req, res, next) => {
     Post.find({}, (err, foundPosts) => {
         if (err) {
@@ -72,6 +74,7 @@ router.get("/getAll", authenticateToken, (req, res, next) => {
     })
 })
 
+// Add a like to a post
 router.post("/:postId/like", authenticateToken, (req, res, next) => {
     const { postId } = req.params;
 
@@ -104,6 +107,7 @@ router.post("/:postId/like", authenticateToken, (req, res, next) => {
 
 });
 
+// Add a dislike to a post
 router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
     const { postId } = req.params;
 
@@ -136,6 +140,7 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
 
 });
 
+// Remove a reaction to a post
 router.post("/:postId/removeReaction/:reaction", authenticateToken, (req,res,next) => {
     const {postId, reaction} = req.params;
 
@@ -162,6 +167,37 @@ router.post("/:postId/removeReaction/:reaction", authenticateToken, (req,res,nex
 
 
 
+    })
+})
+
+// get posts of a username
+router.get("/user/:username", authenticateToken, (req,res,next) => {
+    const { username } = req.params;
+
+    User.findOne({username: username}, (err, foundUser) => {
+
+        if(foundUser){
+
+            Post.find({username: username}, (err, foundPosts) => {
+                if(err) {
+                    res.sendStatus(500);
+                    next();
+                }
+                else {
+                    res.send(foundPosts);
+                    next();
+                }
+            })
+
+        } else if(err) {
+
+            res.sendStatus(500);
+            next();
+
+        } else {
+            res.sendStatus(400);
+            next();
+        }
     })
 })
 
