@@ -31,7 +31,7 @@ const Home = () => {
     return(
         <>
         <Header />
-        <pre className="text-white">{JSON.stringify(posts,null,2)}</pre>
+        {/* <pre className="text-white">{JSON.stringify(posts,null,2)}</pre> */}
         <div className="container mx-auto">
             
             {posts.map(post => (

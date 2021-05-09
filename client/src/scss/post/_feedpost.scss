@@ -8,19 +8,4 @@
     
     
 
-    .thumbUp {
-        animation: left-rotate 0.4s ease;
-    }
-
-    .thumbDown {
-        animation: left-rotate 0.4s ease;
-    }
-
-    @keyframes left-rotate {
-       
-        50% {
-            transform: rotate(-45deg);
-        }
-       
-    }
 }
