@@ -22,6 +22,10 @@ export default function PostModal({ post, onClose }) {
 
     }, [post._id])
 
+    const addComment = (values, auth) => {
+        setComments(prev => [...prev, { content: values.comment, user: { username: auth.username } }]);
+    }
+
     return createPortal(
         <div className="post-modal z-10 fixed top-0 left-0 right-0 bottom-0">
             <button className="text-neon-red w-10 fixed right-1 top-1" onClick={onClose}><CrossIcon /></button>
@@ -33,7 +37,7 @@ export default function PostModal({ post, onClose }) {
                 
                 <div className="w-1/3 px-3 py-2 flex flex-col">
                     <ModalComments post={post} comments={comments}/>
-                    <ModalActions post={post}/>
+                    <ModalActions post={post} addComment={addComment}/>
                 </div>
             </div>
 
