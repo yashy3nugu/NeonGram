@@ -7,6 +7,7 @@ import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../icons/ThumbDownIcon";
 import ThumbUpIcon from "../icons/ThumbUpIcon";
 import BookMarkIcon from "../icons/BookMarkIcon";
+import ModalComments from "./ModalComments";
 import { AuthContext } from "../contextProviders/authContext";
 import axios from "axios";
 
@@ -139,10 +140,10 @@ export default function PostModal({ post, onClose }) {
                 </div>
                 
                 <div className="w-1/3 px-3 py-2 flex flex-col">
-                    <div className="my-2">
+                    {/* <div className="my-2">
                         <UserIcon className="w-8 mr-2 inline text-gray-400" /><a href={`/${post.username}`} className="text-white">{post.username}</a>
-                    </div>
-                    <div className="bg-gray-800 h-3/4 px-2 py-2">
+                    </div> */}
+                    {/* <div className="bg-gray-800 h-3/4 px-2 py-2">
                         <ul className=" text-white">
                             {comments.length && comments.map(comment => {
                                 return (
@@ -150,7 +151,8 @@ export default function PostModal({ post, onClose }) {
                                 )
                             })}
                         </ul>
-                    </div>
+                    </div> */}
+                    <ModalComments post={post} comments={comments}/>
                     <div className="flex h-1/4 justify-between align-middle mt-2 mb-3">
                         <div className="flex">
                             <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumbUp" /> : <ThumbUpIcon className="" />}</button>
