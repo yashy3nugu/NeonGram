@@ -30,12 +30,12 @@ export default function PostModal({ post, onClose }) {
         <div className="post-modal z-10 fixed top-0 left-0 right-0 bottom-0">
             <button className="text-neon-red w-10 fixed right-1 top-1" onClick={onClose}><CrossIcon /></button>
 
-            <div className="post-modal__post w-4/5 bg-gray-900 rounded-xl flex">
-                <div className="w-2/3">
-                    <img src={post.postImage} alt={post.text} className="" />
+            <div className="post-modal__post overflow-hidden w-4/5 h-4/6 bg-gray-900 flex">
+                <div className="w-2/3 bg-black">
+                    <img src={post.postImage} alt={post.text} className="mx-auto h-full" />
                 </div>
                 
-                <div className="w-1/3 px-3 py-2 flex flex-col">
+                <div className="w-1/3 px-3 py-2 flex flex-col border-2 border-neon-purple">
                     <ModalComments post={post} comments={comments}/>
                     <ModalActions post={post} addComment={addComment}/>
                 </div>

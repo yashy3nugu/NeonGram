@@ -7,7 +7,7 @@ const ModalComments = ({post, comments }) => {
         <div className="my-2">
                         <UserIcon className="w-8 mr-2 inline text-gray-400" /><a href={`/${post.username}`} className="text-white">{post.username}</a>
                     </div>
-        <div className="bg-gray-800 h-3/4 px-2 py-2">
+        <div className="bg-gray-800 flex-grow px-2 py-2">
             <ul className=" text-white">
                 {comments.length && comments.map(comment => {
                     return (
