@@ -61,9 +61,18 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 });
 
-// get all posts for a user's feed. (Needs to be changed for pagination)
-router.get("/getAll", authenticateToken, (req, res, next) => {
-    Post.find({}, (err, foundPosts) => {
+// get all posts for a user's feed for infinite scroll pagination.
+router.get("/", authenticateToken, (req, res, next) => {
+
+    const {lastId} = req.query;
+
+    let filter = {};
+
+    if(lastId){
+        filter = {'_id': {'$gt': lastId}}
+    }
+
+    Post.find(filter, (err, foundPosts) => {
         if (err) {
             res.sendStatus(400);
             next();
@@ -71,7 +80,7 @@ router.get("/getAll", authenticateToken, (req, res, next) => {
 
         res.send(foundPosts);
         next();
-    })
+    }).limit(2);
 })
 
 // Add a like to a post

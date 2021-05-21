@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Header from "../header/header";
 import FeedPost from "./FeedPost";
+import PlusIcon from "../icons/PlusIcon";
 
 
 const Home = () => {
@@ -12,7 +13,7 @@ const Home = () => {
     const history = useHistory();
     
     useEffect(() => {
-        axios.get("/api/posts/getAll",{
+        axios.get("/api/posts",{
             headers: {
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         }
@@ -25,7 +26,22 @@ const Home = () => {
             history.push("/");
         }
     })
-    },[])
+    },[history]);
+
+    const handlePagination = () => {
+        const lastId = posts[posts.length-1]._id;
+        axios.get("/api/posts",{
+            headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        },
+        params: {
+            lastId
+        }
+    }).then(res => {
+        console.log(res);
+        setPosts(prev => [...prev,...res.data])
+    })
+    }
     
 
     return(
@@ -40,6 +56,10 @@ const Home = () => {
                 </div>
             )
             )}
+            <div className="text-center">
+                <button onClick={handlePagination} className="w-5 text-white"><PlusIcon /></button>
+            </div>
+            
 
         </div>
         </>
