@@ -14,6 +14,8 @@ export default function PostModal({ post, onClose }) {
 
     useEffect(() => {
 
+        document.body.style.overflow = 'hidden';
+
         axios.get(`api/comment/${post._id}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`

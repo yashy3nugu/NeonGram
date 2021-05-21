@@ -9,11 +9,13 @@ const ModalComments = ({post, comments }) => {
                     </div>
         <div className="bg-gray-800 flex-grow px-2 py-2">
             <ul className=" text-white">
-                {comments.length && comments.map(comment => {
+                {comments.length ? comments.map(comment => {
                     return (
-                        <li className=""><span className="font-semibold">{comment.user.username}</span> {comment.content}</li>
+                        <li className=""><a href={`/${comment.user.username}`} className="font-semibold">{comment.user.username}</a> {comment.content}</li>
                     )
-                })}
+                }): (
+                    <li className="text-gray-400"> <p>No comments yet...</p></li>
+                )}
             </ul>
         </div>
         </>

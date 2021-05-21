@@ -5,6 +5,11 @@ const PostGallery = ({posts}) => {
 
     const [clickedPost, setClickedPost] = useState(null);
 
+    const onClose = () => {
+        setClickedPost(null);
+        document.body.style.overflow = 'unset';
+    }
+
     return (
         <div className="max-w-4xl text-center grid grid-cols-3 gap-6 mx-auto w-full mb-6">
         {posts && posts.map(post => (
@@ -15,7 +20,7 @@ const PostGallery = ({posts}) => {
 
         ))}
         
-        {clickedPost && <PostModal post={clickedPost} onClose={() => setClickedPost(null)}/>}
+        {clickedPost && <PostModal post={clickedPost} onClose={onClose}/>}
 
         </div>
     )
