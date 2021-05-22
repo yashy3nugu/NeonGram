@@ -5,22 +5,26 @@ import Header from "../header/header";
 import FeedPost from "./FeedPost";
 import PlusIcon from "../icons/PlusIcon";
 import {Waypoint} from "react-waypoint";
+import { SpinnerCircular } from 'spinners-react';
 
 
 const Home = () => {
 
     const [posts,setPosts] = useState([]);
     const [hasNext, setHasNext] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const history = useHistory();
     
     useEffect(() => {
+        setLoading(true);
         axios.get("/api/posts",{
             headers: {
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         }
     })
     .then(res => {
+        setLoading(false);
         if(res.data.length){
             setPosts(res.data);
         } else {
@@ -37,8 +41,10 @@ const Home = () => {
     },[history]);
 
     const handlePagination = () => {
+        setLoading(true);
         console.log("pagination req");
         if(!hasNext){
+            setLoading(false);
             return;
         }
         const lastId = posts[posts.length-1]._id;
@@ -50,6 +56,7 @@ const Home = () => {
             lastId
         }
     }).then(res => {
+        setLoading(false);
         console.log(res);
         if(res.data.length){
             setPosts(prev => [...prev,...res.data]);
@@ -69,6 +76,8 @@ const Home = () => {
         <Header />
         {/* <pre className="text-white">{JSON.stringify(posts,null,2)}</pre> */}
         <div className="container mx-auto">
+        
+        
             
             {posts.map((post,idx) => (
                 <div key={idx}>
@@ -77,7 +86,6 @@ const Home = () => {
                         )
                 }
                     <FeedPost post={post} />
-                    <h1>{idx}</h1>
                     
                 </div>
                 
@@ -85,11 +93,11 @@ const Home = () => {
                 
             )
             )}
-                {!hasNext && (
-                    <div className="h-5 bg-gray-50">
-
-                    </div>
-                )}
+            <div>
+            <SpinnerCircular className="block mx-auto" enabled={loading} secondaryColor={"rgba(0,0,0,0)"} speed={150}/>
+                
+            </div>
+            
             
 
         </div>
