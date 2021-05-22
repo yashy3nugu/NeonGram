@@ -19,7 +19,7 @@ const Home = () => {
         }
     })
     .then(res => {
-        setPosts(res.data)
+        setPosts(res.data.posts)
     })
     .catch(err => {
         if(err.response.status === 400){
@@ -39,7 +39,10 @@ const Home = () => {
         }
     }).then(res => {
         console.log(res);
-        setPosts(prev => [...prev,...res.data])
+        if(res.data.hasNext){
+            setPosts(prev => [...prev,...res.data.posts]);
+        }
+        
     })
     }
     
