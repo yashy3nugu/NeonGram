@@ -76,20 +76,10 @@ router.get("/", authenticateToken, (req, res, next) => {
         if (err) {
             res.sendStatus(400);
             next();
-        } else if(!foundPosts){
-            res.send({
-                posts: {},
-                hasNext: 0
-            });
-        } else {
-            res.send({
-                posts: foundPosts,
-                hasNext: 1
-            });
-            next();
         }
 
-        
+        res.send(foundPosts);
+        next();
     }).limit(2);
 })
 
