@@ -61,15 +61,16 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 });
 
-// get all posts for a user's feed for infinite scroll pagination.
+// get all posts for a user's feed for infinite scroll pagination. Latests post are shown everytime.
 router.get("/", authenticateToken, (req, res, next) => {
 
-    const {lastId} = req.query;
+    const {lastTime} = req.query;
 
     let filter = {};
 
-    if(lastId){
-        filter = {'_id': {'$gt': lastId}}
+
+    if(lastTime){
+        filter = {'time': {'$lt': new Date(lastTime)}}
     }
 
     Post.find(filter, (err, foundPosts) => {
@@ -80,7 +81,9 @@ router.get("/", authenticateToken, (req, res, next) => {
 
         res.send(foundPosts);
         next();
-    }).limit(2);
+    })
+    .sort({time: -1})
+    .limit(2);
 })
 
 // Add a like to a post

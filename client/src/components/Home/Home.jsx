@@ -40,19 +40,19 @@ const Home = () => {
     },[history]);
 
     const handlePagination = () => {
-        setLoading(true);
-        console.log("pagination req");
+        
         if(!hasNext){
             setLoading(false);
             return;
         }
-        const lastId = posts[posts.length-1]._id;
+        setLoading(true);
+        const lastTime = posts[posts.length-1].time;
         axios.get("/api/posts",{
             headers: {
             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         },
         params: {
-            lastId
+            lastTime
         }
     }).then(res => {
         setLoading(false);
