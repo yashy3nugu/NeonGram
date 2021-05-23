@@ -3,9 +3,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Header from "../header/header";
 import FeedPost from "./FeedPost";
-import PlusIcon from "../icons/PlusIcon";
 import {Waypoint} from "react-waypoint";
-import { SpinnerCircular } from 'spinners-react';
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 
 const Home = () => {
@@ -94,7 +93,7 @@ const Home = () => {
             )
             )}
             <div>
-            <SpinnerCircular className="block mx-auto" enabled={loading} secondaryColor={"rgba(0,0,0,0)"} speed={150}/>
+            <SpinnerIcon styles="block mx-auto" enabled={loading} size="6rem" />
                 
             </div>
             
