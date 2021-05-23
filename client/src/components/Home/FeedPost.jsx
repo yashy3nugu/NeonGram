@@ -135,7 +135,7 @@ const FeedPost = ({ post }) => {
                 <p className="text-white text-left">{post.text}</p>
             </div>
             <div className="">
-                <img src={post.postImage} alt={post.text} className="w-full"/>
+                <img src={`../${post.postImage}`} alt={post.text} className="w-full"/>
             </div>
             <div className="flex justify-between align-middle mt-2 mb-3">
                 <div className="flex">
