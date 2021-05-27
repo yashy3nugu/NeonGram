@@ -4,7 +4,7 @@ import SignUpPage from "./components/SignUp/SignUpPage";
 import Home from "./components/Home/Home";
 import PrivateRoute from "./components/contextProviders/privateRoute";
 import CreatePost from "./components/Post/CreatePost";
-import UserPage from "./components/user/UserPage";
+import UserPage from "./components/UserPage/UserPage";
 
 function App() {
 

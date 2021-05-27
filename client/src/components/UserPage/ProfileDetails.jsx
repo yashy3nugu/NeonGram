@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
-import UserIcon from "../icons/UserIcon";
-import PencilIcon from "../icons/PencilIcon";
+import UserIcon from "../Icons/UserIcon";
+import PencilIcon from "../Icons/PencilIcon";
 import {AuthContext} from "../contextProviders/authContext";
 
 const ProfileDetails = ({userDetails}) => {

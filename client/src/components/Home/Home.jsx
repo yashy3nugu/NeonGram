@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Header from "../header/header";
 import FeedPost from "./FeedPost";
 import {Waypoint} from "react-waypoint";
-import SpinnerIcon from "../icons/SpinnerIcon";
+import SpinnerIcon from "../Icons/SpinnerIcon";
 
 
 const Home = () => {

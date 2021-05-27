@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import MenuIcon from "../icons/MenuIcon";
-import CrossIcon from "./icons/CrossIcon";
-import HomeIcon from "../icons/HomeIcon";
-import PlusIcon from "./icons/PlusIcon";
-import PlusIconSolid from "../icons/PlusIconSolid";
+import MenuIcon from "../Icons/MenuIcon";
+import CrossIcon from "../Icons/CrossIcon";
+import HomeIcon from "../Icons/HomeIcon";
+import PlusIcon from "../Icons/PlusIcon";
+import PlusIconSolid from "../Icons/PlusIconSolid";
 import { useLocation } from "react-router-dom";
-import HomeIconSolid from "../icons/HomeIconSolid";
+import HomeIconSolid from "../Icons/HomeIconSolid";
 
 const Navbar = () => {
 

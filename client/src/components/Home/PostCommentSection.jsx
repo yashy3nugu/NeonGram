@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Formik, Form, Field } from 'formik';
 import { AuthContext } from "../contextProviders/authContext";
 import axios from "axios";
-import PlusIcon from "../icons/PlusIcon";
+import PlusIcon from "../Icons/PlusIcon";
 
 const PostCommentSection = ({ post }) => {
 

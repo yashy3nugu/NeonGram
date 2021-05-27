@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import CrossIcon from "../icons/CrossIcon"
+import CrossIcon from "../Icons/CrossIcon"
 import axios from 'axios';
-import PlusIcon from "../header/icons/PlusIcon";
+import PlusIcon from "../Icons/PlusIcon";
 
 const DropZone = (props) => {
 

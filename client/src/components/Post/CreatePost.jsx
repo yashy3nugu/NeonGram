@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../header/header";
 import DropZone from "./DropZone";
-import UploadIcon from "../icons/UploadIcon";
+import UploadIcon from "../Icons/UploadIcon";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
-import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
-import ThumbDownIcon from "../icons/ThumbDownIcon";
-import ThumbUpIcon from "../icons/ThumbUpIcon";
-import BookMarkIcon from "../icons/BookMarkIcon";
-import PlusIcon from "../icons/PlusIcon";
+import ThumbDownIconFilled from "../Icons/ThumbDownIconFilled";
+import ThumbUpIconFilled from "../Icons/ThumbUpIconFilled";
+import ThumbDownIcon from "../Icons/ThumbDownIcon";
+import ThumbUpIcon from "../Icons/ThumbUpIcon";
+import BookMarkIcon from "../Icons/BookMarkIcon";
+import PlusIcon from "../Icons/PlusIcon";
 import { AuthContext } from "../contextProviders/authContext";
 import axios from "axios";
 import { Formik, Form, Field } from 'formik';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import CrossIcon from '../icons/CrossIcon';
-import UserIcon from "../icons/UserIcon";
+import CrossIcon from '../Icons/CrossIcon';
+import UserIcon from "../Icons/UserIcon";
 import ModalActions from "./ModalActions";
 import ModalComments from "./ModalComments";
 import { AuthContext } from "../contextProviders/authContext";
