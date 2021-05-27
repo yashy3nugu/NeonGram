@@ -2,8 +2,11 @@ import React, {useContext} from "react";
 import UserIcon from "../Icons/UserIcon";
 import PencilIcon from "../Icons/PencilIcon";
 import {AuthContext} from "../contextProviders/authContext";
+import { useHistory } from "react-router-dom";
 
 const ProfileDetails = ({userDetails}) => {
+
+    const history = useHistory();
 
     const { auth } = useContext(AuthContext);
 
@@ -22,7 +25,7 @@ const ProfileDetails = ({userDetails}) => {
                         <h2 className="text-gray-200">{userDetails.fname} {userDetails.lname}</h2>
                         <h2 className="text-gray-200 text-sm">{userDetails.email}</h2>
                         {userDetails.username === auth.username && (
-                            <button className=" bg-neon-purple px-3 py-2 text-sm rounded-full text-white my-2 hover:bg-purple-900 transition duration-150 ease-in-out">Edit Profile<PencilIcon className="h-5 ml-1 inline relative bottom-0.5"/></button>
+                            <button className=" bg-neon-purple px-3 py-2 text-sm rounded-full text-white my-2 hover:bg-purple-900 transition duration-150 ease-in-out" onClick={() => history.push("/settings")}>Edit Profile<PencilIcon className="h-5 ml-1 inline relative bottom-0.5"/></button>
                         )}
                     </div>
                     

@@ -23,13 +23,10 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
         required: [true,"password is required"]
     },
-    // confirmPassword: {
-    //     type: String,
-    //     required: [true,"password confirmation required"],
-    //     validate: [function(pw) {
-    //         return this.password === pw
-    //     },"not matching passwords"]
-    // }
+    bio: {
+        type: String,
+        default: ""
+    }
 });
 
 const refreshTokenSchema = new mongoose.Schema({

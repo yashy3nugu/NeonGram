@@ -144,7 +144,7 @@ router.get("/details/:username", authenticateToken, (req,res,next) => {
 
 
     User.findOne({username: username})
-    .select("username fname lname email")
+    .select("username fname lname email bio")
     .exec((err, foundUser) => {
             if(foundUser) {
 
