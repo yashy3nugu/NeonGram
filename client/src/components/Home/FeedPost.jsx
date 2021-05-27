@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import {AuthContext} from "../contextProviders/authContext";
 import UserIcon from "../Icons/UserIcon";
@@ -6,7 +6,6 @@ import ThumbDownIconFilled from "../Icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../Icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../Icons/ThumbDownIcon";
 import ThumbUpIcon from "../Icons/ThumbUpIcon";
-import CommentIcon from "../Icons/CommentIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
 import DotsHorizontalIcon from "../Icons/DotsHorizontalIcon";
 import PostCommentSection from "./PostCommentSection"

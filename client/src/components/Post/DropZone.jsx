@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import CrossIcon from "../Icons/CrossIcon"
-import axios from 'axios';
 import PlusIcon from "../Icons/PlusIcon";
 
 const DropZone = (props) => {
 
-    const [files, setFiles] = useState([]);
 
     const { getRootProps, getInputProps } = useDropzone({
 

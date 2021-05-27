@@ -17,7 +17,7 @@ const PostCommentSection = ({ post }) => {
             }
         }).then(res => setComments(res.data));
 
-    }, [])
+    }, [post])
 
     return (
         <>

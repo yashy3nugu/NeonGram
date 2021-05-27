@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import CrossIcon from '../Icons/CrossIcon';
-import UserIcon from "../Icons/UserIcon";
 import ModalActions from "./ModalActions";
 import ModalComments from "./ModalComments";
-import { AuthContext } from "../contextProviders/authContext";
 import axios from "axios";
 
 export default function PostModal({ post, onClose }) {
