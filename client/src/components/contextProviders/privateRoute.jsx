@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import axios from "axios";
 import {AuthContext} from "./authContext";
 import LoginPage from "../Login/LoginPage";
+import Header from "../header/header";
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -34,7 +35,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       !auth ? (
         <LoginPage/>
       ) : (
+        <>
+        <Header />
         <Component {...props} />
+        </>
       )
     }
     />

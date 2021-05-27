@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Header from "../header/header";
 import ProfileDetails from "./ProfileDetails";
 import PostGallery from "./PostGallery";
 
@@ -32,7 +31,6 @@ const UserPage = () => {
 
     return (
         <>
-        <Header />
         <ProfileDetails userDetails={userDetails}/>
         <PostGallery posts={posts} />
         </>
