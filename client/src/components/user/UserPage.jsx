@@ -20,7 +20,7 @@ const UserPage = () => {
             }
         }).then(res => setPosts(res.data));
 
-        axios.get(`api/details/${user}`, {
+        axios.get(`/api/details/${user}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
