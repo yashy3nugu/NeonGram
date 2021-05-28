@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const { authenticateToken } = require("../utils/jwt");
 const { Post } = require("../models/postModel");
 const { User } = require("../models/userModel");
+const streamifier = require('streamifier');
+const { cloudinary } = require('../utils/cloudinary');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,7 +28,7 @@ const imageFilter = (req, file, cb) => {
 //new Date().toISOString().replace(/:/g, '-') required because windows OS does not accept path with ':'
 
 const upload = multer({
-    storage: storage, limits: {
+    limits: {
         fileSize: 1024 * 1024 * 100
     }
 });
@@ -36,26 +38,61 @@ const router = express.Router();
 router.post("/createPost", authenticateToken, upload.single('postImage'), (req, res, next) => {
 
 
-    User.findOne({ _id: req.user._id }, (err, foundUser) => {
-        if (err) {
-            console.log(err);
+    User.findById(req.user._id, (err, foundUser) => {
+        if(err) {
             res.sendStatus(500);
             next();
         }
 
-        if (foundUser) {
-            Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
+        const upload_stream = cloudinary.uploader.upload_stream(
+            {
+                folder: `posts/${req.user._id}`,
+                unique_filename: true
+            },
+            (err, result) => {
                 if (err) {
-                    console.log(err);
                     res.sendStatus(500);
                     next();
-                } else {
-                    res.sendStatus(201);
-                    next();
                 }
-            })
-        }
+
+                Post.create({ text: req.body.text, postImage: result.url, postImageId: result.public_id, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
+                            if (err) {
+                                console.log(err);
+                                res.sendStatus(500);
+                                next();
+                            } else {
+                                res.sendStatus(201);
+                                next();
+                            }
+                        })
+            }
+        )
+
+        streamifier.createReadStream(req.file.buffer).pipe(upload_stream);
+
     })
+
+
+    // User.findOne({ _id: req.user._id }, (err, foundUser) => {
+    //     if (err) {
+    //         console.log(err);
+    //         res.sendStatus(500);
+    //         next();
+    //     }
+
+    //     if (foundUser) {
+    //         Post.create({ text: req.body.text, postImage: req.file.path, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
+    //             if (err) {
+    //                 console.log(err);
+    //                 res.sendStatus(500);
+    //                 next();
+    //             } else {
+    //                 res.sendStatus(201);
+    //                 next();
+    //             }
+    //         })
+    //     }
+    // })
 
 
 

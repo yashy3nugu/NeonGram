@@ -32,7 +32,7 @@ export default function PostModal({ post, onClose }) {
 
             <div className="post-modal__post overflow-hidden w-4/5 h-4/6 bg-gray-900 flex">
                 <div className="w-2/3 bg-black">
-                    <img src={`../${post.postImage}`} alt={post.text} className="mx-auto h-full" />
+                    <img src={post.postImage} alt={post.text} className="mx-auto h-full" />
                 </div>
                 
                 <div className="w-1/3 px-3 py-2 flex flex-col border-2 border-neon-purple">
