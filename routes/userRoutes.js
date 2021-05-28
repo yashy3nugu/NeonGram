@@ -206,6 +206,7 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
         .toBuffer()
         .then(data => {
 
+            //upload to cloudinary
             const upload_stream = cloudinary.uploader.upload_stream(
                 {
                     folder: 'profilePictures',
@@ -216,16 +217,38 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
                         next();
                     }
 
-                    User.updateOne({ _id: req.user }, { profilePicture: result.url }, (err) => {
-                        if (err) {
-                            console.log(err)
+                    //Find user
+                    User.findById(req.user, (err,foundUser) => {
+
+                        if(err) {
                             res.sendStatus(500);
                             next();
-                        } else {
-                            res.sendStatus(200);
-                            next();
                         }
+
+                        const publicId = foundUser.profilePictureId;
+                        // Delete the previous profile picture
+                        cloudinary.api.delete_resources([publicId], (err,response) => {
+                            if(err) {
+                                res.sendStatus(500);
+                                next();
+                            }
+                            // add the new URL to database
+                            User.updateOne({ _id: req.user }, { profilePicture: result.url, profilePictureId: result.public_id }, (err) => {
+                                if (err) {
+                                    console.log(err)
+                                    res.sendStatus(500);
+                                    next();
+                                } else {
+                                    res.sendStatus(200);
+                                    next();
+                                }
+                            })
+
+                        })
+                        
                     })
+
+                    
                 }
 
             )
