@@ -4,6 +4,7 @@ const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const sharp = require('sharp');
+const { cloudinary } = require('../utils/cloudinary');
 const {generateAccessToken, generateRefreshToken, authenticateToken} = require("../utils/jwt");
 
 const router = express.Router();
@@ -188,7 +189,6 @@ const upload = multer({
 router.post("/addProfilePic", authenticateToken, upload.single('profilePicture'), (req,res,next) => {
     
 
-    const imageSettings = JSON.parse(req.body.imageSettings);
 
     const {x,y,width,height} = JSON.parse(req.body.imageSettings);
 
@@ -204,15 +204,27 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
     })
     .toFile(filename)
     .then(info => {
-        User.updateOne({_id:req.user},{profilePicture: filename}, (err) => {
-            if (err) {
-                console.log(err)
+
+        cloudinary.uploader.upload(filename,{
+            folder: 'profilePictures',
+            unique_filename:true
+        },(err,result) => {
+            if(err){
                 res.sendStatus(500);
                 next();
-            } else {
-                res.sendStatus(200);
-                next();
             }
+
+            User.updateOne({_id:req.user},{profilePicture: result.url}, (err) => {
+                if (err) {
+                    console.log(err)
+                    res.sendStatus(500);
+                    next();
+                } else {
+                    res.sendStatus(200);
+                    next();
+                }
+            })
+
         })
     })
     .catch(err => console.log(err));

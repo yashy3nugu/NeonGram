@@ -76,7 +76,7 @@ const ProfileSettings = () => {
 
                         {userDetails && userDetails.profilePicture ? (
                             <div className="rounded-full w-64 overflow-hidden border border-gray-700 mx-auto">
-                                <img className="" src={`../${userDetails.profilePicture}`} alt={`${userDetails.username}'s profile`} />
+                                <img className="" src={userDetails.profilePicture} alt={`${userDetails.username}'s profile`} />
                             </div>
                             
                         ) :
