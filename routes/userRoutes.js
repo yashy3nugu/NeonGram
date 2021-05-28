@@ -4,16 +4,17 @@ const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const sharp = require('sharp');
+const streamifier = require('streamifier');
 const { cloudinary } = require('../utils/cloudinary');
-const {generateAccessToken, generateRefreshToken, authenticateToken} = require("../utils/jwt");
+const { generateAccessToken, generateRefreshToken, authenticateToken } = require("../utils/jwt");
 
 const router = express.Router();
 
-const {User,RefreshToken} = require("../models/userModel");
+const { User, RefreshToken } = require("../models/userModel");
 
 router.post("/register", (req, res, next) => {
 
-    
+
 
 
     const { email, fname, lname, username, password } = req.body;
@@ -27,7 +28,7 @@ router.post("/register", (req, res, next) => {
             res.status(400).send("User exists");
         } else {
 
-            User.create({email, fname, lname, username, hashedPassword}, (err) => {
+            User.create({ email, fname, lname, username, hashedPassword }, (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -44,20 +45,20 @@ router.post("/register", (req, res, next) => {
 
 });
 
-router.post("/login", (req,res,next) => {
+router.post("/login", (req, res, next) => {
 
-    const {username,password} = req.body;
+    const { username, password } = req.body;
 
-    User.findOne({username: username}, (err,foundUser) => {
-        
-        if(foundUser){
+    User.findOne({ username: username }, (err, foundUser) => {
 
-            if(bcrypt.compareSync(password,foundUser.hashedPassword)){
+        if (foundUser) {
 
-                const accessToken = generateAccessToken({_id: foundUser._id});
-                const refreshToken = generateRefreshToken({_id: foundUser._id });
+            if (bcrypt.compareSync(password, foundUser.hashedPassword)) {
 
-                RefreshToken.create({token: refreshToken});
+                const accessToken = generateAccessToken({ _id: foundUser._id });
+                const refreshToken = generateRefreshToken({ _id: foundUser._id });
+
+                RefreshToken.create({ token: refreshToken });
 
 
                 res.send({
@@ -71,7 +72,7 @@ router.post("/login", (req,res,next) => {
                 res.sendStatus(400);
             }
         }
-        else if(err){
+        else if (err) {
             console.log(err);
 
             res.sendStatus(500);
@@ -84,34 +85,34 @@ router.post("/login", (req,res,next) => {
         }
     })
 
-    
+
 
 });
 
-router.post("/token", (req,res,next) => {
+router.post("/token", (req, res, next) => {
     const refreshToken = req.body.refreshToken;
 
-    if(refreshToken == null){
+    if (refreshToken == null) {
         res.status(401).send("Refresh token required");
     }
-    
-    refreshTokenDoc.findOne({token: refreshToken}, (err,foundToken) => {
-        if(err){
+
+    refreshTokenDoc.findOne({ token: refreshToken }, (err, foundToken) => {
+        if (err) {
             console.log(err);
             res.status(500).send("Internal server error");
             next();
         }
 
-        if(foundToken){
-            
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) => {
-                if(err){
+        if (foundToken) {
+
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                if (err) {
                     console.log(err);
                     res.status(403).send("Invalid refresh token");
                     next();
                 }
 
-                const accessToken = generateAccessToken({name: user.name});
+                const accessToken = generateAccessToken({ name: user.name });
 
                 res.send(accessToken);
                 next();
@@ -121,41 +122,41 @@ router.post("/token", (req,res,next) => {
 
 });
 
-router.post("/verify", authenticateToken, (req,res,next) => {
+router.post("/verify", authenticateToken, (req, res, next) => {
 
-    User.findOne({_id:req.user._id}, (err,foundUser) => {
+    User.findOne({ _id: req.user._id }, (err, foundUser) => {
 
-        if(err){
+        if (err) {
             res.sendStatus(500);
         }
 
         else {
-            const {_id,email,fname,lname,username} = foundUser;
+            const { _id, email, fname, lname, username } = foundUser;
 
-            res.send({_id,email,fname,lname,username});
+            res.send({ _id, email, fname, lname, username });
             next();
         }
-        
+
     })
-    
+
 })
 
 // get details of user from username
-router.get("/details/:username", authenticateToken, (req,res,next) => {
-    
+router.get("/details/:username", authenticateToken, (req, res, next) => {
+
     const { username } = req.params;
 
 
-    User.findOne({username: username})
-    .select("username fname lname email bio profilePicture")
-    .exec((err, foundUser) => {
-            if(foundUser) {
+    User.findOne({ username: username })
+        .select("username fname lname email bio profilePicture")
+        .exec((err, foundUser) => {
+            if (foundUser) {
 
                 res.send(foundUser);
                 next();
 
             }
-            else if(err) {
+            else if (err) {
                 res.sendStatus(500);
                 next();
             }
@@ -163,7 +164,7 @@ router.get("/details/:username", authenticateToken, (req,res,next) => {
                 res.sendStatus(400);
                 next();
             }
-    })
+        })
 
 });
 
@@ -186,48 +187,52 @@ const upload = multer({
 
 // })
 
-router.post("/addProfilePic", authenticateToken, upload.single('profilePicture'), (req,res,next) => {
-    
+router.post("/addProfilePic", authenticateToken, upload.single('profilePicture'), (req, res, next) => {
 
 
-    const {x,y,width,height} = JSON.parse(req.body.imageSettings);
+
+    const { x, y, width, height } = JSON.parse(req.body.imageSettings);
 
     const filename = `uploads/${req.user._id}-profilePicture.jpg`;
 
     sharp(req.file.buffer)
-    .extract({left: x, top: y, width, height})
-    .resize(1000,1000)
-    .toFormat('jpeg')
-    .jpeg({
-      quality: 100,
-      force: true,
-    })
-    .toFile(filename)
-    .then(info => {
-
-        cloudinary.uploader.upload(filename,{
-            folder: 'profilePictures',
-            unique_filename:true
-        },(err,result) => {
-            if(err){
-                res.sendStatus(500);
-                next();
-            }
-
-            User.updateOne({_id:req.user},{profilePicture: result.url}, (err) => {
-                if (err) {
-                    console.log(err)
-                    res.sendStatus(500);
-                    next();
-                } else {
-                    res.sendStatus(200);
-                    next();
-                }
-            })
-
+        .extract({ left: x, top: y, width, height })
+        .resize(1000, 1000)
+        .toFormat('jpeg')
+        .jpeg({
+            quality: 100,
+            force: true,
         })
-    })
-    .catch(err => console.log(err));
+        .toBuffer()
+        .then(data => {
+
+            const upload_stream = cloudinary.uploader.upload_stream(
+                {
+                    folder: 'profilePictures',
+                    unique_filename: true
+                }, (err, result) => {
+                    if (err) {
+                        res.sendStatus(500);
+                        next();
+                    }
+
+                    User.updateOne({ _id: req.user }, { profilePicture: result.url }, (err) => {
+                        if (err) {
+                            console.log(err)
+                            res.sendStatus(500);
+                            next();
+                        } else {
+                            res.sendStatus(200);
+                            next();
+                        }
+                    })
+                }
+
+            )
+
+            streamifier.createReadStream(data).pipe(upload_stream);
+        })
+        .catch(err => console.log(err));
 
 })
 
