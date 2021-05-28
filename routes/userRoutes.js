@@ -146,7 +146,7 @@ router.get("/details/:username", authenticateToken, (req,res,next) => {
 
 
     User.findOne({username: username})
-    .select("username fname lname email bio")
+    .select("username fname lname email bio profilePicture")
     .exec((err, foundUser) => {
             if(foundUser) {
 
@@ -192,6 +192,7 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
 
     const {x,y,width,height} = JSON.parse(req.body.imageSettings);
 
+    const filename = `uploads/${req.user._id}-profilePicture.jpg`;
 
     sharp(req.file.buffer)
     .extract({left: x, top: y, width, height})
@@ -201,12 +202,21 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
       quality: 100,
       force: true,
     })
-    .toFile('uploads/test.jpg')
-    .then(info => console.log(info))
+    .toFile(filename)
+    .then(info => {
+        User.updateOne({_id:req.user},{profilePicture: filename}, (err) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(500);
+                next();
+            } else {
+                res.sendStatus(200);
+                next();
+            }
+        })
+    })
     .catch(err => console.log(err));
 
-    res.send("success")
-    next();
 })
 
 module.exports = router;

@@ -17,8 +17,6 @@ const UploadModal = ({onClose}) => {
 
     const saveProfilePicture = (e) => {
         if(croppedImage) {
-            console.log(imageFile);
-            console.log(imageURL);
             const fd = new FormData();
             const imageSettings = JSON.stringify(croppedImage.getData({ rounded: true }))
             fd.append('profilePicture',imageFile);
