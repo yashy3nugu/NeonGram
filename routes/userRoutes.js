@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const sharp = require('sharp');
 const {generateAccessToken, generateRefreshToken, authenticateToken} = require("../utils/jwt");
 
 const router = express.Router();
@@ -162,6 +164,49 @@ router.get("/details/:username", authenticateToken, (req,res,next) => {
             }
     })
 
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./uploads/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + req.user.name + '-' + file.originalname);
+    }
+})
+
+const upload = multer({
+    limits: {
+        fileSize: 1024 * 1024 * 100
+    }
+})
+
+// router.post("/addProfilePic/:username", authenticateToken, upload.single('profilePicture'), (req,res,next) => {
+
+// })
+
+router.post("/addProfilePic", authenticateToken, upload.single('profilePicture'), (req,res,next) => {
+    
+
+    const imageSettings = JSON.parse(req.body.imageSettings);
+
+    const {x,y,width,height} = JSON.parse(req.body.imageSettings);
+
+
+    sharp(req.file.buffer)
+    .extract({left: x, top: y, width, height})
+    .resize(1000,1000)
+    .toFormat('jpeg')
+    .jpeg({
+      quality: 100,
+      force: true,
+    })
+    .toFile('uploads/test.jpg')
+    .then(info => console.log(info))
+    .catch(err => console.log(err));
+
+    res.send("success")
+    next();
 })
 
 module.exports = router;

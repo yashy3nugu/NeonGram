@@ -2,20 +2,31 @@ import React, { useState } from 'react';
 import CrossIcon from "../Icons/CrossIcon";
 import Cropper from "react-cropper";
 import { createPortal } from 'react-dom';
+import axios from "axios";
 import "cropperjs/dist/cropper.css";
 
 const UploadModal = ({onClose}) => {
 
     const [imageURL, setImageURL] = useState(null);
 
-    const [image, setImage] = useState(null);
-
     const [croppedImage, setCroppedImage] = useState(null);
 
-    const getCropped = () => {
-        if(image) {
-            image.getCroppedCanvas().toBlob((blob) => {
-                setCroppedImage(URL.createObjectURL(blob));
+    const [imageFile, setImageFile] = useState(null);
+
+    
+
+    const saveProfilePicture = (e) => {
+        if(croppedImage) {
+            console.log(imageFile);
+            console.log(imageURL);
+            const fd = new FormData();
+            const imageSettings = JSON.stringify(croppedImage.getData({ rounded: true }))
+            fd.append('profilePicture',imageFile);
+            fd.append('imageSettings',imageSettings);
+            axios.post("/api/addProfilePic", fd, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
             })
         }
     }
@@ -30,17 +41,20 @@ const UploadModal = ({onClose}) => {
                 background={false}
                 aspectRatio={1}
                 viewMode={1}
-                onInitialized={instance => setImage(instance)}
+                onInitialized={instance => setCroppedImage(instance)}
                 responsive={true}
                 >
                 
                 </Cropper>): (
                     <input
                         type="file"
-                        onChange = {(e) => setImageURL(URL.createObjectURL(e.target.files[0]))}
+                        onChange = {(e) => {
+                            setImageURL(URL.createObjectURL(e.target.files[0]));
+                            setImageFile(e.target.files[0]);
+                            }}
                      />
                 )}
-                <button onClick={getCropped} className="text-white">Save</button>
+                <button onClick={saveProfilePicture} className="text-white">Save</button>
             </div>
         </div>
     ,document.getElementById('modal'))
