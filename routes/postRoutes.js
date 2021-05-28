@@ -110,17 +110,32 @@ router.get("/", authenticateToken, (req, res, next) => {
         filter = {'time': {'$lt': new Date(lastTime)}}
     }
 
-    Post.find(filter, (err, foundPosts) => {
-        if (err) {
-            res.sendStatus(400);
+    // Post.find(filter, (err, foundPosts) => {
+    //     if (err) {
+    //         res.sendStatus(400);
+    //         next();
+    //     }
+
+    //     res.send(foundPosts);
+    //     next();
+    // })
+    // .sort({time: -1})
+    // .limit(2);
+
+    Post.find(filter)
+    .populate({path:'user',select: ['fname','lname','username','profilePicture']})
+    .sort({time: -1})
+    .limit(2)
+    .exec((err,foundPosts) => {
+        if(err) {
+            res.sendStatus(500);
             next();
         }
 
-        res.send(foundPosts);
-        next();
+        res.send(foundPosts)
+
+
     })
-    .sort({time: -1})
-    .limit(2);
 })
 
 // Add a like to a post

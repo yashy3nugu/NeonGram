@@ -17,7 +17,14 @@ const ProfileDetails = ({userDetails}) => {
             <>
                 <div className="my-5">
                     
-                        <UserIcon className="w-32 text-gray-500 bg-black border-2 border-neon-purple rounded-full mx-auto"/>
+                    <div className="w-44 rounded-full mx-auto overflow-hidden">
+                        {userDetails.profilePicture ? (
+                            <img src={userDetails.profilePicture} alt={userDetails.username} />
+                            ) : (
+                                <UserIcon className=""/>
+                            ) }
+                    </div>
+                        
         
 
                     <div className="align-middle">

@@ -8,6 +8,7 @@ import ThumbDownIcon from "../Icons/ThumbDownIcon";
 import ThumbUpIcon from "../Icons/ThumbUpIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
 import DotsHorizontalIcon from "../Icons/DotsHorizontalIcon";
+import ProfilePicIcon from "../Icons/ProfilePicIcon";
 import PostCommentSection from "./PostCommentSection"
 
 const FeedPost = ({ post }) => {
@@ -123,7 +124,9 @@ const FeedPost = ({ post }) => {
         <div className="post rounded-xl mx-auto w-1/2 bg-gray-900 my-20 px-3 border-2 border-neon-purple">
             <div className="text-left text-sm px-0 py-4 flex justify-between">
                 <div>
-                    <UserIcon className="w-8 mr-2 inline text-gray-400" /><a href={`/user/${post.username}`} className="text-white">{post.username}</a>
+                    {/* <UserIcon className="w-8 mr-2 inline text-gray-400" /> */}
+                    <ProfilePicIcon size={8} username={post.username} />
+                    <a href={`/user/${post.username}`} className="text-white">{post.username}</a>
                 </div>
                 <div>
                     <button className="w-6 inline text-right text-white relative py-1"><DotsHorizontalIcon/></button>
