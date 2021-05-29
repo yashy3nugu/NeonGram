@@ -16,7 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get("/api/posts", {
+        axios.get("/api/posts/fromFollowing", {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
@@ -46,7 +46,7 @@ const Home = () => {
         }
         setLoading(true);
         const lastTime = posts[posts.length - 1].time;
-        axios.get("/api/posts", {
+        axios.get("/api/posts/fromFollowing", {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             },

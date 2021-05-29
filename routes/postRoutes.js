@@ -130,9 +130,20 @@ router.get("/", authenticateToken, (req, res, next) => {
 
 router.get("/fromFollowing", authenticateToken, async (req,res, next) => {
     const {following} = await User.findById(req.user._id).select('following');
+    const {lastTime} = req.query;
 
 
-    const posts = await Post.find({user: {$in: [...following,req.user._id]}});
+    let filter = {user: {$in: [...following,req.user._id]}}
+
+    if(lastTime) {
+        filter = {user: {$in: [...following,req.user._id]}, time: { $lt: new Date(lastTime)}}
+    }
+
+
+    const posts = await Post.find(filter)
+    .populate({path:'user',select: ['fname','lname','username','profilePicture']})
+    .sort({time: -1})
+    .limit(2);
 
     res.send(posts);
     next();
