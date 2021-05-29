@@ -11,6 +11,7 @@ const { generateAccessToken, generateRefreshToken, authenticateToken } = require
 const router = express.Router();
 
 const { User, RefreshToken } = require("../models/userModel");
+const mongoose = require("mongoose");
 
 router.post("/register", (req, res, next) => {
 
@@ -255,6 +256,80 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
         })
         .catch(err => console.log(err));
 
+})
+
+// add partial searching
+router.get("/search",authenticateToken, (req,res,next) => {
+
+    const {username} = req.query;
+    console.log(req.query)
+
+    console.log("called")
+
+    User.find({$text: {$search: username}})
+    .select('-hashedPassword -profilePictureId')
+    .exec((err,foundUsers) => {
+
+        if(err) {
+            res.sendStatus(500);
+            console.log(err);
+            next();
+        }
+
+        res.send(foundUsers);
+        next();
+    })
+
+})
+
+router.patch("/follow/:followingUserId",authenticateToken, async (req,res,next) => {
+    const { followingUserId } = req.params;
+
+    const followerId = req.user._id;
+
+    const session = await mongoose.startSession();
+
+    try {
+
+        session.startTransaction();
+
+        const follower = await User.findByIdAndUpdate(followerId,{
+            $addToSet: {
+                following: mongoose.Types.ObjectId(followingUserId)
+            }
+        },{
+            session
+        });
+
+        const followingUser = await User.findByIdAndUpdate(followingUserId, {
+            $addToSet: {
+                follower: mongoose.Types.ObjectId(followerId)
+            }
+        },
+        {
+            session
+        });
+
+        await session.commitTransaction();
+        session.endSession();
+
+        res.status(200).send({follower,followingUser})
+        next();
+
+
+    }
+
+    catch (err) {
+        await session.abortTransaction();
+        session.endSession();
+
+        res.sendStatus(500);
+        next();
+
+    }
+
+    
+    
 })
 
 module.exports = router;

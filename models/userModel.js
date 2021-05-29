@@ -34,8 +34,13 @@ const userSchema = new mongoose.Schema({
     profilePictureId: {
         type: String,
         default: ""
-    }
+    },
+    followers: [{type: mongoose.Types.ObjectId, ref: 'User'}],
+
+    following: [{type: mongoose.Types.ObjectId, ref: 'User'}]
 });
+
+userSchema.index({username: 'text'});
 
 const refreshTokenSchema = new mongoose.Schema({
     token: {

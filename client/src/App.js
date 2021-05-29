@@ -6,6 +6,7 @@ import PrivateRoute from "./components/contextProviders/privateRoute";
 import CreatePost from "./components/Post/CreatePost";
 import UserPage from "./components/UserPage/UserPage";
 import Settings from "./components/Settings/Settings";
+import FindFollowers from "./components/Followers/FindFollowers";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <PrivateRoute exact path="/post" component={CreatePost} />
           <PrivateRoute exact path="/user/:user" component={UserPage} />
           <PrivateRoute exact path="/settings" component={Settings} />
+          <PrivateRoute exact path="/find" component={FindFollowers} />
           <Route exact path = "/signup">
             <SignUpPage />
           </Route>
