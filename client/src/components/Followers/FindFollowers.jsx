@@ -6,6 +6,14 @@ const FindFollowers = () => {
 
     const [searchResults, setSearchResults] = useState([]);
 
+    const followUser = (followingId) => {
+        axios.patch(`/api/follow/${followingId}`,{},{
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        })
+    }
+
     return (
         <div className="container bg-gray-900 mx-auto">
             <Formik
@@ -52,7 +60,7 @@ const FindFollowers = () => {
                                     <div key={idx} className="bg-gray-800">
                                         <img src={user.profilePicture} alt={user.username} className="w-8 rounded-full"/>
                                         <h1 className="text-white">{user.username}</h1>
-                                        <button className="bg-neon-green">Follow</button>
+                                        <button onClick={() => followUser(user._id)} className="bg-neon-green">Follow</button>
                                     </div>
                                 )
                             )}

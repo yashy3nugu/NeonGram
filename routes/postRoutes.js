@@ -128,6 +128,16 @@ router.get("/", authenticateToken, (req, res, next) => {
     })
 })
 
+router.get("/fromFollowing", authenticateToken, async (req,res, next) => {
+    const {following} = await User.findById(req.user._id).select('following');
+
+
+    const posts = await Post.find({user: {$in: [...following,req.user._id]}});
+
+    res.send(posts);
+    next();
+})
+
 // Add a like to a post
 router.post("/:postId/like", authenticateToken, (req, res, next) => {
     const { postId } = req.params;

@@ -127,16 +127,16 @@ router.post("/verify", authenticateToken, (req, res, next) => {
 
 
     User.findById(req.user._id)
-    .select("username fname lname email bio profilePicture")
-    .exec((err,foundUser) => {
-        if(err) {
-            res.sendStatus(500);
-            next();
-        }
+        .select("username fname lname email bio profilePicture")
+        .exec((err, foundUser) => {
+            if (err) {
+                res.sendStatus(500);
+                next();
+            }
 
-        res.send(foundUser);
-        next();
-    })
+            res.send(foundUser);
+            next();
+        })
 
 })
 
@@ -217,17 +217,17 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
                     }
 
                     //Find user
-                    User.findById(req.user, (err,foundUser) => {
+                    User.findById(req.user, (err, foundUser) => {
 
-                        if(err) {
+                        if (err) {
                             res.sendStatus(500);
                             next();
                         }
 
                         const publicId = foundUser.profilePictureId;
                         // Delete the previous profile picture
-                        cloudinary.api.delete_resources([publicId], (err,response) => {
-                            if(err) {
+                        cloudinary.api.delete_resources([publicId], (err, response) => {
+                            if (err) {
                                 res.sendStatus(500);
                                 next();
                             }
@@ -244,10 +244,10 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
                             })
 
                         })
-                        
+
                     })
 
-                    
+
                 }
 
             )
@@ -259,77 +259,108 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
 })
 
 // add partial searching
-router.get("/search",authenticateToken, (req,res,next) => {
+router.get("/search", authenticateToken, (req, res, next) => {
 
-    const {username} = req.query;
+    const { username } = req.query;
     console.log(req.query)
 
     console.log("called")
 
-    User.find({$text: {$search: username}})
-    .select('-hashedPassword -profilePictureId')
-    .exec((err,foundUsers) => {
+    User.find({ $text: { $search: username } })
+        .select('-hashedPassword -profilePictureId')
+        .exec((err, foundUsers) => {
 
-        if(err) {
-            res.sendStatus(500);
-            console.log(err);
+            if (err) {
+                res.sendStatus(500);
+                console.log(err);
+                next();
+            }
+
+            res.send(foundUsers);
             next();
-        }
-
-        res.send(foundUsers);
-        next();
-    })
+        })
 
 })
 
-router.patch("/follow/:followingUserId",authenticateToken, async (req,res,next) => {
+router.patch("/follow/:followingUserId", authenticateToken, async (req, res, next) => {
     const { followingUserId } = req.params;
 
     const followerId = req.user._id;
 
-    const session = await mongoose.startSession();
+    User.findByIdAndUpdate(followerId, {
+        $addToSet: {
+            following: mongoose.Types.ObjectId(followingUserId)
+        }
+    }, (err) => {
 
-    try {
-
-        session.startTransaction();
-
-        const follower = await User.findByIdAndUpdate(followerId,{
+        console.log("updated follower")
+        if (err) {
+            res.sendStatus(500);
+            next();
+        }
+        User.findByIdAndUpdate(followingUserId, {
             $addToSet: {
-                following: mongoose.Types.ObjectId(followingUserId)
+                followers: mongoose.Types.ObjectId(followerId)
             }
-        },{
-            session
-        });
-
-        const followingUser = await User.findByIdAndUpdate(followingUserId, {
-            $addToSet: {
-                follower: mongoose.Types.ObjectId(followerId)
+        }, (err) => {
+            if (err) {
+                res.sendStatus(500);
+                next();
             }
-        },
-        {
-            session
-        });
 
-        await session.commitTransaction();
-        session.endSession();
+            console.log("updated follwing")
 
-        res.status(200).send({follower,followingUser})
-        next();
+            res.sendStatus(200);
+            next();
+        })
+    })
+
+    // const session = await mongoose.startSession();
+
+    // console.log("in")
+
+    // try {
+
+    //     session.startTransaction();
+
+    //     const follower = await User.findByIdAndUpdate(followerId,{
+    //         $addToSet: {
+    //             following: mongoose.Types.ObjectId(followingUserId)
+    //         }
+    //     },{
+    //         session
+    //     });
+
+    //     const followingUser = await User.findByIdAndUpdate(followingUserId, {
+    //         $addToSet: {
+    //             follower: mongoose.Types.ObjectId(followerId)
+    //         }
+    //     },
+    //     {
+    //         session
+    //     });
+
+    //     await session.commitTransaction();
+    //     session.endSession();
+
+    //     res.status(200).send({follower,followingUser})
+    //     next();
 
 
-    }
+    // }
 
-    catch (err) {
-        await session.abortTransaction();
-        session.endSession();
+    // catch (err) {
+    //     console.log(err);
+    //     await session.abortTransaction();
+    //     session.endSession();
 
-        res.sendStatus(500);
-        next();
+    //     res.sendStatus(500);
+    //     next();
 
-    }
+    // }
 
-    
-    
+
+
 })
 
 module.exports = router;
