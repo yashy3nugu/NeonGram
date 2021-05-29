@@ -134,7 +134,7 @@ const FeedPost = ({ post }) => {
                     <a href={`/user/${post.username}`} className="text-white">{post.username}</a>
                 </div>
                 <div>
-                    <button className="w-6 inline text-right text-white relative py-1"><DotsHorizontalIcon/></button>
+                    {/* <button className="w-6 inline text-right text-white relative py-1"><DotsHorizontalIcon/></button> */}
                 </div>
                 
             </div>
@@ -157,7 +157,7 @@ const FeedPost = ({ post }) => {
                 </div>
 
                 <div>
-                <button className="text-white"><BookMarkIcon className="h-7 w-7 text-white"/></button>
+                {/* <button className="text-white"><BookMarkIcon className="h-7 w-7 text-white"/></button> */}
                     
                 </div>
                 

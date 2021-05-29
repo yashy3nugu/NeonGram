@@ -282,5 +282,25 @@ router.get("/user/:username", authenticateToken, (req,res,next) => {
     })
 })
 
+router.patch("/save/:postId",authenticateToken, async (req,res,next) => {
+
+    const {postId} = req.params;
+
+    const user = await User.findById(req.user._id);
+
+
+    
+    if(user) {
+        console.log(user);
+
+        Post.findByIdAndUpdate(postId,{$addToSet: {saved: mongoose.Types.ObjectId(postId)}})
+    }
+    else {
+        res.sendStatus(401);
+        next();
+    }
+
+})
+
 
 module.exports = router;
