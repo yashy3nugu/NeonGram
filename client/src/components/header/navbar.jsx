@@ -4,6 +4,8 @@ import CrossIcon from "../Icons/CrossIcon";
 import HomeIcon from "../Icons/HomeIcon";
 import PlusIcon from "../Icons/PlusIcon";
 import PlusIconSolid from "../Icons/PlusIconSolid";
+import GlobeIcon from "../Icons/GlobeIcon";
+import GlobeIconSolid from "../Icons/GlobeIconSolid";
 import { useLocation } from "react-router-dom";
 import HomeIconSolid from "../Icons/HomeIconSolid";
 import { AuthContext } from "../contextProviders/authContext";
@@ -29,6 +31,7 @@ const Navbar = () => {
                     <span className="menuIcon" onClick={toggleNavExpanded}><MenuIcon/></span>
                     <li className="mx-6 "><a href="/">{pathname === "/" ? <HomeIconSolid className="w-8 text-neon-purple"/> : <HomeIcon className="w-8 text-gray-300" />}</a></li>
                     <li className="mx-6"><a href="/post" className="">{pathname === "/post"?<PlusIconSolid className="w-8 text-neon-purple" />:<PlusIcon className="w-8 text-gray-300" />}</a></li>
+                    <li className="mx-6"><a href="/explore">{pathname === "/explore"? <GlobeIconSolid className="w-8 text-neon-purple" />: <GlobeIcon className="w-8 text-gray-300"/>}</a></li>
                     <button className="mx-6 "><img src={auth.profilePicture} className="w-8 rounded-full" alt={auth.username}/></button>
                     
                 </ul>
