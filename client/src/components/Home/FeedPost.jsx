@@ -125,7 +125,12 @@ const FeedPost = ({ post }) => {
             <div className="text-left text-sm px-0 py-4 flex justify-between">
                 <div>
                     {/* <UserIcon className="w-8 mr-2 inline text-gray-400" /> */}
-                    <ProfilePicIcon size={8} username={post.username} />
+                    {post.user.profilePicture ? (
+                        <a href={`/user/${post.user.username}`} className="mr-4">
+                            <img className="w-8 inline rounded-full" src={post.user.profilePicture} alt={post.user.username}/>
+                        </a>
+                    ) : <UserIcon className="w-8 mr-4 inline text-gray-400" />}
+                    {/* <ProfilePicIcon size={8} username={post.username} /> */}
                     <a href={`/user/${post.username}`} className="text-white">{post.username}</a>
                 </div>
                 <div>

@@ -110,17 +110,6 @@ router.get("/", authenticateToken, (req, res, next) => {
         filter = {'time': {'$lt': new Date(lastTime)}}
     }
 
-    // Post.find(filter, (err, foundPosts) => {
-    //     if (err) {
-    //         res.sendStatus(400);
-    //         next();
-    //     }
-
-    //     res.send(foundPosts);
-    //     next();
-    // })
-    // .sort({time: -1})
-    // .limit(2);
 
     Post.find(filter)
     .populate({path:'user',select: ['fname','lname','username','profilePicture']})
@@ -132,7 +121,8 @@ router.get("/", authenticateToken, (req, res, next) => {
             next();
         }
 
-        res.send(foundPosts)
+        res.send(foundPosts);
+        next();
 
 
     })
@@ -147,6 +137,7 @@ router.post("/:postId/like", authenticateToken, (req, res, next) => {
 
         if (err) {
             res.sendStatus(500);
+            next();
         }
 
 
@@ -180,6 +171,7 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
 
         if (err) {
             res.sendStatus(500);
+            next();
         }
 
 
@@ -242,16 +234,20 @@ router.get("/user/:username", authenticateToken, (req,res,next) => {
 
         if(foundUser){
 
-            Post.find({username: username}, (err, foundPosts) => {
+            Post.find({username})
+            .populate({path:'user',select: ['fname','lname','username','profilePicture']})
+            .exec((err,foundPosts) => {
                 if(err) {
                     res.sendStatus(500);
                     next();
                 }
-                else {
-                    res.send(foundPosts);
-                    next();
-                }
+
+                res.send(foundPosts);
+                next();
+
+
             })
+            
 
         } else if(err) {
 
