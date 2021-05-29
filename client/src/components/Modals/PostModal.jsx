@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import CrossIcon from '../Icons/CrossIcon';
-import ModalActions from "./ModalActions";
-import ModalComments from "./ModalComments";
+import ModalActions from "../UserPage/ModalActions";
+import ModalComments from "../UserPage/ModalComments";
 import axios from "axios";
 
 export default function PostModal({ post, onClose }) {

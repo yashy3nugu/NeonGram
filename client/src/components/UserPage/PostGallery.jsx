@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import PostModal from "./PostModal";
+import PostModal from "../Modals/PostModal";
 
 const PostGallery = ({posts}) => {
 

@@ -114,7 +114,7 @@ router.get("/", authenticateToken, (req, res, next) => {
     Post.find(filter)
     .populate({path:'user',select: ['fname','lname','username','profilePicture']})
     .sort({time: -1})
-    .limit(2)
+    .limit(6)
     .exec((err,foundPosts) => {
         if(err) {
             res.sendStatus(500);
