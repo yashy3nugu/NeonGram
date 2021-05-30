@@ -63,7 +63,7 @@ const Navbar = () => {
 
             </div>
             {navExpanded && (
-                <div className="bg-gray-900 text-center">
+                <div className="bg-gray-900 text-center sidebar">
                     <a href = {`/user/${auth.username}`} className=" block mb-4">
                         <img src={auth.profilePicture} className="w-16 rounded-full mx-auto" alt={auth.username} />
                         <strong className="text-gray-300 font-semibold">{auth.username}</strong>
