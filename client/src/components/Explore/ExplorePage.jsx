@@ -62,8 +62,8 @@ const ExplorePage = () => {
     }
 
     return (
-        <>
-            <div className="grid grid-cols-3 max-w-4xl gap-5 mx-auto my-10">
+        <div className="container px-2 mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-10">
                 {/* <pre className="text-white">{JSON.stringify(explorePosts,null,2)}</pre> */}
                 {explorePosts.map((post, idx) => (
                     <div key={idx}>
@@ -82,7 +82,7 @@ const ExplorePage = () => {
 
             {clickedPost && <PostModal post={clickedPost} onClose={onClose}/>}
             
-        </>
+        </div>
     )
 }
 
