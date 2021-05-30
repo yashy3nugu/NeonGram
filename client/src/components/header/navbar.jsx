@@ -29,7 +29,7 @@ const Navbar = () => {
     return (
         <>
             {/* <div className="navbar  bg-gray-900"> */}
-            <div className="fixed z-10 top-0 flex items-center justify-between w-full py-8 px-3 bg-gray-900">
+            <div className="flex items-center justify-between w-full py-8 px-3 bg-gray-900">
                 {/* <h1 className="logo">Neongram</h1> */}
                 <NeonGramIcon />
                 <nav className="p-1">
