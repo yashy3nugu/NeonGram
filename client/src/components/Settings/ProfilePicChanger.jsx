@@ -23,7 +23,8 @@ const ProfilePicChanger = () => {
 
     return (
         <>
-            <button onClick={() => fileInput.current.click()} className="w-full bg-neon-purple text-white py-2 rounded-lg my-2">Upload Picture</button>
+            <button onClick={() => fileInput.current.click()} className="block w-1/3 lg:w-full bg-neon-purple text-white py-2 rounded-lg my-2 mx-auto">Upload Picture</button>
+            <button className="block w-1/3 lg:w-full bg-neon-red text-white py-2 rounded-lg my-2 mx-auto">Delete Picture</button>
             <input type="file" className="hidden" ref={fileInput} onChange={handleFiles}/>
             {showModal && <UploadModal imageURL={imageURL} imageFile={imageFile} onClose={() => setShowModal(false)}/>}
         </>

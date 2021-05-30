@@ -5,7 +5,7 @@ const Sidebar = ({ changeSetting, selected }) => {
     const settings = ["Profile", "Account"];
 
     return (
-        <div className="w-1/5">
+        <div className="w-full mb-3 lg:w-1/4 lg:mr-3">
             <nav className="rounded border border-gray-600 text-white overflow-hidden divide-y divide-gray-600">
                 {settings.map((setting, idx) => (
                     <div key={idx}>

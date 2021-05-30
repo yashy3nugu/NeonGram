@@ -11,7 +11,7 @@ const Settings = () => {
     const changeSetting = (e) => setSetting(e.target.textContent)
 
     return (
-        <div className="flex flex-row container mx-auto max-w-5xl bg-gray-900 mt-4 p-3">
+        <div className="flex flex-col lg:flex-row container mx-auto bg-gray-900 p-3">
         <Sidebar changeSetting={changeSetting} selected={setting}/>
 
         {setting === "Profile" && <ProfileSettings />}

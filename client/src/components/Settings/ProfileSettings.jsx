@@ -36,7 +36,7 @@ const ProfileSettings = () => {
 
         return (
             <>
-                <div className="flex-grow ml-5">
+                <div className="flex-grow">
                     <h1 className="text-3xl text-gray-300 mb-2">Profile</h1>
                     <hr className="border-t-0.5 border-gray-700" />
                     {userDetails && (
@@ -82,21 +82,21 @@ const ProfileSettings = () => {
 
 
                 </div>
-                <div className="text-center ml-6">
-                    <div>
-                        <div className="relative rounded-full w-64 overflow-hidden border border-gray-700 mx-auto" onClick={() => setPictureDropDown(prev => !prev)}>
-                            {userDetails && userDetails.profilePicture ? (
+                <div className="text-center mt-6 lg:mt-0 lg:ml-5">
 
-                                <img className="" src={userDetails.profilePicture} alt={`${userDetails.username}'s profile`} />
+                    <div className="relative rounded-full w-32 sm:w-44 lg:w-56 overflow-hidden border border-gray-700 mx-auto" onClick={() => setPictureDropDown(prev => !prev)}>
+                        {userDetails && userDetails.profilePicture ? (
+
+                            <img className="" src={userDetails.profilePicture} alt={`${userDetails.username}'s profile`} />
 
 
-                            ) :
-                                (<UserIcon className="w-64" />)
-                            }
-                            
-                        </div>
-                        {true && <ProfilePicChanger />}
+                        ) :
+                            (<UserIcon className="" />)
+                        }
+
                     </div>
+                    {true && <ProfilePicChanger />}
+
 
 
 
