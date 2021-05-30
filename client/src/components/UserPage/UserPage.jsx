@@ -29,12 +29,26 @@ const UserPage = () => {
 
     }, [user])
 
+    const addFollower = (followerID) => {
+
+        const followers = userDetails.followers;
+
+        followers.push(followerID)
+
+        setUserDetails(prev => {
+            return {
+                ...prev,
+                followers: followers
+            }
+        })
+    }
+
 
     return (
         <>
             {(userDetails && posts) ? (
                 <>
-                    <ProfileDetails userDetails={userDetails} posts={posts} />
+                    <ProfileDetails userDetails={userDetails} addFollower={addFollower} posts={posts} />
                     <PostGallery posts={posts} />
                 </>
             ): (
