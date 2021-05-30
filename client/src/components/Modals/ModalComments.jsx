@@ -12,7 +12,7 @@ const ModalComments = ({post, comments }) => {
             )}
             <a href={`/user/${post.username}`} className="text-gray-200 text-base font-normal">{post.username}</a>
         </div> */}
-        <div className="bg-gray-800 flex-grow px-2 py-2 h-40 overflow-scroll rounded-lg">
+        <div className="bg-gray-800 px-2 py-2 h-40 sm:flex-grow sm:mb-2 overflow-scroll rounded-lg">
             <ul className=" text-white">
                 {comments.length ? comments.map((comment,idx) => {
                     return (

@@ -123,28 +123,33 @@ const ModalActions = ({ post, addComment }) => {
                 {post.user.profilePicture ? (
                     <img className="w-8 mr-2 rounded-full inline" src={post.user.profilePicture} alt={post.user.username} />
                 ) : (
-                    <UserIcon className="w-8 mr-2 inline text-gray-400" />
+                    <UserIcon className="w-8 mr-2 inline text-gray-200" />
                 )}
                 <a href={`/user/${post.username}`} className="text-gray-200 text-base font-normal">{post.username}</a>
             </div>
+            <div className="text-gray-400 mt-2 mb-8">
+                <p>{post.text}</p>
+            </div>
             <div className="flex justify-between align-middle mt-2 mb-3">
                 <div className="flex">
-                    <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up" /> : <ThumbUpIcon className="" />}</button>
+                    <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up" /> : <ThumbUpIcon className="" />}</button>
                     <p className="text-neon-blue font-semibold mr-1 relative top-1.5">{numLikes}</p>
 
-                    <button onClick={handleDisliked} className="mx-2 outline-none w-8 text-neon-red relative top-0.5">{disliked ? <ThumbDownIconFilled className="thumb-down" /> : <ThumbDownIcon className="" />}</button>
+                    <button onClick={handleDisliked} className="mx-2 outline-none w-7 sm:w-8 text-neon-red relative top-0.5">{disliked ? <ThumbDownIconFilled className="thumb-down" /> : <ThumbDownIcon className="" />}</button>
                     <span className="text-neon-red font-semibold mr-1 relative top-1.5">{numDislikes}</span>
 
 
                 </div>
 
                 <div>
-                    <button className="text-white"><BookMarkIcon className="h-7 w-7 text-white" /></button>
+                    <button className="text-white"><BookMarkIcon className="w-6 sm:w-7 text-white" /></button>
 
                 </div>
+                
 
 
             </div>
+            
             <Formik
                 initialValues={{
                     comment: ""

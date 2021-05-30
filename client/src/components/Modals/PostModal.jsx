@@ -28,15 +28,15 @@ export default function PostModal({ post, onClose }) {
 
     return createPortal(
         <div className="post-modal z-10 fixed top-0 left-0 right-0 bottom-0">
-            <button className="text-neon-red w-10 fixed right-1 top-1" onClick={onClose}><CrossIcon /></button>
+            <button className="text-neon-red w-10 fixed right-1 top-1 hidden sm:block" onClick={onClose}><CrossIcon /></button>
 
-            <div className="post-modal__post bg-gray-900 flex flex-col w-full h-full overflow-scroll">
-                <div className="relative">
-                    <img src={post.postImage} alt={post.text} className="mx-auto w-full" />
-                    <button className="text-neon-red w-7 absolute right-1 top-1" onClick={onClose}><CrossIcon /></button>
+            <div className="post-modal__post bg-gray-900 flex flex-col w-full h-full overflow-y-scroll sm:flex-row lg:w-4/5 sm:h-4/6 lg:h-5/6 pb-0">
+                <div className="relative sm:w-10/12 md:w-9/12 lg:w-8/12 bg-black">
+                    <img src={post.postImage} alt={post.text} className="mx-auto w-full sm:max-h-full sm:max-w-full sm:w-auto sm:h-auto sm:absolute sm:top-0 sm:bottom-0 sm:left-0 sm:right-0 sm:m-auto" />
+                    <button className="text-neon-red w-7 absolute right-1 top-1 sm:hidden" onClick={onClose}><CrossIcon /></button>
                 </div>
                 
-                <div className="px-3 py-2 flex flex-col border-neon-purple">
+                <div className="px-3 py-2 flex flex-col border-neon-purple sm:flex-grow">
                     <ModalActions post={post} addComment={addComment}/>
                     <ModalComments post={post} comments={comments}/>
                     
