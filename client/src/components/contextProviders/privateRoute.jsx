@@ -24,7 +24,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   })
     
     
-  }, [])
+  }, [toggleAuth])
 
   if(auth === null){
     return <h1>Loading</h1>
