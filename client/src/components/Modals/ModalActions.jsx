@@ -5,6 +5,7 @@ import ThumbDownIcon from "../Icons/ThumbDownIcon";
 import ThumbUpIcon from "../Icons/ThumbUpIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
 import PlusIcon from "../Icons/PlusIcon";
+import UserIcon from "../Icons/UserIcon";
 import { AuthContext } from "../contextProviders/authContext";
 import axios from "axios";
 import { Formik, Form, Field } from 'formik';
@@ -35,7 +36,7 @@ const ModalActions = ({ post, addComment }) => {
                 setNumDislikes(prev => prev - 1);
             }
 
-            axios.post(`api/posts/${post._id}/like`, {}, {
+            axios.post(`/api/posts/${post._id}/like`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
@@ -54,7 +55,7 @@ const ModalActions = ({ post, addComment }) => {
             setLiked(false);
             setNumLikes(prev => prev - 1);
 
-            axios.post(`api/posts/${post._id}/removeReaction/likes`, {}, {
+            axios.post(`/api/posts/${post._id}/removeReaction/likes`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
@@ -82,7 +83,7 @@ const ModalActions = ({ post, addComment }) => {
                 setNumLikes(prev => prev - 1);
             }
 
-            axios.post(`api/posts/${post._id}/dislike`, {}, {
+            axios.post(`/api/posts/${post._id}/dislike`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
@@ -101,7 +102,7 @@ const ModalActions = ({ post, addComment }) => {
 
             setDisliked(false);
             setNumDislikes(prev => prev - 1);
-            axios.post(`api/posts/${post._id}/removeReaction/dislikes`, {}, {
+            axios.post(`/api/posts/${post._id}/removeReaction/dislikes`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
@@ -118,6 +119,14 @@ const ModalActions = ({ post, addComment }) => {
 
     return (
         <>
+            <div className="my-2">
+                {post.user.profilePicture ? (
+                    <img className="w-8 mr-2 rounded-full inline" src={post.user.profilePicture} alt={post.user.username} />
+                ) : (
+                    <UserIcon className="w-8 mr-2 inline text-gray-400" />
+                )}
+                <a href={`/user/${post.username}`} className="text-gray-200 text-base font-normal">{post.username}</a>
+            </div>
             <div className="flex justify-between align-middle mt-2 mb-3">
                 <div className="flex">
                     <button onClick={handleLiked} className="mx-2 outline-none w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up" /> : <ThumbUpIcon className="" />}</button>
@@ -152,15 +161,16 @@ const ModalActions = ({ post, addComment }) => {
 
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
-                    axios.post(`api/comment/add/${post._id}`, {
+                    axios.post(`/api/comment/add/${post._id}`, {
                         content: values.comment
                     }, {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                         }
-                    });
+                    }).then(res => addComment(values, auth))
+                    .catch(err => console.log(err));
                     // setComments(prev => [...prev, { content: values.comment, user: { username: auth.username } }]);
-                    addComment(values, auth)
+                    
                     values.comment = ""
                     setSubmitting(false);
                 }}
@@ -168,9 +178,9 @@ const ModalActions = ({ post, addComment }) => {
             >
 
                 {({ isSubmitting, isValid, dirty }) => (
-                    <Form autoComplete="off" className="flex">
-                        <Field type="text" maxLength="600" name="comment" placeholder="Add a comment..." className="w-full bg-gray-800 rounded mr-2 px-2 text-xs text-gray-300 focus:outline-none" />
-                        <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="w-8 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"><PlusIcon className="" /></button>
+                    <Form autoComplete="off" className="flex mb-4">
+                        <Field type="text" maxLength="600" name="comment" placeholder="Add a comment..." className="w-full bg-gray-800 rounded-lg mr-2 px-2 py-2 text-base text-gray-300 focus:outline-none" />
+                        <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="w-10 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"><PlusIcon className="" /></button>
                     </Form>
                 )}
 

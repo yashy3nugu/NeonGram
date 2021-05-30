@@ -41,7 +41,8 @@ router.get("/:postID", authenticateToken, (req, res, next) => {
     // })
 
     Comment.find({post: postID})
-    .populate('user', 'username')
+    // .populate('user', 'username')
+    .populate({path: 'user', select: ['username','profilePicture']})
     .then( comment => {
         res.send(comment);
         next();
