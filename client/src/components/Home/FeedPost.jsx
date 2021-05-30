@@ -121,7 +121,7 @@ const FeedPost = ({ post }) => {
     }
 
     return (
-        <div className="post rounded-xl mx-auto w-1/2 bg-gray-900 my-20 px-3 border-2 border-neon-purple">
+        <div className="post w-10/12 sm:w-1/2 rounded-xl mx-auto  bg-gray-900 my-20 px-3 border-2 border-neon-purple">
             <div className="text-left text-sm px-0 py-4 flex justify-between">
                 <div>
                     {/* <UserIcon className="w-8 mr-2 inline text-gray-400" /> */}

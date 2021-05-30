@@ -1,11 +1,9 @@
 .post {
+  @media (min-width: 640px) {
+    transition: box-shadow 0.2s ease-in-out;
 
-    transition: all 0.2s ease-in-out;
-    
     &:hover {
-        box-shadow: 0 0 1.5rem -5px $color-purple, 0 0 30px -8px $color-purple;
+      box-shadow: 0 0 1.5rem -5px $color-purple, 0 0 30px -8px $color-purple;
     }
-    
-    
-
+  }
 }
