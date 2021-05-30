@@ -172,11 +172,15 @@ const ModalActions = ({ post, addComment }) => {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                         }
-                    }).then(res => addComment(values, auth))
+                    }).then(res => {
+                        console.log(values)
+                        addComment(values, auth);
+                        values.comment = "";
+                        })
                     .catch(err => console.log(err));
                     // setComments(prev => [...prev, { content: values.comment, user: { username: auth.username } }]);
                     
-                    values.comment = ""
+                    
                     setSubmitting(false);
                 }}
 

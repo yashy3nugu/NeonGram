@@ -23,7 +23,8 @@ export default function PostModal({ post, onClose }) {
     }, [post._id])
 
     const addComment = (values, auth) => {
-        setComments(prev => [...prev, { content: values.comment, user: { username: auth.username } }]);
+        console.log(values)
+        setComments(prev => [...prev, { content: values.comment, user: { username: auth.username, profilePicture: auth.profilePicture } }]);
     }
 
     return createPortal(
