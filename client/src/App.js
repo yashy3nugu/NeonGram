@@ -8,6 +8,7 @@ import UserPage from "./components/UserPage/UserPage";
 import Settings from "./components/Settings/Settings";
 import FindFollowers from "./components/Followers/FindFollowers";
 import ExplorePage from "./components/Explore/ExplorePage";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
 
@@ -23,9 +24,10 @@ function App() {
           <PrivateRoute exact path="/settings" component={Settings} />
           <PrivateRoute exact path="/find" component={FindFollowers} />
           <PrivateRoute exact path="/explore" component={ExplorePage} />
-          <Route exact path = "/signup">
+          <Route exact path="/signup">
             <SignUpPage />
           </Route>
+          <Route component={NotFound} />
         </Switch>
       </Router>
 
