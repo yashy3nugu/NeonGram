@@ -7,7 +7,8 @@ const FollowButton = ({auth,user,followUser,selectUser}) => {
     if(auth.username === user.username) return null;
 
     else if(auth.following.includes(user._id)) {
-        return <button onClick={() => selectUser(user)} className="rounded-full text-white border-2 bg-gray-900 px-1 py-1 hover:bg-gray-700"><TickIcon className="w-7"/></button>
+        return <button onClick={() => selectUser(user)} className="rounded-full text-white border-2 bg-gray-900 px-1.5 py-1.5 mr-0.5 hover:bg-gray-700"><TickIcon className="w-7"/></button>
+
     } 
     
     return <button onClick={(e) => {

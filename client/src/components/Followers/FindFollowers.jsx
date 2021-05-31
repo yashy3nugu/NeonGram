@@ -23,7 +23,7 @@ const FindFollowers = () => {
         }).then(res => {
             // shallow copies are important for state updation
             let users = [...searchResults];
-            let followedUser;
+            
             let followedUserIndex;
 
             users.forEach((user,index) => {
@@ -32,6 +32,7 @@ const FindFollowers = () => {
                 }
             });
 
+            let followedUser;
             followedUser = {...users[followedUserIndex]};
             followedUser.followers.push(auth._id);
             users[followedUserIndex] = followedUser;
@@ -50,7 +51,52 @@ const FindFollowers = () => {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
-        }).then(res => setSelectedUser(null))
+        }).then(res => {
+            setSelectedUser(null);
+            let users = [...searchResults];
+            let unfollowedUser;
+            let unfollowedUserIndex;
+
+            users.forEach((user,index) => {
+                if(user._id === id) {
+                    unfollowedUserIndex = index;
+                }
+            });
+
+            unfollowedUser = {...users[unfollowedUserIndex]};
+
+            let index;
+
+            unfollowedUser.followers.forEach((follower,idx) => {
+                if(follower === id){
+                    index = idx;
+                }
+            });
+
+            unfollowedUser.followers.splice(index,1);
+
+            users[unfollowedUserIndex] = unfollowedUser;
+
+            setSearchResults(users);
+
+            let currentAuth = {...auth};
+
+            let authIndex;
+
+            currentAuth.following.forEach((followingUser,idx) => {
+                if(id === followingUser._id) {
+                    authIndex = idx;
+                }
+            });
+
+            currentAuth.following.splice(authIndex,1);
+
+            toggleAuth(currentAuth)
+
+
+
+
+        })
     }
 
     const selectUser = (user) => {
@@ -137,7 +183,7 @@ const FindFollowers = () => {
 
             </Formik>
 
-            {selectedUser && <UnfollowModal user={selectedUser} onClose={() => setSelectedUser(null)}/>}
+            {selectedUser && <UnfollowModal user={selectedUser} onClose={() => setSelectedUser(null)} unfollowUser={unfollowUser}/>}
 
         </div>
     )
