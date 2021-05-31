@@ -1,18 +1,18 @@
 import React, { useRef, useState } from 'react';
 import UploadModal from "./UploadModal";
+import ButtonSpinner from "../Icons/ButtonSpinner";
 import PencilIcon from "../Icons/PencilIcon";
+import DeleteIcon from "../Icons/DeleteIcon"
+import axios from 'axios';
 
-const ProfilePicChanger = () => {
+const ProfilePicChanger = ({ userDetails }) => {
 
     const fileInput = useRef(null);
 
     const [imageURL, setImageURL] = useState(null);
-
-    const [croppedImage, setCroppedImage] = useState(null);
-
     const [imageFile, setImageFile] = useState(null);
-
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleFiles = (e) => {
         setImageURL(URL.createObjectURL(e.target.files[0]));
@@ -20,13 +20,35 @@ const ProfilePicChanger = () => {
         setShowModal(true)
     }
 
+    const deleteProfilePicture = () => {
+        setLoading(true)
+        axios.delete("/api/deleteProfilePic", {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(() => window.location.reload())
+    }
+
 
     return (
         <>
-            <button onClick={() => fileInput.current.click()} className="block w-1/3 lg:w-full bg-neon-purple text-white py-2 rounded-lg my-2 mx-auto">Upload Picture</button>
-            <button className="block w-1/3 lg:w-full bg-neon-red text-white py-2 rounded-lg my-2 mx-auto">Delete Picture</button>
-            <input type="file" className="hidden" ref={fileInput} onChange={handleFiles}/>
-            {showModal && <UploadModal imageURL={imageURL} imageFile={imageFile} onClose={() => setShowModal(false)}/>}
+            <button onClick={() => fileInput.current.click()} className="block w-1/3 lg:w-full bg-neon-purple text-white py-2 rounded-lg my-2 mx-auto">
+                <PencilIcon className="w-5 inline mr-1 mb-1"/>
+                {userDetails.profilePicture ? "Change" : "Upload"} 
+            </button>
+            {userDetails.profilePicture && (
+                <button onClick={deleteProfilePicture} className="block w-1/3 lg:w-full bg-neon-red text-white py-2 rounded-lg my-2 mx-auto">
+                    {loading ? <ButtonSpinner className="animate-spin mx-auto w-6"/> : (
+                        <>
+                            <DeleteIcon className="w-5 inline mr-1 mb-1.5"/>
+                            Delete
+                            
+                        </>
+                    )}
+                </button>
+            )}
+            <input type="file" className="hidden" ref={fileInput} onChange={handleFiles} />
+            {showModal && <UploadModal imageURL={imageURL} imageFile={imageFile} onClose={() => setShowModal(false)} />}
         </>
     )
 }

@@ -3,6 +3,7 @@ import CrossIcon from "../Icons/CrossIcon";
 import Cropper from "react-cropper";
 import { createPortal } from 'react-dom';
 import axios from "axios";
+import ButtonSpinner from "../Icons/ButtonSpinner"
 import "cropperjs/dist/cropper.css";
 
 const UploadModal = ({ onClose, imageURL, imageFile }) => {
@@ -11,11 +12,12 @@ const UploadModal = ({ onClose, imageURL, imageFile }) => {
 
     const [croppedImage, setCroppedImage] = useState(null);
 
-    // const [imageFile, setImageFile] = useState(null);
+    const [loading, setLoading] = useState(false)
 
 
 
     const saveProfilePicture = (e) => {
+        setLoading(true);
         if (croppedImage) {
             const fd = new FormData();
             const imageSettings = JSON.stringify(croppedImage.getData({ rounded: true }))
@@ -57,7 +59,10 @@ const UploadModal = ({ onClose, imageURL, imageFile }) => {
                     
                 )}
                 <div className="text-right py-4 px-2">
-                    <button onClick={saveProfilePicture} className="text-white bg-neon-purple rounded-lg py-2 w-1/5 hover:bg-purple-900 transition ease-in-out duration-200">Save</button>
+                    <button onClick={saveProfilePicture} className="text-white bg-neon-purple rounded-lg py-2 w-1/5 hover:bg-purple-900 transition ease-in-out duration-200">
+                        {loading ? <ButtonSpinner className="animate-spin w-6 mx-auto"/>: "Save"}
+                    </button>
+                    
                 </div>
                 
             </div>

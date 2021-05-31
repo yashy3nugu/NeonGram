@@ -147,7 +147,7 @@ router.get("/details/:username", authenticateToken, (req, res, next) => {
 
 
     User.findOne({ username: username })
-        .select("username fname lname email bio profilePicture followers following")
+        .select("username fname lname email bio profilePicture profilePictureId followers following")
         .exec((err, foundUser) => {
             if (foundUser) {
 
@@ -256,6 +256,27 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
         })
         .catch(err => console.log(err));
 
+})
+
+router.delete("/deleteProfilePic",authenticateToken, async (req,res, next) => {
+
+
+
+    try {
+
+        const { profilePictureId } = await User.findById(req.user._id).select('profilePictureId');
+
+        await cloudinary.uploader.destroy(profilePictureId);
+
+        await User.findByIdAndUpdate(req.user._id,{profilePicture:"",profilePictureId:""});
+
+        res.sendStatus(200);
+
+
+    }
+    catch {
+        res.sendStatus(500);
+    }
 })
 
 // add partial searching

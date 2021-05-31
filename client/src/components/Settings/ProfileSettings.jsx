@@ -91,11 +91,11 @@ const ProfileSettings = () => {
 
 
                         ) :
-                            (<UserIcon className="" />)
+                            (<UserIcon className="text-gray-400 w-full" />)
                         }
 
                     </div>
-                    {true && <ProfilePicChanger />}
+                    {true && <ProfilePicChanger userDetails={userDetails}/>}
 
 
 
