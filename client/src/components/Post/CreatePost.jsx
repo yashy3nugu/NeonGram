@@ -40,7 +40,7 @@ const CreatePost = () => {
 
     return (
 
-        <div className="postArea container mx-auto max-w-4xl w-full bg-gray-900 h-screen sm:h-auto my-40">
+        <div className="container mx-auto max-w-4xl w-full bg-gray-900 h-screen sm:h-auto my-40 border-2 border-transparent sm:border-neon-purple sm:rounded-2xl">
             <form className="px-10 py-10" onSubmit={submitPost}>
 
 
@@ -73,7 +73,7 @@ const CreatePost = () => {
                 </div>
 
                 <div className="col-span-2 text-center sm:text-right mt-6 px-4">
-                    <button type="submit" disabled={!(caption && image)} style={{ visibility: !(caption && image) ? 'hidden' : 'visible' }} className="w-12 bg-neon-green text-gray-100 rounded-full px-2 py-2">{loading ? <ButtonSpinner className="animate-spin" /> : <UploadIcon />}</button>
+                    <button type="submit" disabled={!(caption && image)} style={{ visibility: !(caption && image) ? 'hidden' : 'visible' }} className="w-12  text-neon-green rounded-full px-2 py-2">{loading ? <ButtonSpinner className="animate-spin" /> : <UploadIcon />}</button>
                 </div>
 
 
