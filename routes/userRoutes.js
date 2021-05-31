@@ -318,77 +318,75 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
 
     const followerId = req.user._id;
 
-    User.findByIdAndUpdate(followerId, {
-        $addToSet: {
-            following: mongoose.Types.ObjectId(followingUserId)
-        }
-    }, (err) => {
+    // User.findByIdAndUpdate(followerId, {
+    //     $addToSet: {
+    //         following: mongoose.Types.ObjectId(followingUserId)
+    //     }
+    // }, (err) => {
 
-        console.log("updated follower")
-        if (err) {
-            res.sendStatus(500);
-            next();
-        }
-        User.findByIdAndUpdate(followingUserId, {
+    //     console.log("updated follower")
+    //     if (err) {
+    //         res.sendStatus(500);
+    //         next();
+    //     }
+    //     User.findByIdAndUpdate(followingUserId, {
+    //         $addToSet: {
+    //             followers: mongoose.Types.ObjectId(followerId)
+    //         }
+    //     }, (err) => {
+    //         if (err) {
+    //             res.sendStatus(500);
+    //             next();
+    //         }
+
+    //         console.log("updated follwing")
+
+    //         res.sendStatus(200);
+    //         next();
+    //     })
+    // })
+
+    const session = await mongoose.startSession();
+
+    try {
+
+        session.startTransaction();
+
+        const follower = await User.findByIdAndUpdate(followerId,{
             $addToSet: {
-                followers: mongoose.Types.ObjectId(followerId)
+                following: mongoose.Types.ObjectId(followingUserId)
             }
-        }, (err) => {
-            if (err) {
-                res.sendStatus(500);
-                next();
+        },{
+            session
+        });
+
+        const followingUser = await User.findByIdAndUpdate(followingUserId, {
+            $addToSet: {
+                follower: mongoose.Types.ObjectId(followerId)
             }
+        },
+        {
+            session
+        });
 
-            console.log("updated follwing")
+        await session.commitTransaction();
+        session.endSession();
 
-            res.sendStatus(200);
-            next();
-        })
-    })
-
-    // const session = await mongoose.startSession();
-
-    // console.log("in")
-
-    // try {
-
-    //     session.startTransaction();
-
-    //     const follower = await User.findByIdAndUpdate(followerId,{
-    //         $addToSet: {
-    //             following: mongoose.Types.ObjectId(followingUserId)
-    //         }
-    //     },{
-    //         session
-    //     });
-
-    //     const followingUser = await User.findByIdAndUpdate(followingUserId, {
-    //         $addToSet: {
-    //             follower: mongoose.Types.ObjectId(followerId)
-    //         }
-    //     },
-    //     {
-    //         session
-    //     });
-
-    //     await session.commitTransaction();
-    //     session.endSession();
-
-    //     res.status(200).send({follower,followingUser})
-    //     next();
+        res.status(200).send({follower,followingUser})
+        next();
 
 
-    // }
+    }
 
-    // catch (err) {
-    //     console.log(err);
-    //     await session.abortTransaction();
-    //     session.endSession();
+    catch (err) {
 
-    //     res.sendStatus(500);
-    //     next();
+        await session.abortTransaction();
+        session.endSession();
 
-    // }
+        res.sendStatus(500);
+        next();
+
+    }
 
 
 
@@ -399,33 +397,67 @@ router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, n
 
     const followerId = req.user._id;
 
-    User.findByIdAndUpdate(followerId, {
-        $pull: {
-            following: mongoose.Types.ObjectId(followingUserId)
-        }
-    }, (err) => {
+    const session = await mongoose.startSession();
 
-        console.log("updated follower")
-        if (err) {
-            res.sendStatus(500);
-            next();
-        }
-        User.findByIdAndUpdate(followingUserId, {
+    try {
+
+        session.startTransaction();
+
+        const follower = await User.findByIdAndUpdate(followerId,{
+            $pull: {
+                following: mongoose.Types.ObjectId(followingUserId)
+            }
+        },{session});
+
+        const followingUser = await User.findByIdAndUpdate(followingUserId, {
             $pull: {
                 followers: mongoose.Types.ObjectId(followerId)
             }
-        }, (err) => {
-            if (err) {
-                res.sendStatus(500);
-                next();
-            }
+        },{session})
 
-            console.log("updated follwing")
+        await session.commitTransaction();
+        session.endSession();
 
-            res.sendStatus(200);
-            next();
-        })
-    })
+        res.status(200).send({follower,followingUser})
+        next();
+
+    } catch {
+
+        await session.abortTransaction();
+        session.endSession();
+
+        res.sendStatus(500);
+        next();
+
+    }
+
+    // User.findByIdAndUpdate(followerId, {
+    //     $pull: {
+    //         following: mongoose.Types.ObjectId(followingUserId)
+    //     }
+    // }, (err) => {
+
+    //     console.log("updated follower")
+    //     if (err) {
+    //         res.sendStatus(500);
+    //         next();
+    //     }
+    //     User.findByIdAndUpdate(followingUserId, {
+    //         $pull: {
+    //             followers: mongoose.Types.ObjectId(followerId)
+    //         }
+    //     }, (err) => {
+    //         if (err) {
+    //             res.sendStatus(500);
+    //             next();
+    //         }
+
+    //         console.log("updated follwing")
+
+    //         res.sendStatus(200);
+    //         next();
+    //     })
+    // })
 
 })
 
