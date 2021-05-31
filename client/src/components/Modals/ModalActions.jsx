@@ -142,10 +142,11 @@ const ModalActions = ({ post, addComment, onDelete }) => {
             </div>
             <div className="flex justify-between align-middle mt-2 mb-3">
                 <div className="flex">
-                    <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up w-7" /> : <ThumbUpIcon className="w-7" />}</button>
+                    {/* <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up w-7" /> : <ThumbUpIcon className="w-7" />}</button> */}
+                    <button onClick={handleLiked} className={`mx-2 outline-none w-7 sm:w-8 text-neon-blue ${!liked && "opacity-50"}`}><ThumbUpIconFilled className="" /></button>
                     <p className="text-neon-blue font-semibold mr-1 relative top-1.5">{numLikes}</p>
 
-                    <button onClick={handleDisliked} className="mx-2 outline-none w-7 sm:w-8 text-neon-red relative top-0.5">{disliked ? <ThumbDownIconFilled className="thumb-down" /> : <ThumbDownIcon className="" />}</button>
+                    <button onClick={handleDisliked} className={`mx-2 outline-none w-7 sm:w-8 text-neon-red relative top-0.5 ${!disliked && "opacity-50"}`}><ThumbDownIconFilled className="" /></button>
                     <span className="text-neon-red font-semibold mr-1 relative top-1.5">{numDislikes}</span>
 
 
