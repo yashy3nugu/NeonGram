@@ -4,6 +4,7 @@ import axios from "axios";
 import {AuthContext} from "./authContext";
 import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
+import SpinnerIcon from '../Icons/SpinnerIcon';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -14,20 +15,31 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     
   useEffect(() => {
 
+    
+
     axios.post("/api/verify",{},{headers: {
       "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
   }} ).then(res => {
       toggleAuth(res.data);
   })
   .catch(err => {
-    toggleAuth(false);
+    toggleAuth(false)
+    
   })
     
     
   }, [toggleAuth])
 
   if(auth === null){
-    return <h1>Loading</h1>
+    return (
+      <div className="relative">
+        <div className="fixed top-50">
+          <SpinnerIcon styles="block" enabled />
+        </div>
+      </div>
+      
+    
+    )
   }
 
   return (
