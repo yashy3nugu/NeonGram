@@ -363,4 +363,39 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
 
 })
 
+router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, next) => {
+    const { followingUserId } = req.params;
+
+    const followerId = req.user._id;
+
+    User.findByIdAndUpdate(followerId, {
+        $pull: {
+            following: mongoose.Types.ObjectId(followingUserId)
+        }
+    }, (err) => {
+
+        console.log("updated follower")
+        if (err) {
+            res.sendStatus(500);
+            next();
+        }
+        User.findByIdAndUpdate(followingUserId, {
+            $pull: {
+                followers: mongoose.Types.ObjectId(followerId)
+            }
+        }, (err) => {
+            if (err) {
+                res.sendStatus(500);
+                next();
+            }
+
+            console.log("updated follwing")
+
+            res.sendStatus(200);
+            next();
+        })
+    })
+
+})
+
 module.exports = router;

@@ -4,12 +4,14 @@ import { Formik, Form, Field } from 'formik';
 import {AuthContext} from "../contextProviders/authContext";
 import FollowButton from "./FollowButton";
 import SearchIcon from "../Icons/SearchIcon";
-import UserAddIconSolid from "../Icons/UserAddIconSolid";
 import UserIcon from "../Icons/UserIcon";
+import UnfollowModal from "../Modals/UnfollowModal";
 
 const FindFollowers = () => {
 
     const [searchResults, setSearchResults] = useState([]);
+
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const { auth } = useContext(AuthContext);
 
@@ -19,6 +21,10 @@ const FindFollowers = () => {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
         })
+    }
+
+    const selectUser = (user) => {
+        setSelectedUser(user)
     }
 
 
@@ -86,7 +92,7 @@ const FindFollowers = () => {
                                         </div>
                                         {/* {auth.username !== user.username && <button onClick={() => followUser(user._id)} className="bg-neon-purple px-3 py-3 rounded-full text-white hover:bg-purple-900 hover:text-gray-400 transition ease-in-out duration-200"><UserAddIconSolid className="w-6"/></button>}
                                         {auth.following.includes(user._id) && <span>following</span>} */}
-                                        <FollowButton auth={auth} user={user} followUser={followUser}/>
+                                        <FollowButton auth={auth} user={user} followUser={followUser} selectUser={selectUser}/>
                                         
                                         
                                         
@@ -100,6 +106,8 @@ const FindFollowers = () => {
                 )}
 
             </Formik>
+
+            {selectedUser && <UnfollowModal user={selectedUser} onClose={() => setSelectedUser(null)}/>}
 
         </div>
     )
