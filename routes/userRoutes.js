@@ -182,9 +182,19 @@ const upload = multer({
     }
 })
 
-// router.post("/addProfilePic/:username", authenticateToken, upload.single('profilePicture'), (req,res,next) => {
+router.patch("/updateDetails", authenticateToken, async (req,res,next) => {
+    const { userDetails } = req.body;
+    try {
+        await User.findByIdAndUpdate(req.user._id, userDetails);
 
-// })
+        res.sendStatus(200);
+        next();
+    }
+    catch {
+        res.sendStatus(500);
+        next();
+    }
+})
 
 router.post("/addProfilePic", authenticateToken, upload.single('profilePicture'), (req, res, next) => {
 

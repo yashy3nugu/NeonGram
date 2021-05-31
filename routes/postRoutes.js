@@ -255,7 +255,7 @@ router.get("/user/:username", authenticateToken, (req,res,next) => {
 
         if(foundUser){
 
-            Post.find({username})
+            Post.find({user:foundUser._id})
             .populate({path:'user',select: ['fname','lname','username','profilePicture']})
             .exec((err,foundPosts) => {
                 if(err) {

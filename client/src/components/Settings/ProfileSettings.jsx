@@ -3,17 +3,17 @@ import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form, Field } from 'formik';
 import ProfilePicChanger from './ProfilePicChanger';
 import UserIcon from "../Icons/UserIcon";
-import PencilIcon from "../Icons/PencilIcon";
-import UploadModal from "./UploadModal";
 import axios from 'axios';
+import ButtonSpinner from '../Icons/ButtonSpinner';
 
 const ProfileSettings = () => {
 
-    const { auth } = useContext(AuthContext);
+    const { auth, toggleAuth } = useContext(AuthContext);
 
     const [userDetails, setUserDetails] = useState(null);
 
     const [pictureDropDown, setPictureDropDown] = useState(false);
+
 
 
     useEffect(() => {
@@ -24,11 +24,6 @@ const ProfileSettings = () => {
         }).then(res => setUserDetails(res.data));
     }, [auth]);
 
-    const fileInput = useRef(null);
-
-    const handleFile = (e) => {
-
-    }
 
 
 
@@ -44,15 +39,47 @@ const ProfileSettings = () => {
                             initialValues={userDetails}
                             validate={values => {
                                 const errors = {};
-                                // finish later
-                                if (!values.username) errors.username = 'Cannot be empty';
-                                if (!values.fname) errors.fname = '';
+
+                                if (!values.username) {
+                                    errors.username = ''
+                                    }
+                                else if(values.username.length > 15) {
+                                    errors.username = 'Username is too long'
+                                };
+
+                                if (!values.fname) errors.fname = 'Cannot be empty';
+                                if (!values.lname) errors.lname = 'Cannot be empty';
+                                if (!values.bio) errors.bio = 'Cannot be empty';
+                                if (!values.email) {
+                                    errors.email = 'Cannot be empty'
+                                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                                    errors.email = 'Invalid email address';
+                                }
 
                                 return errors;
                             }}
+                            enableReinitialize
                             validateOnMount={false}
+                            onSubmit={(values, { setSubmitting }) => {
+                                setSubmitting(true);
+                                axios.patch("/api/updateDetails", { userDetails: values }, {
+                                    headers: {
+                                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                                    }
+                                }).then(() => {
+                                    setUserDetails(values);
+                                    setSubmitting(false);
+                                    toggleAuth(prev => {
+                                        return {
+                                            ...prev,
+                                            username: values.username
+                                        }
+                                    })
+                                }).catch(() => setSubmitting(false));
+
+                            }}
                         >
-                            {({ isSubmitting, isValid, dirty }) => (
+                            {({ isSubmitting, isValid, dirty, errors }) => (
                                 <Form autoComplete="off" className="w-full" >
 
                                     <div className="my-2">
@@ -68,11 +95,24 @@ const ProfileSettings = () => {
                                     <div className="my-2">
                                         <label className="block text-gray-300 text-sm mb-1 font-medium">Username</label>
                                         <Field type="text" name="username" className="w-full text-white bg-gray-800 rounded px-3 py-1 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
+                                        <p class="text-neon-red text-xs italic mt-1">{errors.username}</p>
                                     </div>
 
                                     <div className="my-2">
                                         <label className="block text-gray-300 text-sm mb-1 font-medium">Email</label>
                                         <Field type="text" name="email" className="w-full text-white bg-gray-800 rounded px-3 py-1 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
+                                        <p class="text-red-500 text-xs italic mt-1">{errors.email}</p>
+                                    </div>
+
+                                    <div className="my-2">
+                                        <label className="block text-gray-300 text-sm mb-1 font-medium">Bio</label>
+                                        <Field type="text" name="bio" className="w-full text-white bg-gray-800 rounded px-3 py-1 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
+                                    </div>
+
+                                    <div className="mt-4">
+                                        <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="w-1/5 sm:w-1/6 bg-neon-purple hover:bg-purple-900 transition ease-in-out text-white rounded-md py-1 px-3 disabled:opacity-50">
+                                            {isSubmitting ? <ButtonSpinner className="w-6 animate-spin mx-auto"/>: "Update"}
+                                        </button>
                                     </div>
 
                                 </Form>
@@ -95,7 +135,7 @@ const ProfileSettings = () => {
                         }
 
                     </div>
-                    {true && <ProfilePicChanger userDetails={userDetails}/>}
+                    {true && <ProfilePicChanger userDetails={userDetails} />}
 
 
 

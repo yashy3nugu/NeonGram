@@ -32,12 +32,12 @@ const ProfilePicChanger = ({ userDetails }) => {
 
     return (
         <>
-            <button onClick={() => fileInput.current.click()} className="block w-1/3 lg:w-full bg-neon-purple text-white py-2 rounded-lg my-2 mx-auto">
+            <button onClick={() => fileInput.current.click()} className="block w-1/3 lg:w-full bg-neon-purple hover:bg-purple-900 transition ease-in-out text-white py-2 rounded-lg my-2 mx-auto">
                 <PencilIcon className="w-5 inline mr-1 mb-1"/>
                 {userDetails.profilePicture ? "Change" : "Upload"} 
             </button>
             {userDetails.profilePicture && (
-                <button onClick={deleteProfilePicture} className="block w-1/3 lg:w-full bg-neon-red text-white py-2 rounded-lg my-2 mx-auto">
+                <button onClick={deleteProfilePicture} className="block w-1/3 lg:w-full bg-neon-red hover:bg-red-700 transition ease-in-out text-white py-2 rounded-lg my-2 mx-auto">
                     {loading ? <ButtonSpinner className="animate-spin mx-auto w-6"/> : (
                         <>
                             <DeleteIcon className="w-5 inline mr-1 mb-1.5"/>

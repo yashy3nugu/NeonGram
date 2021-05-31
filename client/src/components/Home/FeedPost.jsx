@@ -131,7 +131,7 @@ const FeedPost = ({ post }) => {
                         </a>
                     ) : <UserIcon className="w-8 mr-4 inline text-gray-400" />}
                     {/* <ProfilePicIcon size={8} username={post.username} /> */}
-                    <a href={`/user/${post.username}`} className="text-white">{post.username}</a>
+                    <a href={`/user/${post.user.username}`} className="text-white">{post.user.username}</a>
                 </div>
                 <div>
                     {/* <button className="w-6 inline text-right text-white relative py-1"><DotsHorizontalIcon/></button> */}
