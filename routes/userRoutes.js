@@ -127,7 +127,7 @@ router.post("/verify", authenticateToken, (req, res, next) => {
 
 
     User.findById(req.user._id)
-        .select("username fname lname email bio profilePicture")
+        .select("username fname lname email bio profilePicture followers following")
         .exec((err, foundUser) => {
             if (err) {
                 res.sendStatus(500);

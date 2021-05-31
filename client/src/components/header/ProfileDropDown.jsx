@@ -1,7 +1,8 @@
 import React from 'react';
 import SettingsIcon from "../Icons/SettingsIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
-import LogoutIcon from "../Icons/LogoutIcon"
+import LogoutIcon from "../Icons/LogoutIcon";
+import SearchIcon from "../Icons/SearchIcon";
 
 const ProfileDropDown = ({ auth }) => {
     return (
@@ -13,6 +14,7 @@ const ProfileDropDown = ({ auth }) => {
             <hr className="mx-1.5 border-gray-600" />
             <a href="/settings" className="block text-gray-300 p-2 hover:bg-gray-700"><SettingsIcon className="w-5 inline mr-2"/>Settings</a>
             <a href="/settings" className="block text-gray-300 p-2 hover:bg-gray-700"><BookMarkIcon className="w-5 inline mr-2"/>Saved</a>
+            <a href="/find" className="block text-gray-300 p-2 hover:bg-gray-700"><SearchIcon className="w-5 inline mr-2"/>Search</a>
             <hr className="mx-1.5 border-gray-600" />
             <button className="block text-neon-red p-2 hover:bg-gray-700 w-full text-left"><LogoutIcon className="w-5 inline ml-0.5 mr-2"/>Logout</button>
         </div>
