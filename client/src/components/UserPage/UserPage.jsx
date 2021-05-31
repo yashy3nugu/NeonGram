@@ -67,13 +67,28 @@ const UserPage = () => {
 
     }
 
+    const removePost = (id) => {
+        const currentPosts = [...posts];
+        let removeIndex;
+
+        currentPosts.forEach((post,idx) => {
+            if(id === post._id) {
+                removeIndex = idx;
+            }
+        });
+
+        currentPosts.splice(removeIndex,1);
+
+        setPosts(currentPosts);
+    }
+
 
     return (
         <>
             {(userDetails && posts) ? (
                 <>
-                    <ProfileDetails userDetails={userDetails} addFollower={addFollower} removeFollower={removeFollower} posts={posts} />
-                    <PostGallery posts={posts} />
+                    <ProfileDetails userDetails={userDetails} posts={posts} addFollower={addFollower} removeFollower={removeFollower} />
+                    <PostGallery posts={posts} removePost={removePost}/>
                 </>
             ): (
                 <div>

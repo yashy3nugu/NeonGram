@@ -1,14 +1,27 @@
 import React, { useState } from "react";
+import axios from "axios";
 import GridIcon from "../Icons/GridIcon";
 import PostModal from "../Modals/PostModal";
 
-const PostGallery = ({ posts }) => {
+const PostGallery = ({ posts, removePost }) => {
 
     const [clickedPost, setClickedPost] = useState(null);
 
     const onClose = () => {
         setClickedPost(null);
         document.body.style.overflow = 'unset';
+    }
+
+    const onDelete = (id) => {
+        axios.delete(`/api/posts/${id}`,{
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(() => {
+            onClose();
+            removePost(id);
+        })
+
     }
 
     return (
@@ -25,7 +38,7 @@ const PostGallery = ({ posts }) => {
 
                 ))}
 
-                {clickedPost && <PostModal post={clickedPost} onClose={onClose} />}
+                {clickedPost && <PostModal post={clickedPost} onClose={onClose} onDelete={onDelete} />}
 
             </div>
         </div>

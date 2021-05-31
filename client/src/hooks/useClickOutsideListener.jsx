@@ -10,7 +10,8 @@ const useClickOutsideListener = (onClose) => {
       }, [onClose])
       const clickListener = useCallback(
         (e) => {
-              
+        console.log(ref.current);
+        console.log(e.target)  
         if (ref.current && !(ref.current).contains(e.target)) {
                 onClose && onClose()
         }

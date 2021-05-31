@@ -300,6 +300,57 @@ router.patch("/save/:postId",authenticateToken, async (req,res,next) => {
         next();
     }
 
+});
+
+router.delete("/:postId", authenticateToken, (req,res,next) => {
+    const {postId} = req.params;
+
+    // try {
+    //     const {postImageId, user} = await Post.findById( postId ).select('user postImageId');
+        
+    //     if(!postImageId) res.sendStatus(401);
+
+    //     console.log(user)
+    //     console.log(req.user._id)
+
+    //     // if(user !== req.user._id) res.sendStatus(403);
+
+    //     await cloudinary.uploader.destroy(postImageId);
+
+    //     await Post.findByIdAndDelete(postId)
+
+    //     res.sendStatus(204);
+    // }
+    // catch(err) {
+    //     console.log(err)
+    //     res.sendStatus(500);
+    // }
+    Post.findById(postId, (err, foundPost) => {
+        if (foundPost) {
+
+
+
+
+            cloudinary.uploader.destroy(foundPost.postImageId, (err, result) => {
+
+                if (err) {
+                    res.sendStatus(500);
+                }
+
+                Post.findByIdAndDelete(postId, (err, deletedPost) => {
+                    res.sendStatus(200);
+                })
+
+            })
+
+
+
+        } else if (err) {
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(401)
+        }
+    })
 })
 
 

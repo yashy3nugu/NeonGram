@@ -6,7 +6,7 @@ import ModalActions from "./ModalActions";
 import ModalComments from "./ModalComments";
 import axios from "axios";
 
-export default function PostModal({ post, onClose }) {
+export default function PostModal({ post, onClose, onDelete }) {
 
     const [comments, setComments] = useState([]);
 
@@ -39,7 +39,7 @@ export default function PostModal({ post, onClose }) {
                 </div>
                 
                 <div className="px-3 py-2 flex flex-col border-neon-purple sm:flex-grow">
-                    <ModalActions post={post} addComment={addComment}/>
+                    <ModalActions post={post} addComment={addComment} onDelete={onDelete}/>
                     <ModalComments post={post} comments={comments}/>
                     
                 </div>
