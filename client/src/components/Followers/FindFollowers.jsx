@@ -13,14 +13,44 @@ const FindFollowers = () => {
 
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const { auth } = useContext(AuthContext);
+    const { auth, toggleAuth } = useContext(AuthContext);
 
     const followUser = (followingId) => {
         axios.patch(`/api/follow/${followingId}`, {}, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
+        }).then(res => {
+            // shallow copies are important for state updation
+            let users = [...searchResults];
+            let followedUser;
+            let followedUserIndex;
+
+            users.forEach((user,index) => {
+                if(user._id === followingId) {
+                    followedUserIndex = index;
+                }
+            });
+
+            followedUser = {...users[followedUserIndex]};
+            followedUser.followers.push(auth._id);
+            users[followedUserIndex] = followedUser;
+
+            setSearchResults(users);
+
+            let currentAuth = {...auth};
+            currentAuth.following.push(followingId);
+            toggleAuth(currentAuth);
+
         })
+    }
+
+    const unfollowUser = (id) => {
+        axios.patch(`/api/unfollow/${id}`,{},{
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(res => setSelectedUser(null))
     }
 
     const selectUser = (user) => {
