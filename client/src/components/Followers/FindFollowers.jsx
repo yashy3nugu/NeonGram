@@ -148,20 +148,20 @@ const FindFollowers = () => {
                         
 
 
-                        <div>
+                        <div className="mt-6 sm:mt-10">
                             {searchResults.map(
                                 (user, idx) => (
-                                    <div key={idx} className="py-2 px-3 bg-gray-800 rounded-full flex justify-between items-center">
+                                    <div key={idx} className="py-2 px-3 bg-gray-800 rounded-full flex justify-between items-center w-full sm:w-3/4 md:w-3/5 lg:w-1/2 mx-auto mb-2">
                                         <div className="rounded-lg flex items-center">
                                             {user.profilePicture ? (
                                                 <img src={user.profilePicture} alt={user.username} className="w-12 rounded-full" />
                                             ): (
-                                                <UserIcon className="w-12 text-gray-400"/>
+                                                <UserIcon className="w-10 sm:w-12 text-gray-400"/>
                                             )}
                                             
                                             <div className="ml-4">
-                                                <a href={`/user/${user.username}`} className="text-white text-xl">{user.username}</a>
-                                                <p className="text-gray-300 text-sm">{user.followers.length} {user.followers.length === 1 ? "follower" : "followers"}</p>
+                                                <a href={`/user/${user.username}`} className="text-white text-lg sm:text-xl">{user.username}</a>
+                                                <p className="text-gray-300 text-xs sm:text-sm">{user.followers.length} {user.followers.length === 1 ? "follower" : "followers"}</p>
 
                                             </div>
                                         
