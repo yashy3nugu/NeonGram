@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import UploadModal from "./UploadModal";
+import UploadModal from "../Modals/UploadModal";
 import ButtonSpinner from "../Icons/ButtonSpinner";
 import PencilIcon from "../Icons/PencilIcon";
 import DeleteIcon from "../Icons/DeleteIcon"

@@ -1,4 +1,5 @@
 import React, {useRef, useCallback, useEffect} from 'react';
+import useClickOutsideListener from "../../hooks/useClickOutsideListener"
 import SettingsIcon from "../Icons/SettingsIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
@@ -6,30 +7,7 @@ import SearchIcon from "../Icons/SearchIcon";
 
 const ProfileDropDown = ({ auth, onClose }) => {
 
-    const ref = useRef(null);
-    const clickListener = useCallback((e) => {
-
-        if(!ref.current.contains(e.target)) {
-            onClose && onClose();
-        }
-    },[onClose])
-
-    const escapeListener = useCallback((e) => {
-        if(e.key === 'Escape') {
-            onClose && onClose();
-        }
-    },[onClose])
-
-    useEffect(() => {
-        document.addEventListener('click', clickListener);
-        document.addEventListener('keyup', escapeListener);
-
-        return () => {
-            document.removeEventListener('click', clickListener);
-            document.removeEventListener('keyup', escapeListener);
-
-          }
-    },[])
+    const ref = useClickOutsideListener(onClose)
 
     return (
         <div ref={ref} className={`absolute z-20 w-32 right-0 mt-3 bg-gray-800 text-left rounded-md overflow-hidden border border-neon-purple`}>

@@ -1,15 +1,16 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import useClickOutsideListener from "../../hooks/useClickOutsideListener";
 import axios from 'axios';
 import UserIcon from "../Icons/UserIcon";
 
 const UnfollowModal = ({user, onClose, unfollowUser}) => {
 
-
+    const ref = useClickOutsideListener(onClose);
 
     return createPortal(
         <div className="unfollow-modal z-10 fixed top-0 left-0 right-0 bottom-0">
-            <div className="unfollow-modal__actions bg-gray-900 text-center w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 rounded-3xl overflow-hidden">
+            <div ref={ref} className="unfollow-modal__actions bg-gray-900 text-center w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 rounded-3xl overflow-hidden">
                 {user.profilePicture ? (
                     <img src={user.profilePicture} alt={user.username} className="w-28 rounded-full mx-auto" />
                 ): (
