@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import UserIcon from "../Icons/UserIcon";
 import PencilIcon from "../Icons/PencilIcon";
-import ChevronDownIcon from "../Icons/ChevronDownIcon";
 import UnfollowModal from "../Modals/UnfollowModal";
 import axios from 'axios';
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
+import SettingsIconSolid from "../Icons/SettingsIconSolid";
 
 const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => {
 
@@ -16,7 +16,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     const [unfollowModal, setunfollowModal] = useState(false);
 
     const followUser = () => {
-        axios.patch(`/api/follow/${userDetails._id}`,{},{
+        axios.patch(`/api/follow/${userDetails._id}`, {}, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
@@ -24,11 +24,11 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
             addFollower(auth._id);
         })
 
-        
+
     }
 
     const unfollowUser = () => {
-        axios.patch(`/api/unfollow/${userDetails._id}`,{},{
+        axios.patch(`/api/unfollow/${userDetails._id}`, {}, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
@@ -41,13 +41,11 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     let action;
 
     if (userDetails.username === auth.username) {
-        action = <button className=" bg-neon-purple px-3 py-2 text-sm rounded-full text-white my-2 hover:bg-purple-900 transition duration-150 ease-in-out" onClick={() => history.push("/settings")}>
-            Edit Profile<PencilIcon className="h-5 ml-1 inline relative bottom-0.5" />
-        </button>
-    } else if(userDetails.followers.includes(auth._id)) {
-        action = <button onClick={() => setunfollowModal(true)} className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"> Following <ChevronDownIcon className="relative w-4 inline bottom-0.5" /></button>
+        action = null
+    } else if (userDetails.followers.includes(auth._id)) {
+        action = <button onClick={() => setunfollowModal(true)} className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg">Following</button>
     } else {
-        action = <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">Follow</button>
+        action = <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple border border-transparent px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">Follow</button>
     }
 
     return (
@@ -58,12 +56,19 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
             <div className="grid grid-cols-1">
 
 
-                <div className=" w-full">
-                    {userDetails.profilePicture ? (
-                        <img src={userDetails.profilePicture} alt={userDetails.username} className="w-24 sm:w-28 md:w-32 mx-auto rounded-full" />
-                    ) : (
-                        <UserIcon className="w-24 sm:w-28 md:w-32 mx-auto" />
-                    )}
+                <div className="w-full text-center">
+                    <div className="inline-block relative p-3">
+                        {userDetails.username === auth.username && (
+                            <button onClick={() => history.push("/settings")} className="absolute bottom-0 right-0"><SettingsIconSolid className="w-8 text-gray-400"/></button>
+                        )}
+                        
+                        {userDetails.profilePicture ? (
+                            <img src={userDetails.profilePicture} alt={userDetails.username} className="w-24 sm:w-28 md:w-32 rounded-full" />
+                        ) : (
+                            <UserIcon className="w-24 sm:w-28 md:w-32" />
+                        )}
+                    </div>
+
                 </div>
 
 
@@ -93,7 +98,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
 
             </div>
 
-            {unfollowModal && <UnfollowModal user={userDetails} onClose={() => setunfollowModal(false)} unfollowUser={unfollowUser}/>}
+            {unfollowModal && <UnfollowModal user={userDetails} onClose={() => setunfollowModal(false)} unfollowUser={unfollowUser} />}
 
 
         </div>
