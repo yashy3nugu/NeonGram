@@ -125,6 +125,7 @@ router.post("/token", (req, res, next) => {
 
 router.post("/verify", authenticateToken, (req, res, next) => {
 
+    console.log(req.user)
 
     User.findById(req.user._id)
         .select("username fname lname email bio profilePicture followers following")

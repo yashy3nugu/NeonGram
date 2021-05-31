@@ -46,9 +46,9 @@ const Navbar = () => {
                         <li className="py-2 mx-6 hidden sm:inline"><a href="/">{pathname === "/" ? <HomeIconSolid className="w-8 text-neon-purple" /> : <HomeIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />}</a></li>
                         <li className="py-2 mx-6 hidden sm:inline"><a href="/post" className="">{pathname === "/post" ? <PlusIconSolid className="w-8 text-neon-purple" /> : <PlusIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />}</a></li>
                         <li className="py-2 mx-6 hidden sm:inline"><a href="/explore">{pathname === "/explore" ? <GlobeIconSolid className="w-8 text-neon-purple" /> : <GlobeIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />}</a></li>
-                        <button onClick={() => setDropDownOpen(prev => !prev)} className="relative py-2 mx-6 rounded-full hidden sm:inline">
+                        <button onClick={() => setDropDownOpen(true)} className="relative py-2 mx-6 rounded-full hidden sm:inline">
                             <img src={auth.profilePicture} className="w-8 rounded-full border-2 border-transparent hover:border-neon-green transition ease-in-out duration-200" alt={auth.username} />
-                            {dropDownOpen && <ProfileDropDown auth={auth} />}
+                            {dropDownOpen && <ProfileDropDown auth={auth} onClose={() => setDropDownOpen(false)}/>}
                         </button>
 
 

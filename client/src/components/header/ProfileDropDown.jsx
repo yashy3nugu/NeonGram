@@ -1,12 +1,38 @@
-import React from 'react';
+import React, {useRef, useCallback, useEffect} from 'react';
 import SettingsIcon from "../Icons/SettingsIcon";
 import BookMarkIcon from "../Icons/BookMarkIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import SearchIcon from "../Icons/SearchIcon";
 
-const ProfileDropDown = ({ auth }) => {
+const ProfileDropDown = ({ auth, onClose }) => {
+
+    const ref = useRef(null);
+    const clickListener = useCallback((e) => {
+
+        if(!ref.current.contains(e.target)) {
+            onClose && onClose();
+        }
+    },[onClose])
+
+    const escapeListener = useCallback((e) => {
+        if(e.key === 'Escape') {
+            onClose && onClose();
+        }
+    },[onClose])
+
+    useEffect(() => {
+        document.addEventListener('click', clickListener);
+        document.addEventListener('keyup', escapeListener);
+
+        return () => {
+            document.removeEventListener('click', clickListener);
+            document.removeEventListener('keyup', escapeListener);
+
+          }
+    },[])
+
     return (
-        <div className={`absolute z-20 w-32 right-0 mt-3 bg-gray-800 text-left rounded-md overflow-hidden border border-neon-purple`}>
+        <div ref={ref} className={`absolute z-20 w-32 right-0 mt-3 bg-gray-800 text-left rounded-md overflow-hidden border border-neon-purple`}>
             <a href={`/user/${auth.username}`} className="block p-2 text-gray-300">
                 <p>Signed in as</p>
                 <strong className="font-semibold">{auth.username}</strong>
@@ -16,7 +42,7 @@ const ProfileDropDown = ({ auth }) => {
             <a href="/settings" className="block text-gray-300 p-2 hover:bg-gray-700"><BookMarkIcon className="w-5 inline mr-2"/>Saved</a>
             <a href="/find" className="block text-gray-300 p-2 hover:bg-gray-700"><SearchIcon className="w-5 inline mr-2"/>Search</a>
             <hr className="mx-1.5 border-gray-600" />
-            <button className="block text-neon-red p-2 hover:bg-gray-700 w-full text-left"><LogoutIcon className="w-5 inline ml-0.5 mr-2"/>Logout</button>
+            <a className="block text-neon-red p-2 hover:bg-gray-700 w-full text-left"><LogoutIcon className="w-5 inline ml-0.5 mr-2"/>Logout</a>
         </div>
     )
 }

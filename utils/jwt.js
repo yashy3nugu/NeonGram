@@ -26,7 +26,6 @@ exports.authenticateToken = (req,res,next) => {
         if(err){
             
             res.sendStatus(403);
-            next();
             
         }
         else {
