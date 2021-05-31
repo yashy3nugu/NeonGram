@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import NeonGramIcon from "../Icons/NeonGramIcon";
 
 const SignUpForm = () => {
-
+    const history = useHistory();
 
     return (
         <div className="loginForm container mx-auto w-full max-w-md bg-gray-900 border-2 border-transparent sm:border-neon-purple rounded-lg">
@@ -34,8 +35,14 @@ const SignUpForm = () => {
             onSubmit={(values, {setSubmitting}) => {
                 setSubmitting(true);
                 console.log(values)
-                axios.post("/api/register",values).catch(err => console.log(err));
-                setSubmitting(false)
+                axios.post("/api/register",values)
+                .then(() => {
+                    setSubmitting(false);
+                    history.push("/");
+
+                })
+                .catch(err => console.log(err));
+                
             }}
         >
             {({isSubmitting,isValid,dirty}) => (<Form autoComplete="off" className="px-10 py-10">
