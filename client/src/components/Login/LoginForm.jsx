@@ -39,7 +39,7 @@ const LoginForm = () => {
                             localStorage.setItem("accessToken", res.data.accessToken);
                             localStorage.setItem("refreshToken", res.data.refreshToken);
                             toggleAuth(true);
-                            history.push("/");
+                            window.location.reload();
                         })
                         .catch(err => {
                             if(err.response.status === 400){
