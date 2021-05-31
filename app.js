@@ -6,7 +6,11 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
-mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology:true, useCreateIndex:true, useFindAndModify:false })
+// const db = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@neongram.gtkla.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+
+const db = process.env.DB
+
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology:true, useCreateIndex:true, useFindAndModify:false })
 .then(() => console.log('Connected to database'))
 .catch(err => console.log(err));
 

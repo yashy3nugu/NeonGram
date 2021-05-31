@@ -6,7 +6,7 @@ const { authenticateToken } = require("../utils/jwt");
 const { Post } = require("../models/postModel");
 const { User } = require("../models/userModel");
 const streamifier = require('streamifier');
-const { cloudinary } = require('../utils/cloudinary');
+const { cloudinary } = require('../config/cloudinary');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const sharp = require('sharp');
 const streamifier = require('streamifier');
-const { cloudinary } = require('../utils/cloudinary');
+const { cloudinary } = require('../config/cloudinary');
 const { generateAccessToken, generateRefreshToken, authenticateToken } = require("../utils/jwt");
 
 const router = express.Router();
