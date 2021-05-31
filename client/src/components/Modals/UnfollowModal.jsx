@@ -6,13 +6,6 @@ import UserIcon from "../Icons/UserIcon";
 const UnfollowModal = ({user, onClose, unfollowUser}) => {
 
 
-    // const unfollowUser = () => {
-    //     axios.patch(`/api/unfollow/${user._id}`,{},{
-    //         headers: {
-    //             "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-    //         }
-    //     }).then(res => onClose())
-    // }
 
     return createPortal(
         <div className="unfollow-modal z-10 fixed top-0 left-0 right-0 bottom-0">

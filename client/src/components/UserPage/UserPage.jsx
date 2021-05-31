@@ -30,8 +30,9 @@ const UserPage = () => {
     }, [user])
 
     const addFollower = (followerID) => {
+        
 
-        const followers = userDetails.followers;
+        const followers = [...userDetails.followers];
 
         followers.push(followerID)
 
@@ -43,12 +44,35 @@ const UserPage = () => {
         })
     }
 
+    const removeFollower = (followerId) => {
+
+        const followers = [...userDetails.followers];
+
+        let followerIndex;
+
+        followers.forEach((follower,idx) => {
+            if(follower === followerId) {
+                followerIndex = idx;
+            }
+        });
+
+        followers.splice(followerIndex,1);
+
+        setUserDetails(prev => {
+            return {
+                ...prev,
+                followers
+            }
+        })
+
+    }
+
 
     return (
         <>
             {(userDetails && posts) ? (
                 <>
-                    <ProfileDetails userDetails={userDetails} addFollower={addFollower} posts={posts} />
+                    <ProfileDetails userDetails={userDetails} addFollower={addFollower} removeFollower={removeFollower} posts={posts} />
                     <PostGallery posts={posts} />
                 </>
             ): (

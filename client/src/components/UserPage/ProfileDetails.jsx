@@ -1,25 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import UserIcon from "../Icons/UserIcon";
 import PencilIcon from "../Icons/PencilIcon";
 import ChevronDownIcon from "../Icons/ChevronDownIcon";
+import UnfollowModal from "../Modals/UnfollowModal";
 import axios from 'axios';
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
 
-const ProfileDetails = ({ userDetails, posts, addFollower }) => {
+const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => {
 
     const history = useHistory();
 
     const { auth } = useContext(AuthContext);
 
-    const followUser = () => {
-        // axios.patch(`/api/follow/${userDetails._id}`,{},{
-        //     headers: {
-        //         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        //     }
-        // }).then(console.log("followed"))
+    const [unfollowModal, setunfollowModal] = useState(false);
 
-        addFollower(auth._id);
+    const followUser = () => {
+        axios.patch(`/api/follow/${userDetails._id}`,{},{
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(() => {
+            addFollower(auth._id);
+        })
+
+        
+    }
+
+    const unfollowUser = () => {
+        axios.patch(`/api/unfollow/${userDetails._id}`,{},{
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(() => {
+            setunfollowModal(false);
+            removeFollower(auth._id)
+        })
     }
 
     let action;
@@ -29,7 +45,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower }) => {
             Edit Profile<PencilIcon className="h-5 ml-1 inline relative bottom-0.5" />
         </button>
     } else if(userDetails.followers.includes(auth._id)) {
-        action = <button className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"> Following <ChevronDownIcon className="relative w-4 inline bottom-0.5" /></button>
+        action = <button onClick={() => setunfollowModal(true)} className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"> Following <ChevronDownIcon className="relative w-4 inline bottom-0.5" /></button>
     } else {
         action = <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">Follow</button>
     }
@@ -76,6 +92,8 @@ const ProfileDetails = ({ userDetails, posts, addFollower }) => {
 
 
             </div>
+
+            {unfollowModal && <UnfollowModal user={userDetails} onClose={() => setunfollowModal(false)} unfollowUser={unfollowUser}/>}
 
 
         </div>
