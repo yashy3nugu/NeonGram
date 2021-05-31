@@ -1,35 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import NeonGramIcon from "../Icons/NeonGramIcon";
 
 const SignUpForm = () => {
 
-    // const [input, setInput] = useState({
-    //     email: "",
-    //     fname: "",
-    //     lname: "",
-    //     username: "",
-    //     password: "",
-    //     confirmPassword: ""
-    // });
-
-    // const handleInput = (event) => {
-    //     setInput(prev => {
-    //         return {
-    //             ...prev,
-    //             [event.target.name]: event.target.value
-    //         }
-    //     })
-    // }
-
-    const signUp = (event) => {
-        
-        
-        event.preventDefault();
-    }
 
     return (
-        <div className="loginForm container mx-auto w-full max-w-md bg-gray-900">
+        <div className="loginForm container mx-auto w-full max-w-md bg-gray-900 border-2 border-transparent sm:border-neon-purple rounded-lg">
         <Formik
             initialValues={{
                 email: "",
@@ -61,8 +39,8 @@ const SignUpForm = () => {
             }}
         >
             {({isSubmitting,isValid,dirty}) => (<Form autoComplete="off" className="px-10 py-10">
-                <div>
-                    <h1 className="text-center logo">NeonGram</h1>
+                <div className="text-center">
+                    <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium"/>
                 </div>
                 <div className="mb-3 mt-10 px-3">
                     <Field

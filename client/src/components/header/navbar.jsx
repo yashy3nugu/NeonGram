@@ -31,8 +31,8 @@ const Navbar = () => {
             {/* <div className="navbar  bg-gray-900"> */}
             <div className="flex items-center justify-between w-full py-8 px-3 bg-gray-900">
                 {/* <h1 className="logo">Neongram</h1> */}
-                <a href="/">
-                    <NeonGramIcon />
+                <a href="/" className="ml-10">
+                    <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium"/>
                 </a>
                 
                 <nav className="p-1">

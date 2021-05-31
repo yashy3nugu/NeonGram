@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form, Field } from 'formik';
+import NeonGramIcon from "../Icons/NeonGramIcon";
 
 const LoginForm = () => {
 
@@ -12,7 +13,7 @@ const LoginForm = () => {
 
 
     return (
-        <div className="loginForm container mx-auto w-full max-w-md bg-gray-900">
+        <div className="loginForm container mx-auto w-full max-w-md bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple">
             <Formik
                 initialValues={{
                     username: "",
@@ -51,8 +52,8 @@ const LoginForm = () => {
             >
                 {({ isSubmitting,isValid,dirty }) => (
                     <Form autoComplete="off" className="px-10 py-10">
-                        <div>
-                            <h1 className="text-center logo">NeonGram</h1>
+                        <div className="text-center">
+                            <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium" />
                         </div>
                         <div className="mb-3 mt-10 px-3">
                             <Field type="text" name="username" placeholder="username" className="rounded text-white bg-gray-800 px-2 py-2 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent w-full" />
