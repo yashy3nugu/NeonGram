@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { Waypoint } from "react-waypoint";
@@ -16,11 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get("/api/posts/fromFollowing", {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        })
+        axiosInstance.get("/api/posts/fromFollowing")
             .then(res => {
                 setLoading(false);
                 if (res.data.length) {
@@ -46,10 +42,7 @@ const Home = () => {
         }
         setLoading(true);
         const lastTime = posts[posts.length - 1].time;
-        axios.get("/api/posts/fromFollowing", {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            },
+        axiosInstance.get("/api/posts/fromFollowing", {
             params: {
                 lastTime
             }

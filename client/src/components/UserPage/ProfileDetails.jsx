@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import UserIcon from "../Icons/UserIcon";
 import PencilIcon from "../Icons/PencilIcon";
 import UnfollowModal from "../Modals/UnfollowModal";
-import axios from 'axios';
+import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
 import SettingsIconSolid from "../Icons/SettingsIconSolid";
@@ -16,11 +16,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     const [unfollowModal, setunfollowModal] = useState(false);
 
     const followUser = () => {
-        axios.patch(`/api/follow/${userDetails._id}`, {}, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(() => {
+        axiosInstance.patch(`/api/follow/${userDetails._id}`, {}).then(() => {
             addFollower(auth._id);
         })
 
@@ -28,11 +24,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     }
 
     const unfollowUser = () => {
-        axios.patch(`/api/unfollow/${userDetails._id}`, {}, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(() => {
+        axiosInstance.patch(`/api/unfollow/${userDetails._id}`, {}).then(() => {
             setunfollowModal(false);
             removeFollower(auth._id)
         })

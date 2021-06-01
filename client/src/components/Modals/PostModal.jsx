@@ -4,7 +4,7 @@ import useClickOutsideListener from "../../hooks/useClickOutsideListener";
 import CrossIcon from '../Icons/CrossIcon';
 import ModalActions from "./ModalActions";
 import ModalComments from "./ModalComments";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 
 export default function PostModal({ post, onClose, onDelete }) {
 
@@ -16,11 +16,7 @@ export default function PostModal({ post, onClose, onDelete }) {
 
         document.body.style.overflow = 'hidden';
 
-        axios.get(`/api/comment/${post._id}`, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => setComments(res.data));
+        axiosInstance.get(`/api/comment/${post._id}`).then(res => setComments(res.data));
 
     }, [post._id])
 

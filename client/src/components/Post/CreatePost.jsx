@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DropZone from "./DropZone";
 import UploadIcon from "../Icons/UploadIcon";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 import ButtonSpinner from "../Icons/ButtonSpinner";
 
@@ -24,11 +24,7 @@ const CreatePost = () => {
         const fd = new FormData();
         fd.append('postImage', image[0]);
         fd.append('text', caption);
-        axios.post("/api/posts/createPost", fd, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        })
+        axiosInstance.post("/api/posts/createPost", fd)
             .then(() => {
                 setLoading(false)
                 history.push('/')

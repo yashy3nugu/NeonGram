@@ -8,7 +8,7 @@ import PlusIcon from "../Icons/PlusIcon";
 import UserIcon from "../Icons/UserIcon";
 import DeleteIconSolid from '../Icons/DeleteIconSolid';
 import { AuthContext } from "../contextProviders/authContext";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from 'formik';
 import ButtonSpinner from '../Icons/ButtonSpinner';
 
@@ -39,11 +39,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
                 setNumDislikes(prev => prev - 1);
             }
 
-            axios.post(`/api/posts/${post._id}/like`, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            axiosInstance.post(`/api/posts/${post._id}/like`, {})
                 .catch(err => {
                     setLiked(false);
                     setNumLikes(prev => prev - 1);
@@ -58,11 +54,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
             setLiked(false);
             setNumLikes(prev => prev - 1);
 
-            axios.post(`/api/posts/${post._id}/removeReaction/likes`, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            axiosInstance.post(`/api/posts/${post._id}/removeReaction/likes`, {})
                 .catch(err => {
                     setLiked(true);
                     setNumLikes(prev => prev + 1);
@@ -86,11 +78,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
                 setNumLikes(prev => prev - 1);
             }
 
-            axios.post(`/api/posts/${post._id}/dislike`, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).catch(err => {
+            axiosInstance.post(`/api/posts/${post._id}/dislike`, {}).catch(err => {
 
                 setDisliked(false);
                 setNumDislikes(prev => prev - 1);
@@ -105,11 +93,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
 
             setDisliked(false);
             setNumDislikes(prev => prev - 1);
-            axios.post(`/api/posts/${post._id}/removeReaction/dislikes`, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).catch(err => {
+            axiosInstance.post(`/api/posts/${post._id}/removeReaction/dislikes`, {}).catch(err => {
 
                 setDisliked(true);
                 setNumDislikes(prev => prev + 1);
@@ -177,12 +161,8 @@ const ModalActions = ({ post, addComment, onDelete }) => {
 
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
-                    axios.post(`/api/comment/add/${post._id}`, {
+                    axiosInstance.post(`/api/comment/add/${post._id}`, {
                         content: values.comment
-                    }, {
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                        }
                     }).then(res => {
                         console.log(values)
                         addComment(values, auth);

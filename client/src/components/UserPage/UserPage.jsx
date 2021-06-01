@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import ProfileDetails from "./ProfileDetails";
 import SpinnerIcon from "../Icons/SpinnerIcon";
 import PostGallery from "./PostGallery";
@@ -14,17 +14,9 @@ const UserPage = () => {
 
     useEffect(() => {
 
-        axios.get(`/api/posts/user/${user}`, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => setPosts(res.data));
+        axiosInstance.get(`/api/posts/user/${user}`).then(res => setPosts(res.data));
 
-        axios.get(`/api/details/${user}`, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => setUserDetails(res.data),1000);
+        axiosInstance.get(`/api/details/${user}`).then(res => setUserDetails(res.data));
 
 
     }, [user])

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Formik, Form, Field } from 'formik';
 import { AuthContext } from "../contextProviders/authContext";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import PlusIcon from "../Icons/PlusIcon";
 
 const PostCommentSection = ({ post }) => {
@@ -11,7 +11,7 @@ const PostCommentSection = ({ post }) => {
 
     useEffect(() => {
 
-        axios.get(`api/comment/${post._id}`, {
+        axiosInstance.get(`api/comment/${post._id}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
@@ -46,7 +46,7 @@ const PostCommentSection = ({ post }) => {
 
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
-                    axios.post(`api/comment/add/${post._id}`, {
+                    axiosInstance.post(`api/comment/add/${post._id}`, {
                         content: values.comment
                     }, {
                         headers: {

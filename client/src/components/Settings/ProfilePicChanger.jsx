@@ -3,7 +3,7 @@ import UploadModal from "../Modals/UploadModal";
 import ButtonSpinner from "../Icons/ButtonSpinner";
 import PencilIcon from "../Icons/PencilIcon";
 import DeleteIcon from "../Icons/DeleteIcon"
-import axios from 'axios';
+import axiosInstance from "../../config/axios";
 
 const ProfilePicChanger = ({ userDetails }) => {
 
@@ -22,11 +22,7 @@ const ProfilePicChanger = ({ userDetails }) => {
 
     const deleteProfilePicture = () => {
         setLoading(true)
-        axios.delete("/api/deleteProfilePic", {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(() => window.location.reload())
+        axiosInstance.delete("/api/deleteProfilePic").then(() => window.location.reload())
     }
 
 

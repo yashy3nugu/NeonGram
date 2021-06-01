@@ -1,7 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
-import axios from 'axios';
 import UserIcon from "../Icons/UserIcon";
 
 const UnfollowModal = ({user, onClose, unfollowUser}) => {

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import CrossIcon from "../Icons/CrossIcon";
 import Cropper from "react-cropper";
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import ButtonSpinner from "../Icons/ButtonSpinner"
 import "cropperjs/dist/cropper.css";
 
@@ -24,11 +23,7 @@ const UploadModal = ({ onClose, imageURL, imageFile }) => {
             const imageSettings = JSON.stringify(croppedImage.getData({ rounded: true }))
             fd.append('profilePicture', imageFile);
             fd.append('imageSettings', imageSettings);
-            axios.post("/api/addProfilePic", fd, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            }).then(res => window.location.reload())
+            axiosInstance.post("/api/addProfilePic", fd).then(res => window.location.reload())
         }
     }
 

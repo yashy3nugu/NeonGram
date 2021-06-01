@@ -3,7 +3,7 @@ import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form, Field } from 'formik';
 import ProfilePicChanger from './ProfilePicChanger';
 import UserIcon from "../Icons/UserIcon";
-import axios from 'axios';
+import axiosInstance from "../../config/axios";
 import ButtonSpinner from '../Icons/ButtonSpinner';
 
 const ProfileSettings = () => {
@@ -17,11 +17,7 @@ const ProfileSettings = () => {
 
 
     useEffect(() => {
-        axios.get(`/api/details/${auth.username}`, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => setUserDetails(res.data));
+        axiosInstance.get(`/api/details/${auth.username}`).then(res => setUserDetails(res.data));
     }, [auth]);
 
 
@@ -62,11 +58,7 @@ const ProfileSettings = () => {
                             validateOnMount={false}
                             onSubmit={(values, { setSubmitting }) => {
                                 setSubmitting(true);
-                                axios.patch("/api/updateDetails", { userDetails: values }, {
-                                    headers: {
-                                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                                    }
-                                }).then(() => {
+                                axiosInstance.patch("/api/updateDetails", { userDetails: values }).then(() => {
                                     setUserDetails(values);
                                     setSubmitting(false);
                                     toggleAuth(prev => {

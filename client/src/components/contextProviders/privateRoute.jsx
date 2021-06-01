@@ -1,10 +1,11 @@
 import React, { useEffect, useContext} from 'react';
 import { Route } from 'react-router-dom'
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import {AuthContext} from "./authContext";
 import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
 import SpinnerIcon from '../Icons/SpinnerIcon';
+import axios from 'axios';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import GridIcon from "../Icons/GridIcon";
+import axiosInstance from "../../config/axios";
 import PostModal from "../Modals/PostModal";
 
 const PostGallery = ({ posts, removePost }) => {
@@ -13,11 +12,7 @@ const PostGallery = ({ posts, removePost }) => {
     }
 
     const onDelete = (id) => {
-        axios.delete(`/api/posts/${id}`,{
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(() => {
+        axiosInstance.delete(`/api/posts/${id}`).then(() => {
             onClose();
             removePost(id);
         })

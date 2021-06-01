@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import {AuthContext} from "../contextProviders/authContext";
 import UserIcon from "../Icons/UserIcon";
 import ThumbDownIconFilled from "../Icons/ThumbDownIconFilled";
@@ -38,11 +38,7 @@ const FeedPost = ({ post }) => {
                 setNumDislikes(prev => prev - 1);
             }
 
-            axios.post(`api/posts/${post._id}/like`, {}, {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            axiosInstance.post(`api/posts/${post._id}/like`, {})
             .catch(err => {
                 setLiked(false);
                 setNumLikes(prev => prev - 1);
@@ -57,11 +53,7 @@ const FeedPost = ({ post }) => {
             setLiked(false);
             setNumLikes(prev => prev - 1);
 
-            axios.post(`api/posts/${post._id}/removeReaction/likes`,{},{
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            axiosInstance.post(`api/posts/${post._id}/removeReaction/likes`,{})
             .catch(err => {
                 setLiked(true);
                 setNumLikes(prev => prev + 1);
@@ -86,7 +78,7 @@ const FeedPost = ({ post }) => {
                 setNumLikes(prev => prev - 1);
             }
 
-            axios.post(`api/posts/${post._id}/dislike`, {}, {
+            axiosInstance.post(`api/posts/${post._id}/dislike`, {}, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }
@@ -105,7 +97,7 @@ const FeedPost = ({ post }) => {
 
             setDisliked(false);
             setNumDislikes(prev => prev - 1);
-            axios.post(`api/posts/${post._id}/removeReaction/dislikes`,{},{
+            axiosInstance.post(`api/posts/${post._id}/removeReaction/dislikes`,{},{
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 }

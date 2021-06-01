@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from 'formik';
 import {AuthContext} from "../contextProviders/authContext";

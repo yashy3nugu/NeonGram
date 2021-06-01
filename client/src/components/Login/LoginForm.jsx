@@ -7,7 +7,7 @@ import NeonGramIcon from "../Icons/NeonGramIcon";
 
 const LoginForm = () => {
 
-    const history = useHistory();
+    
 
     const { toggleAuth } = useContext(AuthContext);
 
