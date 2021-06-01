@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from 'formik';
 import {AuthContext} from "../contextProviders/authContext";
 import FollowButton from "./FollowButton";
@@ -16,11 +17,7 @@ const FindFollowers = () => {
     const { auth, toggleAuth } = useContext(AuthContext);
 
     const followUser = (followingId) => {
-        axios.patch(`/api/follow/${followingId}`, {}, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => {
+        axiosInstance.patch(`/api/follow/${followingId}`, {}).then(res => {
             // shallow copies are important for state updation
             let users = [...searchResults];
             
@@ -47,11 +44,7 @@ const FindFollowers = () => {
     }
 
     const unfollowUser = (id) => {
-        axios.patch(`/api/unfollow/${id}`,{},{
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => {
+        axiosInstance.patch(`/api/unfollow/${id}`,{}).then(res => {
             setSelectedUser(null);
             let users = [...searchResults];
             let unfollowedUser;
@@ -122,10 +115,8 @@ const FindFollowers = () => {
                 validateOnMount={false}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
-                    axios.get("/api/search", {
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                        },
+                    axiosInstance.get("/api/search", {
+                        
                         params: {
 
                             username: values.search
