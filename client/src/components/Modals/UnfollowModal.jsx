@@ -1,9 +1,10 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
+import ButtonSpinner from '../Icons/ButtonSpinner';
 import UserIcon from "../Icons/UserIcon";
 
-const UnfollowModal = ({user, onClose, unfollowUser}) => {
+const UnfollowModal = ({user, onClose, unfollowUser, loading}) => {
 
     const ref = useClickOutsideListener(onClose);
 
@@ -18,7 +19,7 @@ const UnfollowModal = ({user, onClose, unfollowUser}) => {
                 
                 <p className="text-gray-300">Unfollow @{user.username}?</p>
                 <div className="mt-6">
-                    <button onClick={() => unfollowUser(user._id)} className="py-2 block w-full text-center text-neon-red font-bold border-t border-gray-700 hover:bg-gray-700 focus:bg-gray-700">Unfollow</button>
+                    <button onClick={() => unfollowUser(user._id)} className="py-2 block w-full text-center text-neon-red font-bold border-t border-gray-700 hover:bg-gray-700 focus:bg-gray-700">{loading ? <ButtonSpinner className="w-6 mx-auto animate-spin"/>: "Unfollow"}</button>
                     <button onClick={onClose} className="py-2 block w-full text-center text-gray-200 border-t border-gray-700 hover:bg-gray-700 focus:bg-gray-700">Cancel</button>
                 </div>
                 

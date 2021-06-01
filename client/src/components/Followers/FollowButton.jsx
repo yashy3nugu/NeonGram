@@ -1,8 +1,9 @@
 import React from 'react';
 import UserAddIconSolid from "../Icons/UserAddIconSolid";
 import TickIcon from "../Icons/TickIcon";
+import ButtonSpinner from '../Icons/ButtonSpinner';
 
-const FollowButton = ({auth,user,followUser,selectUser}) => {
+const FollowButton = ({auth, user, followUser, selectUser, loading}) => {
 
     if(auth.username === user.username) return null;
 
@@ -14,7 +15,7 @@ const FollowButton = ({auth,user,followUser,selectUser}) => {
     return <button onClick={(e) => {
         followUser(user._id);
         e.preventDefault()
-        }} className="bg-neon-purple px-2 py-2 sm:px-3 sm:py-3 rounded-full text-white hover:bg-purple-900 hover:text-gray-400 transition ease-in-out duration-200"><UserAddIconSolid className="w-6"/></button>
+        }} className="bg-neon-purple px-2 py-2 sm:px-3 sm:py-3 rounded-full text-white hover:bg-purple-900 hover:text-gray-400 transition ease-in-out duration-200">{loading ? <ButtonSpinner className="animate-spin w-6"/> : <UserAddIconSolid className="w-6"/>}</button>
     
 
 

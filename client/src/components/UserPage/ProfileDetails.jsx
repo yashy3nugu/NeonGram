@@ -6,6 +6,7 @@ import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
 import SettingsIconSolid from "../Icons/SettingsIconSolid";
+import ButtonSpinner from "../Icons/ButtonSpinner";
 
 const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => {
 
@@ -15,8 +16,14 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
 
     const [unfollowModal, setunfollowModal] = useState(false);
 
+    const [followLoading, setfollowLoading] = useState(false);
+
+    const [unfollowLoading, setUnfollowLoading] = useState(false);
+
     const followUser = () => {
+        setfollowLoading(true);
         axiosInstance.patch(`/api/follow/${userDetails._id}`, {}).then(() => {
+            setfollowLoading(false)
             addFollower(auth._id);
         })
 
@@ -24,7 +31,9 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     }
 
     const unfollowUser = () => {
+        setUnfollowLoading(true);
         axiosInstance.patch(`/api/unfollow/${userDetails._id}`, {}).then(() => {
+            setUnfollowLoading(false);
             setunfollowModal(false);
             removeFollower(auth._id)
         })
@@ -37,7 +46,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
     } else if (userDetails.followers.includes(auth._id)) {
         action = <button onClick={() => setunfollowModal(true)} className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg">Following</button>
     } else {
-        action = <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple border border-transparent px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">Follow</button>
+        action = <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple border border-transparent px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">{followLoading ? <ButtonSpinner className="w-5 animate-spin mx-auto"/> : "Follow"}</button>
     }
 
     return (
@@ -90,7 +99,7 @@ const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => 
 
             </div>
 
-            {unfollowModal && <UnfollowModal user={userDetails} onClose={() => setunfollowModal(false)} unfollowUser={unfollowUser} />}
+            {unfollowModal && <UnfollowModal user={userDetails} onClose={() => setunfollowModal(false)} unfollowUser={unfollowUser} loading={unfollowLoading}/>}
 
 
         </div>
