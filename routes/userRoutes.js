@@ -293,11 +293,9 @@ router.delete("/deleteProfilePic",authenticateToken, async (req,res, next) => {
 router.get("/search", authenticateToken, (req, res, next) => {
 
     const { username } = req.query;
-    console.log(req.query)
+    
 
-    console.log("called")
-
-    User.find({ $text: { $search: username } })
+    User.find({ username: { $regex: username, $options: 'i'} })
         .select('-hashedPassword -profilePictureId')
         .exec((err, foundUsers) => {
 
