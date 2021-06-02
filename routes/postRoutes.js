@@ -52,7 +52,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
             (err, result) => {
                 if (err) {
                     res.sendStatus(500);
-                    next();
+                    //next();
                 }
 
                 Post.create({ text: req.body.text, postImage: result.url, postImageId: result.public_id, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
@@ -100,7 +100,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
 
 // get all posts for a user's feed for infinite scroll pagination. Latests post are shown everytime.
 router.get("/", authenticateToken, (req, res, next) => {
-
+    
     const {lastTime} = req.query;
 
     let filter = {};
@@ -117,12 +117,13 @@ router.get("/", authenticateToken, (req, res, next) => {
     .limit(6)
     .exec((err,foundPosts) => {
         if(err) {
+            console.log(err)
             res.sendStatus(500);
-            next();
+            
         }
-
+        
         res.send(foundPosts);
-        next();
+        
 
 
     })

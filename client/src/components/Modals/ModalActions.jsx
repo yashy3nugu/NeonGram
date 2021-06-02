@@ -115,8 +115,9 @@ const ModalActions = ({ post, addComment, onDelete }) => {
                 <a href={`/user/${post.user.username}`} className="text-gray-200 text-base font-normal">{post.user.username}</a>
                 {auth._id === post.user._id && (
                     <button className="text-right ml-auto text-neon-red" onClick={() => {
-                        onDelete(post._id);
                         setLoading(true);
+                        onDelete(post._id);
+                        
                         }}>{loading && <ButtonSpinner className="animate-spin w-6 inline"/> } <DeleteIconSolid className="w-6 inline"/></button>
                 )}
                 

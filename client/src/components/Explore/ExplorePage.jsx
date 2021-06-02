@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '../../config/axios';
 import { Waypoint } from 'react-waypoint';
 import ExplorePost from "./ExplorePost";
 import SpinnerIcon from "../Icons/SpinnerIcon";
@@ -13,11 +14,7 @@ const ExplorePage = () => {
     const [clickedPost, setClickedPost] = useState(null);
 
     useEffect(() => {
-        axios.get("/api/posts/", {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        }).then(res => {
+        axiosInstance.get("/api/posts/").then(res => {
             setExplorePosts(res.data);
         })
     }, []);
@@ -61,6 +58,27 @@ const ExplorePage = () => {
         setClickedPost(post);
     }
 
+    const onDelete = (id) => {
+
+        axiosInstance.delete(`/api/posts/${id}`).then(() => {
+            
+            
+            
+            setExplorePosts(prev => {
+                const remainingPosts = prev.filter(post => {
+                    return !(post._id === id)
+                });
+    
+                return remainingPosts;
+            });
+
+            onClose();
+            
+        })
+
+        
+    }
+
     return (
         <div className="container px-2 mx-auto">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-10">
@@ -80,7 +98,7 @@ const ExplorePage = () => {
                 <SpinnerIcon styles="block mx-auto" enabled={loading} size="6rem" />
             </div>
 
-            {clickedPost && <PostModal post={clickedPost} onClose={onClose}/>}
+            {clickedPost && <PostModal post={clickedPost} onClose={onClose} onDelete={onDelete}/>}
             
         </div>
     )
