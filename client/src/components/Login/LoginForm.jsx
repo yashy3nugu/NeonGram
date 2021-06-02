@@ -13,7 +13,7 @@ const LoginForm = () => {
 
 
     return (
-        <div className="loginForm container mx-auto w-full max-w-md bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple">
+        <div className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple">
             <Formik
                 initialValues={{
                     username: "",
@@ -67,6 +67,9 @@ const LoginForm = () => {
                         
                         <div>
                             <button type="submit" disabled={isSubmitting || !(isValid && dirty)} className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none">Sign In</button>
+                        </div>
+                        <div className="text-center mt-5">
+                            <p className="text-gray-300 text-sm">Don't have an account? <a href="/signup" className="text-neon-purple">Sign Up</a></p>
                         </div>
 
                     </Form>

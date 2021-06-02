@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 
 const LoginPage = () => {
     return (
-        <div className="">
+        <div className="relative h-screen">
             <LoginForm />
         </div>
     )
