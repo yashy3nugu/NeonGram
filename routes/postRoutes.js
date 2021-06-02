@@ -41,7 +41,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
     User.findById(req.user._id, (err, foundUser) => {
         if(err) {
             res.sendStatus(500);
-            next();
+            
         }
 
         const upload_stream = cloudinary.uploader.upload_stream(
@@ -52,17 +52,17 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
             (err, result) => {
                 if (err) {
                     res.sendStatus(500);
-                    //next();
+                    //
                 }
 
                 Post.create({ text: req.body.text, postImage: result.url, postImageId: result.public_id, user: mongoose.Types.ObjectId(foundUser._id), username:foundUser.username }, (err) => {
                             if (err) {
                                 console.log(err);
                                 res.sendStatus(500);
-                                next();
+                                
                             } else {
                                 res.sendStatus(201);
-                                next();
+                                
                             }
                         })
             }
@@ -77,7 +77,7 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
     //     if (err) {
     //         console.log(err);
     //         res.sendStatus(500);
-    //         next();
+    //         
     //     }
 
     //     if (foundUser) {
@@ -85,10 +85,10 @@ router.post("/createPost", authenticateToken, upload.single('postImage'), (req, 
     //             if (err) {
     //                 console.log(err);
     //                 res.sendStatus(500);
-    //                 next();
+    //                 
     //             } else {
     //                 res.sendStatus(201);
-    //                 next();
+    //                 
     //             }
     //         })
     //     }
@@ -147,7 +147,7 @@ router.get("/fromFollowing", authenticateToken, async (req,res, next) => {
     .limit(2);
 
     res.send(posts);
-    next();
+    
 })
 
 // Add a like to a post
@@ -159,7 +159,7 @@ router.post("/:postId/like", authenticateToken, (req, res, next) => {
 
         if (err) {
             res.sendStatus(500);
-            next();
+            
         }
 
 
@@ -168,10 +168,10 @@ router.post("/:postId/like", authenticateToken, (req, res, next) => {
             if (err) {
                 console.log(err)
                 res.sendStatus(500);
-                next();
+                
             } else {
                 res.sendStatus(200);
-                next();
+                
             }
 
         })
@@ -193,7 +193,7 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
 
         if (err) {
             res.sendStatus(500);
-            next();
+            
         }
 
 
@@ -202,10 +202,10 @@ router.post("/:postId/dislike", authenticateToken, (req, res, next) => {
             if (err) {
                 console.log(err)
                 res.sendStatus(500);
-                next();
+                
             } else {
                 res.sendStatus(200);
-                next();
+                
             }
 
         })
@@ -234,10 +234,10 @@ router.post("/:postId/removeReaction/:reaction", authenticateToken, (req,res,nex
             if (err) {
                 console.log(err)
                 res.sendStatus(500);
-                next();
+                
             } else {
                 res.sendStatus(200);
-                next();
+                
             }
 
         })
@@ -261,11 +261,11 @@ router.get("/user/:username", authenticateToken, (req,res,next) => {
             .exec((err,foundPosts) => {
                 if(err) {
                     res.sendStatus(500);
-                    next();
+                    
                 }
 
                 res.send(foundPosts);
-                next();
+                
 
 
             })
@@ -274,11 +274,11 @@ router.get("/user/:username", authenticateToken, (req,res,next) => {
         } else if(err) {
 
             res.sendStatus(500);
-            next();
+            
 
         } else {
             res.sendStatus(400);
-            next();
+            
         }
     })
 })
@@ -298,7 +298,7 @@ router.patch("/save/:postId",authenticateToken, async (req,res,next) => {
     }
     else {
         res.sendStatus(401);
-        next();
+        
     }
 
 });

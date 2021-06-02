@@ -34,7 +34,7 @@ router.post("/register", (req, res, next) => {
                     console.log(err);
                 } else {
                     res.send(`User ${username} saved successfully`);
-                    next();
+                    
                 }
             })
 
@@ -66,7 +66,7 @@ router.post("/login", (req, res, next) => {
                     accessToken: accessToken,
                     refreshToken: refreshToken
                 });
-                next();
+                
 
             }
             else {
@@ -77,12 +77,12 @@ router.post("/login", (req, res, next) => {
             console.log(err);
 
             res.sendStatus(500);
-            next();
+            
         }
 
         else {
             res.status(400).send("Invalid username");
-            next();
+            
         }
     })
 
@@ -101,7 +101,7 @@ router.post("/token", (req, res, next) => {
         if (err) {
             console.log(err);
             res.status(500).send("Internal server error");
-            next();
+            
         }
 
         if (foundToken) {
@@ -110,13 +110,13 @@ router.post("/token", (req, res, next) => {
                 if (err) {
                     console.log(err);
                     res.status(403).send("Invalid refresh token");
-                    next();
+                    
                 }
 
                 const accessToken = generateAccessToken({ name: user.name });
 
                 res.send(accessToken);
-                next();
+                
             })
         }
     })
@@ -131,11 +131,11 @@ router.post("/verify", authenticateToken, (req, res, next) => {
         .exec((err, foundUser) => {
             if (err) {
                 res.sendStatus(500);
-                next();
+                
             }
 
             res.send(foundUser);
-            next();
+            
         })
 
 })
@@ -152,16 +152,16 @@ router.get("/details/:username", authenticateToken, (req, res, next) => {
             if (foundUser) {
 
                 res.send(foundUser);
-                next();
+                
 
             }
             else if (err) {
                 res.sendStatus(500);
-                next();
+                
             }
             else {
                 res.sendStatus(400);
-                next();
+                
             }
         })
 
@@ -188,11 +188,11 @@ router.patch("/updateDetails", authenticateToken, async (req,res,next) => {
         await User.findByIdAndUpdate(req.user._id, userDetails);
 
         res.sendStatus(200);
-        next();
+        
     }
     catch {
         res.sendStatus(500);
-        next();
+        
     }
 })
 
@@ -223,7 +223,7 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
                 }, (err, result) => {
                     if (err) {
                         res.sendStatus(500);
-                        next();
+                        
                     }
 
                     //Find user
@@ -231,7 +231,7 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
 
                         if (err) {
                             res.sendStatus(500);
-                            next();
+                            
                         }
 
                         const publicId = foundUser.profilePictureId;
@@ -239,17 +239,17 @@ router.post("/addProfilePic", authenticateToken, upload.single('profilePicture')
                         cloudinary.api.delete_resources([publicId], (err, response) => {
                             if (err) {
                                 res.sendStatus(500);
-                                next();
+                                
                             }
                             // add the new URL to database
                             User.updateOne({ _id: req.user }, { profilePicture: result.url, profilePictureId: result.public_id }, (err) => {
                                 if (err) {
                                     console.log(err)
                                     res.sendStatus(500);
-                                    next();
+                                    
                                 } else {
                                     res.sendStatus(200);
-                                    next();
+                                    
                                 }
                             })
 
@@ -302,11 +302,11 @@ router.get("/search", authenticateToken, (req, res, next) => {
             if (err) {
                 res.sendStatus(500);
                 console.log(err);
-                next();
+                
             }
 
             res.send(foundUsers);
-            next();
+            
         })
 
 })
@@ -325,7 +325,7 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
     //     console.log("updated follower")
     //     if (err) {
     //         res.sendStatus(500);
-    //         next();
+    //         
     //     }
     //     User.findByIdAndUpdate(followingUserId, {
     //         $addToSet: {
@@ -334,13 +334,13 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
     //     }, (err) => {
     //         if (err) {
     //             res.sendStatus(500);
-    //             next();
+    //             
     //         }
 
     //         console.log("updated follwing")
 
     //         res.sendStatus(200);
-    //         next();
+    //         
     //     })
     // })
 
@@ -371,7 +371,7 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
         session.endSession();
 
         res.status(200).send({follower,followingUser})
-        next();
+        
 
 
     }
@@ -382,7 +382,7 @@ router.patch("/follow/:followingUserId", authenticateToken, async (req, res, nex
         session.endSession();
 
         res.sendStatus(500);
-        next();
+        
 
     }
 
@@ -417,7 +417,7 @@ router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, n
         session.endSession();
 
         res.status(200).send({follower,followingUser})
-        next();
+        
 
     } catch {
 
@@ -425,7 +425,7 @@ router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, n
         session.endSession();
 
         res.sendStatus(500);
-        next();
+        
 
     }
 
@@ -438,7 +438,7 @@ router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, n
     //     console.log("updated follower")
     //     if (err) {
     //         res.sendStatus(500);
-    //         next();
+    //         
     //     }
     //     User.findByIdAndUpdate(followingUserId, {
     //         $pull: {
@@ -447,13 +447,13 @@ router.patch("/unfollow/:followingUserId", authenticateToken, async (req, res, n
     //     }, (err) => {
     //         if (err) {
     //             res.sendStatus(500);
-    //             next();
+    //             
     //         }
 
     //         console.log("updated follwing")
 
     //         res.sendStatus(200);
-    //         next();
+    //         
     //     })
     // })
 

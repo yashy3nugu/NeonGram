@@ -16,10 +16,10 @@ router.post("/add/:postID", authenticateToken, (req, res, next) => {
     Comment.create({content: req.body.content, post: postID, user: req.user._id}, (err) => {
         if(err) {
             res.sendStatus(500);
-            next();
+            
         } else {
             res.sendStatus(201);
-            next();
+            
         }
     })
 });
@@ -32,11 +32,11 @@ router.get("/:postID", authenticateToken, (req, res, next) => {
     // Comment.find({post: postID}, (err, foundComments) => {
     //     if(err) {
     //         res.sendStatus(500);
-    //         next();
+    //         
     //     } else {
     //         console.log(foundComments)
     //         res.send(foundComments);
-    //         next();
+    //         
     //     }
     // })
 
@@ -45,7 +45,7 @@ router.get("/:postID", authenticateToken, (req, res, next) => {
     .populate({path: 'user', select: ['username','profilePicture']})
     .then( comment => {
         res.send(comment);
-        next();
+        
     })
 
 })
