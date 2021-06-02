@@ -107,7 +107,7 @@ const FindFollowers = () => {
 
 
     return (
-        <div className="container bg-gray-900 h-screen mx-auto">
+        <div className="container bg-gray-900 mx-auto mt-20 py-10">
             <Formik
                 initialValues={{
                     search: ""
@@ -138,17 +138,13 @@ const FindFollowers = () => {
                 }}
             >
                 {({ isSubmitting, isValid, dirty }) => (
-                    <Form autoComplete="off" className="px-10 pt-10">
+                    <Form autoComplete="off" className="px-10">
                         
-                            <div className="mb-3 mt-10 px-3 flex justify-center">
+                            <div className="mb-3 px-3 flex justify-center">
                                 <Field type="text" name="search" placeholder="search" className="rounded text-white bg-gray-800 px-2 py-2 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" />
-                                <button type="submit" className="bg-neon-purple inline rounded px-2 py-2 text-white disabled:opacity-50 ml-2" disabled={isSubmitting}>{isSubmitting ? <ButtonSpinner className="w-5 animate-spin"/> : <SearchIcon className="w-5" />}</button>
+                                <button type="submit" className="bg-neon-purple inline rounded px-2 py-2 text-white disabled:opacity-50 ml-2" disabled={isSubmitting || !(isValid && dirty)}>{isSubmitting ? <ButtonSpinner className="w-5 animate-spin"/> : <SearchIcon className="w-5" />}</button>
                             </div>
                         
-
-
-                        
-
                     </Form>
                 )}
 
@@ -182,12 +178,7 @@ const FindFollowers = () => {
 
                                 )
                             )}
-                            {!searchResults.length && (
-                                <div className="">
-                                    <p className="text-center text-lg text-gray-200">No users found with that username...</p>
-                                </div>
-                                
-                                )}
+                            
                         </div>
 
             {selectedUser && <UnfollowModal user={selectedUser} onClose={() => setSelectedUser(null)} unfollowUser={unfollowUser} loading={unfollowLoading}/>}
