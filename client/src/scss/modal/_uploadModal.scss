@@ -1,0 +1,10 @@
+.upload-modal {
+    background-color: rgba(0, 0, 0, 0.6);
+  
+    .upload-modal__cropper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
