@@ -28,6 +28,8 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/', express.static(path.join(__dirname, 'client/build')));
+
 app.use('/uploads', express.static('uploads'))
 
 //routes
@@ -40,8 +42,8 @@ app.use("/api",userRoutes);
 app.use("/api/posts",postRoutes);
 app.use("/api/comment",commentRoutes);
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+app.use((req, res, next) => {
+	res.sendFile(path.resolve(__dirname, 'client/build/index.html'));
 });
 
 app.listen(port, () => {
