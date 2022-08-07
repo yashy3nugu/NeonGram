@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
-import ThumbDownIconFilled from "../Icons/ThumbDownIconFilled";
-import ThumbUpIconFilled from "../Icons/ThumbUpIconFilled";
-import ThumbDownIcon from "../Icons/ThumbDownIcon";
-import ThumbUpIcon from "../Icons/ThumbUpIcon";
-import BookMarkIcon from "../Icons/BookMarkIcon";
-import PlusIcon from "../Icons/PlusIcon";
-import UserIcon from "../Icons/UserIcon";
-import DeleteIconSolid from '../Icons/DeleteIconSolid';
+import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
+import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
+import ThumbDownIcon from "../icons/ThumbDownIcon";
+import ThumbUpIcon from "../icons/ThumbUpIcon";
+import BookMarkIcon from "../icons/BookMarkIcon";
+import PlusIcon from "../icons/PlusIcon";
+import UserIcon from "../icons/UserIcon";
+import DeleteIconSolid from '../icons/DeleteIconSolid';
 import { AuthContext } from "../contextProviders/authContext";
 import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from 'formik';
-import ButtonSpinner from '../Icons/ButtonSpinner';
+import ButtonSpinner from '../icons/ButtonSpinner';
 
 const ModalActions = ({ post, addComment, onDelete }) => {
 

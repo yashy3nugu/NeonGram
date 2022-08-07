@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import MenuIcon from "../Icons/MenuIcon";
-import CrossIcon from "../Icons/CrossIcon";
-import HomeIcon from "../Icons/HomeIcon";
-import PlusIcon from "../Icons/PlusIcon";
-import PlusIconSolid from "../Icons/PlusIconSolid";
-import GlobeIcon from "../Icons/GlobeIcon";
-import GlobeIconSolid from "../Icons/GlobeIconSolid";
-import NeonGramIcon from "../Icons/NeonGramIcon";
+import MenuIcon from "../icons/MenuIcon";
+import CrossIcon from "../icons/CrossIcon";
+import HomeIcon from "../icons/HomeIcon";
+import PlusIcon from "../icons/PlusIcon";
+import PlusIconSolid from "../icons/PlusIconSolid";
+import GlobeIcon from "../icons/GlobeIcon";
+import GlobeIconSolid from "../icons/GlobeIconSolid";
+import NeonGramIcon from "../icons/NeonGramIcon";
 import ProfileDropDown from "./ProfileDropDown";
 import { useLocation } from "react-router-dom";
-import HomeIconSolid from "../Icons/HomeIconSolid";
+import HomeIconSolid from "../icons/HomeIconSolid";
 import { AuthContext } from "../contextProviders/authContext";
 
 const Navbar = () => {

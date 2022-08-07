@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import UserIcon from "../Icons/UserIcon";
+import UserIcon from "../icons/UserIcon";
 import axios from 'axios';
 
 const ProfilePicIcon = ({username,size}) => {

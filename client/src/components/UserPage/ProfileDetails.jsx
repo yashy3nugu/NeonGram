@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import UserIcon from "../Icons/UserIcon";
-import PencilIcon from "../Icons/PencilIcon";
+import UserIcon from "../icons/UserIcon";
+import PencilIcon from "../icons/PencilIcon";
 import UnfollowModal from "../Modals/UnfollowModal";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
-import SettingsIconSolid from "../Icons/SettingsIconSolid";
-import ButtonSpinner from "../Icons/ButtonSpinner";
+import SettingsIconSolid from "../icons/SettingsIconSolid";
+import ButtonSpinner from "../icons/ButtonSpinner";
 
 const ProfileDetails = ({ userDetails, posts, addFollower, removeFollower }) => {
 

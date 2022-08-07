@@ -3,7 +3,7 @@ import axios from 'axios';
 import axiosInstance from '../../config/axios';
 import { Waypoint } from 'react-waypoint';
 import ExplorePost from "./ExplorePost";
-import SpinnerIcon from "../Icons/SpinnerIcon";
+import SpinnerIcon from "../icons/SpinnerIcon";
 import PostModal from "../Modals/PostModal";
 
 const ExplorePage = () => {

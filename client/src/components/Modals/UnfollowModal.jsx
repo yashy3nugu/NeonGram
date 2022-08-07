@@ -1,8 +1,8 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
-import ButtonSpinner from '../Icons/ButtonSpinner';
-import UserIcon from "../Icons/UserIcon";
+import ButtonSpinner from '../icons/ButtonSpinner';
+import UserIcon from "../icons/UserIcon";
 
 const UnfollowModal = ({user, onClose, unfollowUser, loading}) => {
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form, Field } from 'formik';
 import ProfilePicChanger from './ProfilePicChanger';
-import UserIcon from "../Icons/UserIcon";
+import UserIcon from "../icons/UserIcon";
 import axiosInstance from "../../config/axios";
-import ButtonSpinner from '../Icons/ButtonSpinner';
+import ButtonSpinner from '../icons/ButtonSpinner';
 
 const ProfileSettings = () => {
 

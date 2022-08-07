@@ -1,9 +1,9 @@
 import React, {useRef, useCallback, useEffect} from 'react';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener"
-import SettingsIcon from "../Icons/SettingsIcon";
-import BookMarkIcon from "../Icons/BookMarkIcon";
-import LogoutIcon from "../Icons/LogoutIcon";
-import SearchIcon from "../Icons/SearchIcon";
+import SettingsIcon from "../icons/SettingsIcon";
+import BookMarkIcon from "../icons/BookMarkIcon";
+import LogoutIcon from "../icons/LogoutIcon";
+import SearchIcon from "../icons/SearchIcon";
 
 const ProfileDropDown = ({ auth, onClose }) => {
 

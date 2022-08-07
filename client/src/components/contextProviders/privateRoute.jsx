@@ -4,7 +4,7 @@ import axiosInstance from "../../config/axios";
 import {AuthContext} from "./authContext";
 import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
-import SpinnerIcon from '../Icons/SpinnerIcon';
+import SpinnerIcon from '../icons/SpinnerIcon';
 import axios from 'axios';
 
 

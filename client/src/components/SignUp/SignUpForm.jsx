@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import NeonGramIcon from "../Icons/NeonGramIcon";
+import NeonGramIcon from "../icons/NeonGramIcon";
 
 const SignUpForm = () => {
     const history = useHistory();

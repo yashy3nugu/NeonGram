@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../config/axios";
 import ProfileDetails from "./ProfileDetails";
-import SpinnerIcon from "../Icons/SpinnerIcon";
+import SpinnerIcon from "../icons/SpinnerIcon";
 import PostGallery from "./PostGallery";
 
 const UserPage = () => {

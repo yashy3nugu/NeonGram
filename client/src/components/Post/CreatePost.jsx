@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import DropZone from "./DropZone";
-import UploadIcon from "../Icons/UploadIcon";
+import UploadIcon from "../icons/UploadIcon";
 import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
-import ButtonSpinner from "../Icons/ButtonSpinner";
+import ButtonSpinner from "../icons/ButtonSpinner";
 
 const CreatePost = () => {
 

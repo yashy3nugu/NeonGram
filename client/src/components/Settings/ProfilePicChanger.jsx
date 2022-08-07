@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import UploadModal from "../Modals/UploadModal";
-import ButtonSpinner from "../Icons/ButtonSpinner";
-import PencilIcon from "../Icons/PencilIcon";
-import DeleteIcon from "../Icons/DeleteIcon"
+import ButtonSpinner from "../icons/ButtonSpinner";
+import PencilIcon from "../icons/PencilIcon";
+import DeleteIcon from "../icons/DeleteIcon"
 import axiosInstance from "../../config/axios";
 
 const ProfilePicChanger = ({ userDetails }) => {

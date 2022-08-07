@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form, Field } from 'formik';
-import NeonGramIcon from "../Icons/NeonGramIcon";
+import NeonGramIcon from "../icons/NeonGramIcon";
 
 const LoginForm = () => {
 

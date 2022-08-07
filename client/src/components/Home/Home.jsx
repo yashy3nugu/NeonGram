@@ -3,7 +3,7 @@ import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { Waypoint } from "react-waypoint";
-import SpinnerIcon from "../Icons/SpinnerIcon";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 
 const Home = () => {

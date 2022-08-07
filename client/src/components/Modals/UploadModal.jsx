@@ -3,7 +3,7 @@ import Cropper from "react-cropper";
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
 import axiosInstance from "../../config/axios";
-import ButtonSpinner from "../Icons/ButtonSpinner"
+import ButtonSpinner from "../icons/ButtonSpinner"
 import "cropperjs/dist/cropper.css";
 
 const UploadModal = ({ onClose, imageURL, imageFile }) => {

@@ -3,10 +3,10 @@ import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from 'formik';
 import {AuthContext} from "../contextProviders/authContext";
 import FollowButton from "./FollowButton";
-import SearchIcon from "../Icons/SearchIcon";
-import UserIcon from "../Icons/UserIcon";
+import SearchIcon from "../icons/SearchIcon";
+import UserIcon from "../icons/UserIcon";
 import UnfollowModal from "../Modals/UnfollowModal";
-import ButtonSpinner from '../Icons/ButtonSpinner';
+import ButtonSpinner from '../icons/ButtonSpinner';
 
 const FindFollowers = () => {
 

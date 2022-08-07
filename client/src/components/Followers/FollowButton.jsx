@@ -1,7 +1,7 @@
 import React from 'react';
-import UserAddIconSolid from "../Icons/UserAddIconSolid";
-import TickIcon from "../Icons/TickIcon";
-import ButtonSpinner from '../Icons/ButtonSpinner';
+import UserAddIconSolid from "../icons/UserAddIconSolid";
+import TickIcon from "../icons/TickIcon";
+import ButtonSpinner from '../icons/ButtonSpinner';
 
 const FollowButton = ({auth, user, followUser, selectUser, loading}) => {
 

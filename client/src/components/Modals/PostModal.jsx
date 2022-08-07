@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import useClickOutsideListener from "../../hooks/useClickOutsideListener";
-import CrossIcon from '../Icons/CrossIcon';
+import CrossIcon from '../icons/CrossIcon';
 import ModalActions from "./ModalActions";
 import ModalComments from "./ModalComments";
 import axiosInstance from "../../config/axios";

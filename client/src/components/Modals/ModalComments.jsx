@@ -1,5 +1,5 @@
 import React from 'react';
-import UserIcon from "../Icons/UserIcon";
+import UserIcon from "../icons/UserIcon";
 
 const ModalComments = ({post, comments }) => {
     return (

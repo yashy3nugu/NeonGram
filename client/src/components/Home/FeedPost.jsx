@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
 import {AuthContext} from "../contextProviders/authContext";
-import UserIcon from "../Icons/UserIcon";
-import ThumbDownIconFilled from "../Icons/ThumbDownIconFilled";
-import ThumbUpIconFilled from "../Icons/ThumbUpIconFilled";
-import ThumbDownIcon from "../Icons/ThumbDownIcon";
-import ThumbUpIcon from "../Icons/ThumbUpIcon";
-import BookMarkIcon from "../Icons/BookMarkIcon";
-import DotsHorizontalIcon from "../Icons/DotsHorizontalIcon";
-import ProfilePicIcon from "../Icons/ProfilePicIcon";
+import UserIcon from "../icons/UserIcon";
+import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
+import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
+import ThumbDownIcon from "../icons/ThumbDownIcon";
+import ThumbUpIcon from "../icons/ThumbUpIcon";
+import BookMarkIcon from "../icons/BookMarkIcon";
+import DotsHorizontalIcon from "../icons/DotsHorizontalIcon";
+import ProfilePicIcon from "../icons/ProfilePicIcon";
 import PostCommentSection from "./PostCommentSection"
 
 const FeedPost = ({ post }) => {
