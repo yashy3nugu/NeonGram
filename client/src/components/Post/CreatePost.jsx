@@ -24,7 +24,7 @@ const CreatePost = () => {
         const fd = new FormData();
         fd.append('postImage', image[0]);
         fd.append('text', caption);
-        axiosInstance.post("/api/posts/createPost", fd)
+        axiosInstance.post("/api/posts", fd)
             .then(() => {
                 setLoading(false)
                 history.push('/')

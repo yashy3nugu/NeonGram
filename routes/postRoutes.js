@@ -10,18 +10,15 @@ const upload = multer({
 });
 const router = express.Router();
 
-router.post(
-  "/createPost",
-  authenticateToken,
-  upload.single("postImage"),
-  postController.createPost
-);
+router
+  .route("/")
+  .get(authenticateToken, postController.getAllPosts)
+  .post(authenticateToken, upload.single("postImage"), postController.createPost)
+  .delete(authenticateToken, postController.deletePost);
 
 // get all posts for a user's feed for infinite scroll pagination. Latests post are shown everytime.
-router.get("/", authenticateToken, postController.getAllPosts);
-
 router.get(
-  "/fromFollowing",
+  "/following",
   authenticateToken,
   postController.getAllPostsFromFollowing
 );
@@ -47,7 +44,7 @@ router.get(
 );
 
 // add the post to saved posts of user
-router.patch("/save/:postId", authenticateToken, postController.savePost);
+router.patch("/:postId/save", authenticateToken, postController.savePost);
 
 //  delete the post
 router.delete("/:postId", authenticateToken, postController.deletePost);

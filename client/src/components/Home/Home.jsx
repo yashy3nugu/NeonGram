@@ -16,7 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance.get("/api/posts/fromFollowing")
+        axiosInstance.get("/api/posts/following")
             .then(res => {
                 setLoading(false);
                 if (res.data.length) {
@@ -42,7 +42,7 @@ const Home = () => {
         }
         setLoading(true);
         const lastTime = posts[posts.length - 1].time;
-        axiosInstance.get("/api/posts/fromFollowing", {
+        axiosInstance.get("/api/posts/following", {
             params: {
                 lastTime
             }
