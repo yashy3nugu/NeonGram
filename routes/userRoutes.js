@@ -27,7 +27,7 @@ router.post("/verify", authenticateToken, authController.verifyToken);
 router.get(
   "/details/:username",
   authenticateToken,
-  userController.getUserFromUsername
+  userController.getUserFromUserName
 );
 
 router.patch(

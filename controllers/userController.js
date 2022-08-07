@@ -1,6 +1,7 @@
 const sharp = require("sharp");
 const streamifier = require("streamifier");
 const { cloudinary } = require("../config/cloudinary");
+const { User } = require("../models/userModel");
 
 exports.getUserFromUserName = (req, res) => {
   const { username } = req.params;
