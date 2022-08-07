@@ -52,16 +52,8 @@ router.delete(
 // add partial searching
 router.get("/search", authenticateToken, userController.searchUsers);
 
-router.patch(
-  "/follow/:followingUserId",
-  authenticateToken,
-  userController.followUser
-);
+router.post("/follow", authenticateToken, userController.followUser);
 
-router.patch(
-  "/unfollow/:followingUserId",
-  authenticateToken,
-  userController.unfollowUser
-);
+router.post("/unfollow", authenticateToken, userController.unfollowUser);
 
 module.exports = router;

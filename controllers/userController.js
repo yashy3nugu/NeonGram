@@ -2,6 +2,7 @@ const sharp = require("sharp");
 const streamifier = require("streamifier");
 const { cloudinary } = require("../config/cloudinary");
 const { User } = require("../models/userModel");
+const mongoose = require("mongoose");
 
 exports.getUserFromUserName = (req, res) => {
   const { username } = req.params;
@@ -131,7 +132,7 @@ exports.searchUsers = (req, res) => {
 };
 
 exports.followUser = async (req, res) => {
-  const { followingUserId } = req.params;
+  const { followingUserId } = req.body;
 
   const followerId = req.user._id;
 
@@ -177,7 +178,7 @@ exports.followUser = async (req, res) => {
 };
 
 exports.unfollowUser = async (req, res) => {
-  const { followingUserId } = req.params;
+  const { followingUserId } = req.body;
 
   const followerId = req.user._id;
 
