@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
+const { User } = require("../models/userModel");
 
 exports.registerUser = (req, res) => {
   const { email, fname, lname, username, password } = req.body;
@@ -86,4 +87,16 @@ exports.refreshToken = (req, res, next) => {
       );
     }
   });
+};
+
+exports.verifyToken = (req, res, next) => {
+  User.findById(req.user._id)
+    .select("username fname lname email bio profilePicture followers following")
+    .exec((err, foundUser) => {
+      if (err) {
+        res.sendStatus(500);
+      }
+
+      res.send(foundUser);
+    });
 };

@@ -1,23 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const salt = bcrypt.genSaltSync(10);
-const jwt = require("jsonwebtoken");
+
 const multer = require("multer");
-const sharp = require("sharp");
-const streamifier = require("streamifier");
-const { cloudinary } = require("../config/cloudinary");
-const {
-  generateAccessToken,
-  generateRefreshToken,
-  authenticateToken,
-} = require("../utils/jwt");
+
+const { authenticateToken } = require("../utils/jwt");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 
 const router = express.Router();
-
-const { User, RefreshToken } = require("../models/userModel");
-const mongoose = require("mongoose");
 
 const upload = multer({
   limits: {
@@ -31,17 +21,7 @@ router.post("/login", authController.loginUser);
 
 router.post("/token", authController.refreshToken);
 
-router.post("/verify", authenticateToken, (req, res, next) => {
-  User.findById(req.user._id)
-    .select("username fname lname email bio profilePicture followers following")
-    .exec((err, foundUser) => {
-      if (err) {
-        res.sendStatus(500);
-      }
-
-      res.send(foundUser);
-    });
-});
+router.post("/verify", authenticateToken, authController.verifyToken);
 
 // get details of user from username
 router.get(
