@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
-import ThumbDownIcon from "../icons/ThumbDownIcon";
-import ThumbUpIcon from "../icons/ThumbUpIcon";
 import BookMarkIcon from "../icons/BookMarkIcon";
 import PlusIcon from "../icons/PlusIcon";
 import UserIcon from "../icons/UserIcon";

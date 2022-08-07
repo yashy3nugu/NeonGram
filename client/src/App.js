@@ -11,10 +11,7 @@ import ExplorePage from "./components/Explore/ExplorePage";
 import NotFound from "./components/NotFound/NotFound";
 
 function App() {
-
-
   return (
-
     <>
       <Router>
         <Switch>
@@ -30,11 +27,7 @@ function App() {
           <Route component={NotFound} />
         </Switch>
       </Router>
-
-
     </>
-
-
   );
 }
 

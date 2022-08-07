@@ -4,6 +4,8 @@ const { cloudinary } = require("../config/cloudinary");
 const { User } = require("../models/userModel");
 const mongoose = require("mongoose");
 
+/////////////////////////////////////////////////////
+// Get details of user from username
 exports.getUserFromUserName = (req, res) => {
   const { username } = req.params;
 
@@ -22,6 +24,8 @@ exports.getUserFromUserName = (req, res) => {
     });
 };
 
+/////////////////////////////////////////////////////
+// Update user details
 exports.updateUserDetails = async (req, res) => {
   const { userDetails } = req.body;
   try {
@@ -33,6 +37,8 @@ exports.updateUserDetails = async (req, res) => {
   }
 };
 
+/////////////////////////////////////////////////////
+// Upload profile picture and remove old one if exists
 exports.uploadProfilePicture = (req, res, next) => {
   const { x, y, width, height } = JSON.parse(req.body.imageSettings);
 
@@ -97,6 +103,8 @@ exports.uploadProfilePicture = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+/////////////////////////////////////////////////////
+// Delete profile picture
 exports.deleteProfilePicture = async (req, res, next) => {
   try {
     const { profilePictureId } = await User.findById(req.user._id).select(
@@ -116,6 +124,8 @@ exports.deleteProfilePicture = async (req, res, next) => {
   }
 };
 
+/////////////////////////////////////////////////////
+// Search for users using regex
 exports.searchUsers = (req, res) => {
   const { username } = req.query;
 
@@ -131,6 +141,8 @@ exports.searchUsers = (req, res) => {
     });
 };
 
+/////////////////////////////////////////////////////
+// Follow user
 exports.followUser = async (req, res) => {
   const { followingUserId } = req.body;
 
@@ -176,7 +188,8 @@ exports.followUser = async (req, res) => {
     res.sendStatus(500);
   }
 };
-
+/////////////////////////////////////////////////////
+// Unfollow user
 exports.unfollowUser = async (req, res) => {
   const { followingUserId } = req.body;
 

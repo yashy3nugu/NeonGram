@@ -4,6 +4,8 @@ const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
 const { User } = require("../models/userModel");
 const { RefreshToken } = require("../models/userModel");
 
+/////////////////////////////////////////////////////
+// Register new user
 exports.registerUser = (req, res) => {
   const { email, fname, lname, username, password } = req.body;
 
@@ -30,6 +32,8 @@ exports.registerUser = (req, res) => {
   );
 };
 
+/////////////////////////////////////////////////////
+// Login user
 exports.loginUser = (req, res) => {
   const { username, password } = req.body;
 
@@ -58,7 +62,9 @@ exports.loginUser = (req, res) => {
   });
 };
 
-exports.refreshToken = (req, res, next) => {
+/////////////////////////////////////////////////////
+// Refresh token
+exports.refresh = (req, res) => {
   const refreshToken = req.body.refreshToken;
 
   if (refreshToken == null) {
@@ -90,6 +96,8 @@ exports.refreshToken = (req, res, next) => {
   });
 };
 
+/////////////////////////////////////////////////////
+// Verify JWT token
 exports.verifyToken = (req, res, next) => {
   User.findById(req.user._id)
     .select("username fname lname email bio profilePicture followers following")

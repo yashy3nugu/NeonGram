@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import UserIcon from "../icons/UserIcon";
-import PencilIcon from "../icons/PencilIcon";
 import UnfollowModal from "../Modals/UnfollowModal";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";

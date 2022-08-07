@@ -1,5 +1,4 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 
 const multer = require("multer");
 
@@ -19,11 +18,10 @@ router.post("/register", authController.registerUser);
 
 router.post("/login", authController.loginUser);
 
-router.post("/token", authController.refreshToken);
+router.post("/token", authController.refresh);
 
 router.post("/verify", authenticateToken, authController.verifyToken);
 
-// get details of user from username
 router.get(
   "/details/:username",
   authenticateToken,

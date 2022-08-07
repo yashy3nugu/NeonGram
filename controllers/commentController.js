@@ -1,5 +1,7 @@
 const { Comment } = require("../models/commentModel");
 
+/////////////////////////////////////////////////////
+// Add comment to a post
 exports.addComment = (req, res) => {
   const { postID } = req.params;
   Comment.create(
@@ -14,6 +16,8 @@ exports.addComment = (req, res) => {
   );
 };
 
+/////////////////////////////////////////////////////
+// Get comments for a post
 exports.getCommentsForPost = (req, res, next) => {
   const { postID } = req.params;
 
