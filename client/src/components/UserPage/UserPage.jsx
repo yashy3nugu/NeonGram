@@ -2,95 +2,93 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../config/axios";
 import ProfileDetails from "./ProfileDetails";
-import SpinnerIcon from "../Icons/SpinnerIcon";
+import SpinnerIcon from "../icons/SpinnerIcon";
 import PostGallery from "./PostGallery";
 
 const UserPage = () => {
+  const [posts, setPosts] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
 
-    const [posts, setPosts] = useState(null);
-    const [userDetails, setUserDetails] = useState(null);
+  const { user } = useParams();
 
-    const { user } = useParams();
+  useEffect(() => {
+    axiosInstance
+      .get(`/api/posts/user/${user}`)
+      .then((res) => setPosts(res.data));
 
-    useEffect(() => {
+    axiosInstance
+      .get(`/api/details/${user}`)
+      .then((res) => setUserDetails(res.data));
+  }, [user]);
 
-        axiosInstance.get(`/api/posts/user/${user}`).then(res => setPosts(res.data));
+  const addFollower = (followerID) => {
+    const followers = [...userDetails.followers];
 
-        axiosInstance.get(`/api/details/${user}`).then(res => setUserDetails(res.data));
+    followers.push(followerID);
 
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        followers: followers,
+      };
+    });
+  };
 
-    }, [user])
+  const removeFollower = (followerId) => {
+    const followers = [...userDetails.followers];
 
-    const addFollower = (followerID) => {
-        
+    let followerIndex;
 
-        const followers = [...userDetails.followers];
+    followers.forEach((follower, idx) => {
+      if (follower === followerId) {
+        followerIndex = idx;
+      }
+    });
 
-        followers.push(followerID)
+    followers.splice(followerIndex, 1);
 
-        setUserDetails(prev => {
-            return {
-                ...prev,
-                followers: followers
-            }
-        })
-    }
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        followers,
+      };
+    });
+  };
 
-    const removeFollower = (followerId) => {
+  const removePost = (id) => {
+    const currentPosts = [...posts];
+    let removeIndex;
 
-        const followers = [...userDetails.followers];
+    currentPosts.forEach((post, idx) => {
+      if (id === post._id) {
+        removeIndex = idx;
+      }
+    });
 
-        let followerIndex;
+    currentPosts.splice(removeIndex, 1);
 
-        followers.forEach((follower,idx) => {
-            if(follower === followerId) {
-                followerIndex = idx;
-            }
-        });
+    setPosts(currentPosts);
+  };
 
-        followers.splice(followerIndex,1);
-
-        setUserDetails(prev => {
-            return {
-                ...prev,
-                followers
-            }
-        })
-
-    }
-
-    const removePost = (id) => {
-        const currentPosts = [...posts];
-        let removeIndex;
-
-        currentPosts.forEach((post,idx) => {
-            if(id === post._id) {
-                removeIndex = idx;
-            }
-        });
-
-        currentPosts.splice(removeIndex,1);
-
-        setPosts(currentPosts);
-    }
-
-
-    return (
+  return (
+    <>
+      {userDetails && posts ? (
         <>
-            {(userDetails && posts) ? (
-                <>
-                    <ProfileDetails userDetails={userDetails} posts={posts} addFollower={addFollower} removeFollower={removeFollower} />
-                    <PostGallery posts={posts} removePost={removePost}/>
-                </>
-            ): (
-                <div>
-                    <SpinnerIcon styles="block mx-auto" enabled={true} size="6rem" />
-                </div>
-            )}
-
+          <ProfileDetails
+            userDetails={userDetails}
+            posts={posts}
+            addFollower={addFollower}
+            removeFollower={removeFollower}
+          />
+          <PostGallery posts={posts} removePost={removePost} />
         </>
-    )
-
-}
+      ) : (
+        <div>
+          <SpinnerIcon styles="block mx-auto" enabled={true} size="6rem" />
+        </div>
+      )}
+    </>
+  );
+};
 
 export default UserPage;
