@@ -28,10 +28,10 @@ const ProfileDropDown = ({ auth, onClose }) => {
         <SettingsIcon className="w-5 inline mr-2" />
         Settings
       </a>
-      <a href="/settings" className="block text-gray-300 p-2 hover:bg-gray-700">
-        <BookMarkIcon className="w-5 inline mr-2" />
-        Saved
-      </a>
+//       <a href="/settings" className="block text-gray-300 p-2 hover:bg-gray-700">
+//         <BookMarkIcon className="w-5 inline mr-2" />
+//         Saved
+//       </a>
       <a href="/find" className="block text-gray-300 p-2 hover:bg-gray-700">
         <SearchIcon className="w-5 inline mr-2" />
         Search
