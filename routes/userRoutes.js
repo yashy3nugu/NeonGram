@@ -18,8 +18,6 @@ router.post("/register", authController.registerUser);
 
 router.post("/login", authController.loginUser);
 
-router.post("/token", authController.refresh);
-
 router.post("/verify", authenticateToken, authController.verifyToken);
 
 router.get(
@@ -52,6 +50,10 @@ router.get("/search", authController.protectRoutes, userController.searchUsers);
 
 router.post("/follow", authController.protectRoutes, userController.followUser);
 
-router.post("/unfollow", authController.protectRoutes, userController.unfollowUser);
+router.post(
+  "/unfollow",
+  authController.protectRoutes,
+  userController.unfollowUser
+);
 
 module.exports = router;

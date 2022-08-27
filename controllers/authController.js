@@ -1,47 +1,52 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { generateAccessToken, generateRefreshToken, decodeToken } = require("../utils/jwt");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+  decodeToken,
+} = require("../utils/jwt");
 const { User } = require("../models/userModel");
 const { RefreshToken } = require("../models/userModel");
 
 /////////////////////////////////////////////////////
 // Register new user
-exports.registerUser = (req, res) => {
-  const { email, fname, lname, username, password } = req.body;
+exports.registerUser = async (req, res) => {
+  try {
+    const { email, fname, lname, username, password } = req.body;
 
-  const hashedPassword = bcrypt.hashSync(password);
+    const hashedPassword = bcrypt.hashSync(password);
 
-  User.findOne(
-    { $or: [{ username: username }, { email: email }] },
-    (err, foundUser) => {
-      if (foundUser) {
-        res.status(400).send("User exists");
-      } else {
-        User.create(
-          { email, fname, lname, username, hashedPassword },
-          (err) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(`User ${username} saved successfully`);
-            }
-          }
-        );
-      }
+    let foundUser;
+
+    foundUser = await User.findOne({ username: username }, { email: email });
+    if (foundUser) {
+      res.status(400).send({ message: "Username or email already exists" });
+    } else {
+      await User.create({
+        email,
+        fname,
+        lname,
+        username,
+        hashedPassword,
+      });
+      res.status(201).send(`User ${username} saved successfully`);
     }
-  );
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
 // Login user
-exports.loginUser = (req, res) => {
-  const { username, password } = req.body;
+exports.loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-  User.findOne({ username: username }, (err, foundUser) => {
-    if (foundUser) {
-      if (bcrypt.compareSync(password, foundUser.hashedPassword)) {
-        const accessToken = generateAccessToken({ _id: foundUser._id });
-        const refreshToken = generateRefreshToken({ _id: foundUser._id });
+    const user = await User.findOne({ username: username });
+    if (user) {
+      if (bcrypt.compareSync(password, user.hashedPassword)) {
+        const accessToken = generateAccessToken({ _id: user._id });
+        const refreshToken = generateRefreshToken({ _id: user._id });
 
         RefreshToken.create({ token: refreshToken });
 
@@ -52,89 +57,54 @@ exports.loginUser = (req, res) => {
       } else {
         res.sendStatus(400);
       }
-    } else if (err) {
-      console.log(err);
-
-      res.sendStatus(500);
     } else {
-      res.status(400).send("Invalid username");
+      res.sendStatus(400);
     }
-  });
-};
-
-/////////////////////////////////////////////////////
-// Refresh token
-exports.refresh = (req, res) => {
-  const refreshToken = req.body.refreshToken;
-
-  if (refreshToken == null) {
-    res.status(401).send("Refresh token required");
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
   }
-
-  refreshTokenDoc.findOne({ token: refreshToken }, (err, foundToken) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Internal server error");
-    }
-
-    if (foundToken) {
-      jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        (err, user) => {
-          if (err) {
-            console.log(err);
-            res.status(403).send("Invalid refresh token");
-          }
-
-          const accessToken = generateAccessToken({ name: user.name });
-
-          res.send(accessToken);
-        }
-      );
-    }
-  });
 };
 
 /////////////////////////////////////////////////////
 // Verify JWT token
-exports.verifyToken = (req, res, next) => {
-  User.findById(req.user)
-    .select("username fname lname email bio profilePicture followers following")
-    .exec((err, foundUser) => {
-      if (err) {
-        res.sendStatus(500);
-      }
+exports.verifyToken = async (req, res) => {
+  try {
+    const user = await User.findById(req.user).select(
+      "username fname lname email bio profilePicture followers following"
+    );
 
-      res.send(foundUser);
-    });
+    res.send(user);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
 // Protect Routes
 
 exports.protectRoutes = async (req, res, next) => {
-	try {
-		let authToken;
-		if (
-			req.headers.authorization &&
-			req.headers.authorization.startsWith('Bearer')
-		) {
-			authToken = req.headers.authorization.split(' ')[1];
-		}
+  try {
+    let authToken;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      authToken = req.headers.authorization.split(" ")[1];
+    }
 
-		const { _id } = await decodeToken(authToken);
+    const { _id } = await decodeToken(authToken);
 
-		const userInstance = await User.findById(_id)
+    const userInstance = await User.findById(_id);
 
-		if (!userInstance) {
-			return res.status(401).send('Unauthorized');
-		}
+    if (!userInstance) {
+      return res.status(401).send("Unauthorized");
+    }
 
-		req.user = _id;
+    req.user = _id;
 
-		next();
-	} catch (err) {
-		res.status(401).send('Unauthorized');
-	}
+    next();
+  } catch (err) {
+    res.status(401).send("Unauthorized");
+  }
 };
