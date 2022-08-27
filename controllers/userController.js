@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 // Get details of user from username
 exports.getUserFromUserName = async (req, res) => {
   const { username } = req.params;
-  // convert to async function
 
   try {
     const foundUser = await User.findOne({ username: username })
@@ -43,7 +42,6 @@ exports.updateUserDetails = async (req, res) => {
 // Upload profile picture and remove old one if exists
 exports.uploadProfilePicture = (req, res, next) => {
   const { x, y, width, height } = JSON.parse(req.body.imageSettings);
-
 
   sharp(req.file.buffer)
     .extract({ left: x, top: y, width, height })
@@ -127,19 +125,18 @@ exports.deleteProfilePicture = async (req, res, next) => {
 
 /////////////////////////////////////////////////////
 // Search for users using regex
-exports.searchUsers = (req, res) => {
-  const { username } = req.query;
+exports.searchUsers = async (req, res) => {
+  try {
+    const { username } = req.query;
 
-  User.find({ username: { $regex: username, $options: "i" } })
-    .select("-hashedPassword -profilePictureId")
-    .exec((err, foundUsers) => {
-      if (err) {
-        res.sendStatus(500);
-        console.log(err);
-      }
+    const users = await User.find({
+      username: { $regex: username, $options: "i" },
+    }).select("-hashedPassword -profilePictureId");
 
-      res.send(foundUsers);
-    });
+    res.send(users);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
