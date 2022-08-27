@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
+const { generateAccessToken, generateRefreshToken, decodeToken } = require("../utils/jwt");
 const { User } = require("../models/userModel");
 const { RefreshToken } = require("../models/userModel");
 
@@ -99,7 +99,7 @@ exports.refresh = (req, res) => {
 /////////////////////////////////////////////////////
 // Verify JWT token
 exports.verifyToken = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.user)
     .select("username fname lname email bio profilePicture followers following")
     .exec((err, foundUser) => {
       if (err) {
@@ -108,4 +108,33 @@ exports.verifyToken = (req, res, next) => {
 
       res.send(foundUser);
     });
+};
+
+/////////////////////////////////////////////////////
+// Protect Routes
+
+exports.protectRoutes = async (req, res, next) => {
+	try {
+		let authToken;
+		if (
+			req.headers.authorization &&
+			req.headers.authorization.startsWith('Bearer')
+		) {
+			authToken = req.headers.authorization.split(' ')[1];
+		}
+
+		const { _id } = await decodeToken(authToken);
+
+		const userInstance = await User.findById(_id)
+
+		if (!userInstance) {
+			return res.status(401).send('Unauthorized');
+		}
+
+		req.user = _id;
+
+		next();
+	} catch (err) {
+		res.status(401).send('Unauthorized');
+	}
 };

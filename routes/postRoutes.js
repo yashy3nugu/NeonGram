@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
-const { authenticateToken } = require("../utils/jwt");
 const postController = require("../controllers/postController");
+const authController = require("../controllers/authController");
 
 const upload = multer({
   limits: {
@@ -12,38 +12,38 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(authenticateToken, postController.getAllPosts)
+  .get(authController.protectRoutes, postController.getAllPosts)
   .post(
-    authenticateToken,
+    authController.protectRoutes,
     upload.single("postImage"),
     postController.createPost
   )
-  .delete(authenticateToken, postController.deletePost);
+  .delete(authController.protectRoutes, postController.deletePost);
 
 router.get(
   "/following",
-  authenticateToken,
+  authController.protectRoutes,
   postController.getAllPostsFromFollowing
 );
 
-router.post("/:postId/like", authenticateToken, postController.likePost);
+router.post("/:postId/like", authController.protectRoutes, postController.likePost);
 
-router.post("/:postId/dislike", authenticateToken, postController.dislikePost);
+router.post("/:postId/dislike", authController.protectRoutes, postController.dislikePost);
 
 router.post(
   "/:postId/removeReaction/:reaction",
-  authenticateToken,
+  authController.protectRoutes,
   postController.removeReaction
 );
 
 router.get(
   "/user/:username",
-  authenticateToken,
+  authController.protectRoutes,
   postController.getPostsFromUsername
 );
 
-router.patch("/:postId/save", authenticateToken, postController.savePost);
+router.patch("/:postId/save", authController.protectRoutes, postController.savePost);
 
-router.delete("/:postId", authenticateToken, postController.deletePost);
+router.delete("/:postId", authController.protectRoutes, postController.deletePost);
 
 module.exports = router;

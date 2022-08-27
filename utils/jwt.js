@@ -9,7 +9,13 @@ exports.generateRefreshToken = (user) => {
   return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 };
 
-exports.authenticateToken = (req, res, next) => {
+exports.decodeToken = async (token) => {
+  const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  return decoded;
+}
+
+//convert to async
+exports.authenticateToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 

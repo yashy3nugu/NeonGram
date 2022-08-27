@@ -24,34 +24,34 @@ router.post("/verify", authenticateToken, authController.verifyToken);
 
 router.get(
   "/details/:username",
-  authenticateToken,
+  authController.protectRoutes,
   userController.getUserFromUserName
 );
 
 router.patch(
   "/updateDetails",
-  authenticateToken,
+  authController.protectRoutes,
   userController.updateUserDetails
 );
 
 router.post(
   "/addProfilePic",
-  authenticateToken,
+  authController.protectRoutes,
   upload.single("profilePicture"),
   userController.uploadProfilePicture
 );
 
 router.delete(
   "/deleteProfilePic",
-  authenticateToken,
+  authController.protectRoutes,
   userController.deleteProfilePicture
 );
 
 // add partial searching
-router.get("/search", authenticateToken, userController.searchUsers);
+router.get("/search", authController.protectRoutes, userController.searchUsers);
 
-router.post("/follow", authenticateToken, userController.followUser);
+router.post("/follow", authController.protectRoutes, userController.followUser);
 
-router.post("/unfollow", authenticateToken, userController.unfollowUser);
+router.post("/unfollow", authController.protectRoutes, userController.unfollowUser);
 
 module.exports = router;

@@ -5,7 +5,7 @@ const { Comment } = require("../models/commentModel");
 exports.addComment = (req, res) => {
   const { postID } = req.params;
   Comment.create(
-    { content: req.body.content, post: postID, user: req.user._id },
+    { content: req.body.content, post: postID, user: req.user },
     (err) => {
       if (err) {
         res.sendStatus(500);

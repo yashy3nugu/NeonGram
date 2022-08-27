@@ -7,14 +7,14 @@ const mongoose = require("mongoose");
 /////////////////////////////////////////////////////
 // Create a post
 exports.createPost = (req, res) => {
-  User.findById(req.user._id, (err, foundUser) => {
+  User.findById(req.user, (err, foundUser) => {
     if (err) {
       res.sendStatus(500);
     }
 
     const upload_stream = cloudinary.uploader.upload_stream(
       {
-        folder: `posts/${req.user._id}`,
+        folder: `posts/${req.user}`,
         unique_filename: true,
       },
       (err, result) => {
@@ -78,14 +78,14 @@ exports.getAllPosts = (req, res) => {
 ///////////////////////////////////////////////////////////////////////
 // Get all posts from the user's following sorted by time and paginated
 exports.getAllPostsFromFollowing = async (req, res) => {
-  const { following } = await User.findById(req.user._id).select("following");
+  const { following } = await User.findById(req.user).select("following");
   const { lastTime } = req.query;
 
-  let filter = { user: { $in: [...following, req.user._id] } };
+  let filter = { user: { $in: [...following, req.user] } };
 
   if (lastTime) {
     filter = {
-      user: { $in: [...following, req.user._id] },
+      user: { $in: [...following, req.user] },
       time: { $lt: new Date(lastTime) },
     };
   }
@@ -106,7 +106,7 @@ exports.getAllPostsFromFollowing = async (req, res) => {
 exports.likePost = async (req, res) => {
   const { postId } = req.params;
 
-  User.findOne({ _id: req.user._id }, (err, foundUser) => {
+  User.findOne({ _id: req.user }, (err, foundUser) => {
     if (err) {
       res.sendStatus(500);
     }
@@ -134,7 +134,7 @@ exports.likePost = async (req, res) => {
 exports.dislikePost = async (req, res) => {
   const { postId } = req.params;
 
-  User.findOne({ _id: req.user._id }, (err, foundUser) => {
+  User.findOne({ _id: req.user }, (err, foundUser) => {
     if (err) {
       res.sendStatus(500);
     }
@@ -162,7 +162,7 @@ exports.dislikePost = async (req, res) => {
 exports.removeReaction = (req, res) => {
   const { postId, reaction } = req.params;
 
-  User.findOne({ _id: req.user._id }, (err, foundUser) => {
+  User.findOne({ _id: req.user }, (err, foundUser) => {
     if (err) {
       res.sendStatus(500);
     }
@@ -214,7 +214,7 @@ exports.getPostsFromUsername = (req, res) => {
 exports.savePost = async (req, res, next) => {
   const { postId } = req.params;
 
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user);
 
   if (user) {
     console.log(user);

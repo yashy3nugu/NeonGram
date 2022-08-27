@@ -6,22 +6,24 @@ const mongoose = require("mongoose");
 
 /////////////////////////////////////////////////////
 // Get details of user from username
-exports.getUserFromUserName = (req, res) => {
+exports.getUserFromUserName = async (req, res) => {
   const { username } = req.params;
+  // convert to async function
 
-  User.findOne({ username: username })
-    .select(
-      "username fname lname email bio profilePicture profilePictureId followers following"
-    )
-    .exec((err, foundUser) => {
-      if (foundUser) {
-        res.send(foundUser);
-      } else if (err) {
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(400);
-      }
-    });
+  try {
+    const foundUser = await User.findOne({ username: username })
+      .select(
+        "username fname lname email bio profilePicture profilePictureId followers following"
+      )
+      .exec();
+    if (foundUser) {
+      res.send(foundUser);
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
@@ -29,7 +31,7 @@ exports.getUserFromUserName = (req, res) => {
 exports.updateUserDetails = async (req, res) => {
   const { userDetails } = req.body;
   try {
-    await User.findByIdAndUpdate(req.user._id, userDetails);
+    await User.findByIdAndUpdate(req.user, userDetails);
 
     res.sendStatus(200);
   } catch {
@@ -42,7 +44,6 @@ exports.updateUserDetails = async (req, res) => {
 exports.uploadProfilePicture = (req, res, next) => {
   const { x, y, width, height } = JSON.parse(req.body.imageSettings);
 
-  const filename = `uploads/${req.user._id}-profilePicture.jpg`;
 
   sharp(req.file.buffer)
     .extract({ left: x, top: y, width, height })
@@ -107,13 +108,13 @@ exports.uploadProfilePicture = (req, res, next) => {
 // Delete profile picture
 exports.deleteProfilePicture = async (req, res, next) => {
   try {
-    const { profilePictureId } = await User.findById(req.user._id).select(
+    const { profilePictureId } = await User.findById(req.user).select(
       "profilePictureId"
     );
 
     await cloudinary.uploader.destroy(profilePictureId);
 
-    await User.findByIdAndUpdate(req.user._id, {
+    await User.findByIdAndUpdate(req.user, {
       profilePicture: "",
       profilePictureId: "",
     });
@@ -146,7 +147,7 @@ exports.searchUsers = (req, res) => {
 exports.followUser = async (req, res) => {
   const { followingUserId } = req.body;
 
-  const followerId = req.user._id;
+  const followerId = req.user;
 
   const session = await mongoose.startSession();
 
@@ -193,7 +194,7 @@ exports.followUser = async (req, res) => {
 exports.unfollowUser = async (req, res) => {
   const { followingUserId } = req.body;
 
-  const followerId = req.user._id;
+  const followerId = req.user;
 
   const session = await mongoose.startSession();
 
