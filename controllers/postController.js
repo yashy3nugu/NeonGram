@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 /////////////////////////////////////////////////////
 // Create a post
-exports.createPost = (req, res) => {
+exports.createPost = async (req, res) => {
   User.findById(req.user, (err, foundUser) => {
     if (err) {
       res.sendStatus(500);
@@ -49,45 +49,14 @@ exports.createPost = (req, res) => {
 
 /////////////////////////////////////////////////////
 // Get all posts with pagination
-exports.getAllPosts = (req, res) => {
-  const { lastTime } = req.query;
+exports.getAllPosts = async (req, res) => {
+  try {
+    const { lastTime } = req.query;
 
   let filter = {};
 
   if (lastTime) {
     filter = { time: { $lt: new Date(lastTime) } };
-  }
-
-  Post.find(filter)
-    .populate({
-      path: "user",
-      select: ["fname", "lname", "username", "profilePicture"],
-    })
-    .sort({ time: -1 })
-    .limit(6)
-    .exec((err, foundPosts) => {
-      if (err) {
-        console.log(err);
-        res.sendStatus(500);
-      }
-
-      res.send(foundPosts);
-    });
-};
-
-///////////////////////////////////////////////////////////////////////
-// Get all posts from the user's following sorted by time and paginated
-exports.getAllPostsFromFollowing = async (req, res) => {
-  const { following } = await User.findById(req.user).select("following");
-  const { lastTime } = req.query;
-
-  let filter = { user: { $in: [...following, req.user] } };
-
-  if (lastTime) {
-    filter = {
-      user: { $in: [...following, req.user] },
-      time: { $lt: new Date(lastTime) },
-    };
   }
 
   const posts = await Post.find(filter)
@@ -96,37 +65,69 @@ exports.getAllPostsFromFollowing = async (req, res) => {
       select: ["fname", "lname", "username", "profilePicture"],
     })
     .sort({ time: -1 })
-    .limit(2);
+    .limit(6)
+    
+    res.send(posts);
+  }
+  catch (err) {
+    
+    res.sendStatus(500);
+  }
 
-  res.send(posts);
+  
+};
+
+///////////////////////////////////////////////////////////////////////
+// Get all posts from the user's following sorted by time and paginated
+exports.getAllPostsFromFollowing = async (req, res) => {
+  try {
+    const { following } = await User.findById(req.user).select("following");
+    const { lastTime } = req.query;
+
+    let filter = { user: { $in: [...following, req.user] } };
+
+    if (lastTime) {
+      filter = {
+        user: { $in: [...following, req.user] },
+        time: { $lt: new Date(lastTime) },
+      };
+    }
+
+    const posts = await Post.find(filter)
+      .populate({
+        path: "user",
+        select: ["fname", "lname", "username", "profilePicture"],
+      })
+      .sort({ time: -1 })
+      .limit(2);
+
+    res.send(posts);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
 // Like a post
 exports.likePost = async (req, res) => {
-  const { postId } = req.params;
+  try {
+    const { postId } = req.params;
 
-  User.findOne({ _id: req.user }, (err, foundUser) => {
-    if (err) {
-      res.sendStatus(500);
-    }
-
-    Post.updateOne(
+    const updatedPost = await Post.findOneAndUpdate(
       { _id: postId },
       {
-        $addToSet: { likes: mongoose.Types.ObjectId(foundUser._id) },
-        $pull: { dislikes: mongoose.Types.ObjectId(foundUser._id) },
-      },
-      (err) => {
-        if (err) {
-          console.log(err);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(200);
-        }
+        $addToSet: { likes: mongoose.Types.ObjectId(req.user) },
+        $pull: { dislikes: mongoose.Types.ObjectId(req.user) },
       }
     );
-  });
+
+    res.status(200).json({
+      status: "success",
+      updatedPost,
+    });
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
@@ -134,79 +135,68 @@ exports.likePost = async (req, res) => {
 exports.dislikePost = async (req, res) => {
   const { postId } = req.params;
 
-  User.findOne({ _id: req.user }, (err, foundUser) => {
-    if (err) {
-      res.sendStatus(500);
-    }
-
-    Post.updateOne(
+  try {
+    const updatedPost = await Post.findOneAndUpdate(
       { _id: postId },
       {
-        $addToSet: { dislikes: mongoose.Types.ObjectId(foundUser._id) },
-        $pull: { likes: mongoose.Types.ObjectId(foundUser._id) },
-      },
-      (err) => {
-        if (err) {
-          console.log(err);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(200);
-        }
+        $addToSet: { dislikes: mongoose.Types.ObjectId(req.user) },
+        $pull: { likes: mongoose.Types.ObjectId(req.user) },
       }
     );
-  });
+
+    res.status(200).json({
+      status: "success",
+      updatedPost,
+    });
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
 // Remove reaction from a post
-exports.removeReaction = (req, res) => {
-  const { postId, reaction } = req.params;
+exports.removeReaction = async (req, res) => {
+  try {
+    const { postId, reaction } = req.params;
 
-  User.findOne({ _id: req.user }, (err, foundUser) => {
-    if (err) {
-      res.sendStatus(500);
-    }
-
-    Post.updateOne(
+    const updatedPost = await Post.findOneAndUpdate(
       { _id: postId },
-      { $pull: { [reaction]: mongoose.Types.ObjectId(foundUser._id) } },
-      (err) => {
-        if (err) {
-          console.log(err);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(200);
-        }
-      }
+      { $pull: { [reaction]: mongoose.Types.ObjectId(req.user) } }
     );
-  });
+
+    res.status(200).json({
+      status: "success",
+      updatedPost,
+    });
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
 // Get all posts of a user from username
-exports.getPostsFromUsername = (req, res) => {
-  const { username } = req.params;
+exports.getPostsFromUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
 
-  User.findOne({ username: username }, (err, foundUser) => {
+    const foundUser = await User.findOne({ username: username });
+
     if (foundUser) {
-      Post.find({ user: foundUser._id })
+      const foundPosts = await Post.find({ user: foundUser._id })
         .populate({
           path: "user",
           select: ["fname", "lname", "username", "profilePicture"],
         })
-        .exec((err, foundPosts) => {
-          if (err) {
-            res.sendStatus(500);
-          }
+        .sort({ time: -1 })
+        .limit(2);
 
-          res.send(foundPosts);
-        });
-    } else if (err) {
-      res.sendStatus(500);
+      res.send(foundPosts);
     } else {
       res.sendStatus(400);
     }
-  });
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
 
 /////////////////////////////////////////////////////
@@ -217,8 +207,6 @@ exports.savePost = async (req, res, next) => {
   const user = await User.findById(req.user);
 
   if (user) {
-    console.log(user);
-
     Post.findByIdAndUpdate(postId, {
       $addToSet: { saved: mongoose.Types.ObjectId(postId) },
     });
@@ -229,24 +217,22 @@ exports.savePost = async (req, res, next) => {
 
 /////////////////////////////////////////////////////
 // Delete Post
-exports.deletePost = (req, res, next) => {
-  const { postId } = req.params;
+exports.deletePost = async (req, res) => {
 
-  Post.findById(postId, (err, foundPost) => {
+  try {
+    const { postId } = req.params;
+
+    const foundPost = await Post.findById(postId);
+
     if (foundPost) {
-      cloudinary.uploader.destroy(foundPost.postImageId, (err, result) => {
-        if (err) {
-          res.sendStatus(500);
-        }
+      await cloudinary.uploader.destroy(foundPost.postImageId);
 
-        Post.findByIdAndDelete(postId, (err, deletedPost) => {
-          res.sendStatus(200);
-        });
-      });
-    } else if (err) {
-      res.sendStatus(500);
+      await Post.findByIdAndDelete(postId);
+      res.sendStatus(200);
     } else {
       res.sendStatus(401);
     }
-  });
+  } catch (err) {
+    res.sendStatus(500);
+  }
 };
