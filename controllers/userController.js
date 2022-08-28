@@ -3,10 +3,11 @@ const streamifier = require("streamifier");
 const { cloudinary } = require("../config/cloudinary");
 const { User } = require("../models/userModel");
 const mongoose = require("mongoose");
+const AppError = require("../utils/AppError");
 
 /////////////////////////////////////////////////////
 // Get details of user from username
-exports.getUserFromUserName = async (req, res) => {
+exports.getUserFromUserName = async (req, res,next) => {
   const { username } = req.params;
 
   try {
@@ -14,27 +15,28 @@ exports.getUserFromUserName = async (req, res) => {
       .select(
         "username fname lname email bio profilePicture profilePictureId followers following"
       )
-      .exec();
-    if (foundUser) {
-      res.send(foundUser);
-    } else {
-      res.sendStatus(400);
+      
+    if(!foundUser) {
+      return next(new AppError("User not found", 404));
     }
+
+    res.send(foundUser);
+    
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Update user details
-exports.updateUserDetails = async (req, res) => {
+exports.updateUserDetails = async (req, res, next) => {
   const { userDetails } = req.body;
   try {
     await User.findByIdAndUpdate(req.user, userDetails);
 
     res.sendStatus(200);
   } catch {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
@@ -61,20 +63,17 @@ exports.uploadProfilePicture = (req, res, next) => {
         },
         (err, result) => {
           if (err) {
-            res.sendStatus(500);
+            return next(new AppError("error uploading image", 500));
           }
 
           //Find user
           User.findById(req.user, (err, foundUser) => {
-            if (err) {
-              res.sendStatus(500);
-            }
 
             const publicId = foundUser.profilePictureId;
             // Delete the previous profile picture
             cloudinary.api.delete_resources([publicId], (err, response) => {
               if (err) {
-                res.sendStatus(500);
+                return next(new AppError("error deleting image", 500));
               }
               // add the new URL to database
               User.updateOne(
@@ -85,11 +84,9 @@ exports.uploadProfilePicture = (req, res, next) => {
                 },
                 (err) => {
                   if (err) {
-                    console.log(err);
-                    res.sendStatus(500);
-                  } else {
-                    res.sendStatus(200);
-                  }
+                    next(err);
+                  } 
+                  res.sendStatus(200);
                 }
               );
             });
@@ -99,7 +96,7 @@ exports.uploadProfilePicture = (req, res, next) => {
 
       streamifier.createReadStream(data).pipe(upload_stream);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => next(err));
 };
 
 /////////////////////////////////////////////////////
@@ -119,13 +116,13 @@ exports.deleteProfilePicture = async (req, res, next) => {
 
     res.sendStatus(200);
   } catch {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Search for users using regex
-exports.searchUsers = async (req, res) => {
+exports.searchUsers = async (req, res, next) => {
   try {
     const { username } = req.query;
 
@@ -135,13 +132,13 @@ exports.searchUsers = async (req, res) => {
 
     res.send(users);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Follow user
-exports.followUser = async (req, res) => {
+exports.followUser = async (req, res, next) => {
   const { followingUserId } = req.body;
 
   const followerId = req.user;
@@ -183,12 +180,12 @@ exports.followUser = async (req, res) => {
     await session.abortTransaction();
     session.endSession();
 
-    res.sendStatus(500);
+    next(err);
   }
 };
 /////////////////////////////////////////////////////
 // Unfollow user
-exports.unfollowUser = async (req, res) => {
+exports.unfollowUser = async (req, res, next) => {
   const { followingUserId } = req.body;
 
   const followerId = req.user;
@@ -226,6 +223,6 @@ exports.unfollowUser = async (req, res) => {
     await session.abortTransaction();
     session.endSession();
 
-    res.sendStatus(500);
+    next(err);
   }
 };
