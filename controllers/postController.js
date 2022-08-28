@@ -3,13 +3,23 @@ const { User } = require("../models/userModel");
 const { cloudinary } = require("../config/cloudinary");
 const streamifier = require("streamifier");
 const mongoose = require("mongoose");
+const AppError = require("../utils/AppError");
 
 /////////////////////////////////////////////////////
 // Create a post
-exports.createPost = async (req, res) => {
+exports.createPost = async (req, res, next) => {
+
+  if(!req.file) {
+    next(new AppError("No image provided", 400));
+  }
+
+  if(!req.body.text) {
+    next(new AppError("No caption provided", 400));
+  }
+
   User.findById(req.user, (err, foundUser) => {
     if (err) {
-      res.sendStatus(500);
+      next(err);
     }
 
     const upload_stream = cloudinary.uploader.upload_stream(
@@ -19,8 +29,7 @@ exports.createPost = async (req, res) => {
       },
       (err, result) => {
         if (err) {
-          res.sendStatus(500);
-          //
+          next(err);
         }
 
         Post.create(
@@ -33,11 +42,9 @@ exports.createPost = async (req, res) => {
           },
           (err) => {
             if (err) {
-              console.log(err);
-              res.sendStatus(500);
-            } else {
-              res.sendStatus(201);
+              next(err);
             }
+            res.sendStatus(201);
           }
         );
       }
@@ -49,37 +56,33 @@ exports.createPost = async (req, res) => {
 
 /////////////////////////////////////////////////////
 // Get all posts with pagination
-exports.getAllPosts = async (req, res) => {
+exports.getAllPosts = async (req, res, next) => {
   try {
     const { lastTime } = req.query;
 
-  let filter = {};
+    let filter = {};
 
-  if (lastTime) {
-    filter = { time: { $lt: new Date(lastTime) } };
-  }
+    if (lastTime) {
+      filter = { time: { $lt: new Date(lastTime) } };
+    }
 
-  const posts = await Post.find(filter)
-    .populate({
-      path: "user",
-      select: ["fname", "lname", "username", "profilePicture"],
-    })
-    .sort({ time: -1 })
-    .limit(6)
-    
+    const posts = await Post.find(filter)
+      .populate({
+        path: "user",
+        select: ["fname", "lname", "username", "profilePicture"],
+      })
+      .sort({ time: -1 })
+      .limit(6);
+
     res.send(posts);
+  } catch (err) {
+    next(err);
   }
-  catch (err) {
-    
-    res.sendStatus(500);
-  }
-
-  
 };
 
 ///////////////////////////////////////////////////////////////////////
 // Get all posts from the user's following sorted by time and paginated
-exports.getAllPostsFromFollowing = async (req, res) => {
+exports.getAllPostsFromFollowing = async (req, res, next) => {
   try {
     const { following } = await User.findById(req.user).select("following");
     const { lastTime } = req.query;
@@ -103,13 +106,13 @@ exports.getAllPostsFromFollowing = async (req, res) => {
 
     res.send(posts);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Like a post
-exports.likePost = async (req, res) => {
+exports.likePost = async (req, res, next) => {
   try {
     const { postId } = req.params;
 
@@ -126,13 +129,13 @@ exports.likePost = async (req, res) => {
       updatedPost,
     });
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Disklike a post
-exports.dislikePost = async (req, res) => {
+exports.dislikePost = async (req, res, next) => {
   const { postId } = req.params;
 
   try {
@@ -149,13 +152,13 @@ exports.dislikePost = async (req, res) => {
       updatedPost,
     });
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Remove reaction from a post
-exports.removeReaction = async (req, res) => {
+exports.removeReaction = async (req, res, next) => {
   try {
     const { postId, reaction } = req.params;
 
@@ -169,13 +172,13 @@ exports.removeReaction = async (req, res) => {
       updatedPost,
     });
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Get all posts of a user from username
-exports.getPostsFromUsername = async (req, res) => {
+exports.getPostsFromUsername = async (req, res, next) => {
   try {
     const { username } = req.params;
 
@@ -192,47 +195,50 @@ exports.getPostsFromUsername = async (req, res) => {
 
       res.send(foundPosts);
     } else {
-      res.sendStatus(400);
+      next(new AppError("User not found", 404));
     }
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Save post
 exports.savePost = async (req, res, next) => {
-  const { postId } = req.params;
+  try {
+    const { postId } = req.params;
 
-  const user = await User.findById(req.user);
+    const user = await User.findById(req.user);
 
-  if (user) {
+    if (!user) {
+      next(new AppError("User not found", 404));
+    }
+
     Post.findByIdAndUpdate(postId, {
       $addToSet: { saved: mongoose.Types.ObjectId(postId) },
     });
-  } else {
-    res.sendStatus(401);
+  } catch (err) {
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Delete Post
-exports.deletePost = async (req, res) => {
-
+exports.deletePost = async (req, res, next) => {
   try {
     const { postId } = req.params;
 
     const foundPost = await Post.findById(postId);
 
-    if (foundPost) {
-      await cloudinary.uploader.destroy(foundPost.postImageId);
-
-      await Post.findByIdAndDelete(postId);
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(401);
+    if (!foundPost) {
+      next(new AppError("Post not found", 404));
     }
+
+    await cloudinary.uploader.destroy(foundPost.postImageId);
+
+    await Post.findByIdAndDelete(postId);
+    res.sendStatus(200);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
