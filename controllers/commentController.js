@@ -1,8 +1,9 @@
 const { Comment } = require("../models/commentModel");
+const AppError = require("../utils/AppError");
 
 /////////////////////////////////////////////////////
 // Add comment to a post
-exports.addComment = async (req, res) => {
+exports.addComment = async (req, res, next) => {
   try {
     const { postID } = req.params;
     const comment = await Comment.create({
@@ -12,13 +13,13 @@ exports.addComment = async (req, res) => {
     });
     res.status(201).json(comment);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Get comments for a post
-exports.getCommentsForPost = async (req, res) => {
+exports.getCommentsForPost = async (req, res, next) => {
   try {
     const { postID } = req.params;
 
@@ -29,6 +30,6 @@ exports.getCommentsForPost = async (req, res) => {
 
     res.send(comments);
   } catch (err) {
-    res.sendStatus(500);
+    res.send(err);
   }
 };

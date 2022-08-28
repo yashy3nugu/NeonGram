@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
+const errorController = require("./controllers/errorController");
 
 const app = express();
 
@@ -45,6 +46,8 @@ app.use("/api/comment", commentRoutes);
 app.use((req, res, next) => {
   res.sendFile(path.resolve(__dirname, "client/build/index.html"));
 });
+
+app.use(errorController);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
