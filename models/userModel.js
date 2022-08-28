@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -42,6 +43,13 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.index({ username: "text" });
+
+userSchema.methods.comparePassword = async function (
+  enteredPassword,
+  savedPassword
+) {
+  return await bcrypt.compare(enteredPassword, savedPassword);
+};
 
 const refreshTokenSchema = new mongoose.Schema({
   token: {

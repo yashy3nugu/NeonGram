@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -7,10 +6,11 @@ const {
 } = require("../utils/jwt");
 const { User } = require("../models/userModel");
 const { RefreshToken } = require("../models/userModel");
+const AppError = require("../utils/AppError");
 
 /////////////////////////////////////////////////////
 // Register new user
-exports.registerUser = async (req, res) => {
+exports.registerUser = async (req, res, next) => {
   try {
     const { email, fname, lname, username, password } = req.body;
 
@@ -20,55 +20,54 @@ exports.registerUser = async (req, res) => {
 
     foundUser = await User.findOne({ username: username }, { email: email });
     if (foundUser) {
-      res.status(400).send({ message: "Username or email already exists" });
-    } else {
-      await User.create({
-        email,
-        fname,
-        lname,
-        username,
-        hashedPassword,
-      });
-      res.status(201).send(`User ${username} saved successfully`);
+      return next(new AppError("Username or email already exists", 400));
     }
+    await User.create({
+      email,
+      fname,
+      lname,
+      username,
+      hashedPassword,
+    });
+    res.status(201).send(`User ${username} saved successfully`);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Login user
-exports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username: username });
-    if (user) {
-      if (bcrypt.compareSync(password, user.hashedPassword)) {
-        const accessToken = generateAccessToken({ _id: user._id });
-        const refreshToken = generateRefreshToken({ _id: user._id });
-
-        RefreshToken.create({ token: refreshToken });
-
-        res.send({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        });
-      } else {
-        res.sendStatus(400);
-      }
-    } else {
-      res.sendStatus(400);
+    if (!username || !password) {
+      return next(new AppError("Please provide username and password", 400));
     }
+
+    const user = await User.findOne({ username: username });
+
+    if (!user || !(await user.comparePassword(password, user.hashedPassword))) {
+      return next(new AppError("Incorrect username or password", 400));
+    }
+
+    const accessToken = generateAccessToken({ _id: user._id });
+    const refreshToken = generateRefreshToken({ _id: user._id });
+
+    RefreshToken.create({ token: refreshToken });
+
+    res.send({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
   } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    next(err);
   }
 };
 
 /////////////////////////////////////////////////////
 // Verify JWT token
-exports.verifyToken = async (req, res) => {
+exports.verifyToken = async (req, res, next) => {
   try {
     const user = await User.findById(req.user).select(
       "username fname lname email bio profilePicture followers following"
@@ -76,7 +75,7 @@ exports.verifyToken = async (req, res) => {
 
     res.send(user);
   } catch (err) {
-    res.sendStatus(500);
+    next(err);
   }
 };
 
@@ -98,13 +97,13 @@ exports.protectRoutes = async (req, res, next) => {
     const userInstance = await User.findById(_id);
 
     if (!userInstance) {
-      return res.status(401).send("Unauthorized");
+      return next(new AppError("You are not authorized. Please login", 401));
     }
 
     req.user = _id;
 
     next();
   } catch (err) {
-    res.status(401).send("Unauthorized");
+    next(err);
   }
 };
