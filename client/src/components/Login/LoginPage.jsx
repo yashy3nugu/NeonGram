@@ -4,11 +4,9 @@ import LoginForm from "./LoginForm";
 
 const LoginPage = () => {
   return (
-    <div className="relative h-screen">
-      <Flex align="center" justify="center" h="100vh">
-        <LoginForm />
-      </Flex>
-    </div>
+    <Flex align="center" justify="center" h="100vh">
+      <LoginForm />
+    </Flex>
   );
 };
 

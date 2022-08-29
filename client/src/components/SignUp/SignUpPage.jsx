@@ -1,11 +1,12 @@
+import { Flex } from "@chakra-ui/react";
 import React from "react";
 import SignUpForm from "./SignUpForm";
 
 const SignUpPage = () => {
   return (
-    <div>
+    <Flex align="center" justify="center" h="100vh">
       <SignUpForm />
-    </div>
+    </Flex >
   );
 };
 

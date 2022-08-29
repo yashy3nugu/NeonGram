@@ -6,12 +6,12 @@ import {
 } from "@chakra-ui/react";
 import { useField, Field } from "formik";
 
-const AuthFormField = (props) => {
+const AuthFormField = ({label, ...props}) => {
   const [{ name }, { error, touched }] = useField(props);
 
   return (
     <FormControl isInvalid={!!error && touched}>
-      <FormLabel htmlFor={name}>{name}</FormLabel>
+      <FormLabel htmlFor={name}>{label ? label : name}</FormLabel>
       <Field
         as={Input}
         focusBorderColor="tertiary"
