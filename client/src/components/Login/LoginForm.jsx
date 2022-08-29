@@ -49,29 +49,14 @@ const LoginForm = () => {
             localStorage.setItem("accessToken", res.data.accessToken);
             localStorage.setItem("refreshToken", res.data.refreshToken);
             
-            // toggleAuth(true);
-            // window.location.reload();
+            toggleAuth(true);
+            window.location.reload();
           } catch (error) {
             toggleAuth(false);
             setAlert('error',error.response.data.message);
           }
 
-          // axiosInstance
-          //   .post("/api/login", {
-          //     username: values.username,
-          //     password: values.password,
-          //   })
-          //   .then((res) => {
-          //     localStorage.setItem("accessToken", res.data.accessToken);
-          //     localStorage.setItem("refreshToken", res.data.refreshToken);
-          //     toggleAuth(true);
-          //     window.location.reload();
-          //   })
-          //   .catch((err) => {
-          //     if (err.response.status === 400) {
-          //       alert("wrong password");
-          //     }
-          //   });
+          
           
           setSubmitting(false);
         }}
