@@ -9,7 +9,7 @@ import Settings from "./components/Settings/Settings";
 import FindFollowers from "./components/Followers/FindFollowers";
 import ExplorePage from "./components/Explore/ExplorePage";
 import NotFound from "./components/NotFound/NotFound";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { Box, ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./config/themeconfig";
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Router>
           <Switch>
+            <Box h="100vh">
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/post" component={CreatePost} />
             <PrivateRoute exact path="/user/:user" component={UserPage} />
@@ -28,7 +29,8 @@ function App() {
             <Route exact path="/signup">
               <SignUpPage />
             </Route>
-            <Route component={NotFound} />
+            {/* <Route component={NotFound} /> */}
+            </Box>
           </Switch>
         </Router>
       </ChakraProvider>
