@@ -6,6 +6,13 @@ import NeonGramIcon from "../icons/NeonGramIcon";
 import { Button, Center, Box, Text } from "@chakra-ui/react";
 import AuthFormField from "../shared/AuthFormField";
 import * as Yup from "yup";
+import useAlert from "../../hooks/useAlert";
+import AppAlert from "../shared/AppAlert";
+
+const initialValues = {
+  username: "",
+  password: "",
+};
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required("Please enter your username"),
@@ -14,8 +21,11 @@ const loginSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const { toggleAuth } = useContext(AuthContext);
+  const { setAlert, alertDetails, isAlertOpen } = useAlert();
 
   return (
+    <>
+    {isAlertOpen && <AppAlert details={alertDetails} />}
     <Box
       bg="gray.900"
       border="2px"
@@ -24,30 +34,45 @@ const LoginForm = () => {
       className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
     >
       <Formik
-        initialValues={{
-          username: "",
-          password: "",
-        }}
+        initialValues={initialValues}
         validationSchema={loginSchema}
         validateOnMount={false}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(true);
-          axiosInstance
-            .post("/api/login", {
+
+          try {
+            const res = await axiosInstance.post("/api/login", {
               username: values.username,
               password: values.password,
-            })
-            .then((res) => {
-              localStorage.setItem("accessToken", res.data.accessToken);
-              localStorage.setItem("refreshToken", res.data.refreshToken);
-              toggleAuth(true);
-              window.location.reload();
-            })
-            .catch((err) => {
-              if (err.response.status === 400) {
-                alert("wrong password");
-              }
             });
+
+            localStorage.setItem("accessToken", res.data.accessToken);
+            localStorage.setItem("refreshToken", res.data.refreshToken);
+            
+            // toggleAuth(true);
+            // window.location.reload();
+          } catch (error) {
+            toggleAuth(false);
+            setAlert('error',error.response.data.message);
+          }
+
+          // axiosInstance
+          //   .post("/api/login", {
+          //     username: values.username,
+          //     password: values.password,
+          //   })
+          //   .then((res) => {
+          //     localStorage.setItem("accessToken", res.data.accessToken);
+          //     localStorage.setItem("refreshToken", res.data.refreshToken);
+          //     toggleAuth(true);
+          //     window.location.reload();
+          //   })
+          //   .catch((err) => {
+          //     if (err.response.status === 400) {
+          //       alert("wrong password");
+          //     }
+          //   });
+          
           setSubmitting(false);
         }}
       >
@@ -96,6 +121,7 @@ const LoginForm = () => {
         )}
       </Formik>
     </Box>
+    </>
   );
 };
 

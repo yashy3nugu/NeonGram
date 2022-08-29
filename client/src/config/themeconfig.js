@@ -47,6 +47,9 @@ const colors = {
     100: "#873dff",
     50: "#7a27ff",
 
+  },
+  crimsonScheme: {
+    200: "#dc143c"
   }
 };
 
