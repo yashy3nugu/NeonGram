@@ -46,21 +46,20 @@ const colors = {
     200: "#7a27ff",
     100: "#873dff",
     50: "#7a27ff",
-
   },
   crimsonScheme: {
-    200: "#dc143c"
-  }
+    200: "#dc143c",
+  },
 };
 
 const styles = {
   global: (props) => ({
     body: {
-      bg: mode("gray.800", "gray.800")(props),
+      bg: mode("primary.900", "primary.900")(props),
     },
     button: {
       color: mode("gray.100", "gray.100")(props),
-    }
+    },
   }),
 };
 
