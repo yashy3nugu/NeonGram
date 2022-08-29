@@ -1,11 +1,12 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import Navbar from "./navbar";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-10">
+    <Box as="header" position="sticky" top={0} z="10" className="sticky top-0 z-10">
       <Navbar />
-    </header>
+    </Box>
   );
 };
 

@@ -11,6 +11,7 @@ import ProfileDropDown from "./ProfileDropDown";
 import { useLocation } from "react-router-dom";
 import HomeIconSolid from "../icons/HomeIconSolid";
 import { AuthContext } from "../contextProviders/authContext";
+import { Box, Flex, Text, Icon, IconButton } from "@chakra-ui/react";
 
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
@@ -28,13 +29,25 @@ const Navbar = () => {
   return (
     <>
       {/* <div className="navbar  bg-gray-900"> */}
-      <div className="flex items-center justify-between w-full py-8 px-3 bg-gray-900">
+      <Flex
+        align="center"
+        justify="center"
+        py={8}
+        px={3}
+        className="flex items-center justify-between w-full py-8 px-3 bg-gray-900"
+      >
         {/* <h1 className="logo">Neongram</h1> */}
-        <a href="/" className="ml-10">
-          <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium" />
-        </a>
+        <Text as="a" href="/" className="ml-10">
+          <NeonGramIcon />
+        </Text>
 
-        <nav className="p-1">
+        <Box as="nav">
+          <Box as="ul">
+            <IconButton variant="text" icon={<PlusIcon boxSize={10} color="purp" />} />
+          </Box>
+        </Box>
+
+        {/* <nav className="p-1">
           <ul className="m-0 p-0 list-none flex">
             {!navExpanded ? (
               <span className="inline sm:invisible" onClick={toggleNavExpanded}>
@@ -90,8 +103,8 @@ const Navbar = () => {
               )}
             </span>
           </ul>
-        </nav>
-      </div>
+        </nav> */}
+      </Flex>
       {navExpanded && (
         <div className="bg-gray-900 text-center sidebar">
           <a href={`/user/${auth.username}`} className=" block mb-4">
