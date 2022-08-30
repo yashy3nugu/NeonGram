@@ -164,7 +164,7 @@ exports.followUser = async (req, res, next) => {
       followingUserId,
       {
         $addToSet: {
-          follower: mongoose.Types.ObjectId(followerId),
+          followers: mongoose.Types.ObjectId(followerId),
         },
       },
       {

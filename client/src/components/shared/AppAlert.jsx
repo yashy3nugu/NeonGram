@@ -12,9 +12,8 @@ const AppAlert = ({ details }) => {
         md: "6%",
         sm: "12%",
       }}
-      m={{
-        sm: "0 auto",
-      }}
+      left={"50%"}
+      transform="translateX(-50%)"
       zIndex="100"
       maxW={{
         md: "500px",
