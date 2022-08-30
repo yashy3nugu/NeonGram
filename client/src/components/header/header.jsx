@@ -4,7 +4,7 @@ import Navbar from "./navbar";
 
 const Header = () => {
   return (
-    <Box bg="primary.900" as="header" pos="sticky" top={0} z="100" className="sticky top-0 z-10">
+    <Box bg="primary.900" as="header" pos="sticky" top={0} zIndex="100" className="sticky top-0 z-10">
       <Navbar />
     </Box>
   );

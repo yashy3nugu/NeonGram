@@ -27,7 +27,9 @@ const DropZone = (props) => {
               <Box
                 key={file.name}
                 w="full"
-                bg="primary.900"
+                bg="whiteAlpha.50"
+                borderRadius="1.5rem"
+                borderWidth="1px"
                 className="relative max-h-96 overflow-auto"
                 p={10}
                 position="relative"
@@ -60,8 +62,9 @@ const DropZone = (props) => {
           justify="center"
           h="24rem"
           w="full"
-          bg="primary.900"
+          bg="whiteAlpha.50"
           borderRadius="1.5rem"
+          borderWidth="1px"
           {...getRootProps()}
           className="dropzone flex flex-col items-center justify-center w-full h-96 border border-transparent hover:border-neon-purple bg-gray-800 container hover:bg-gray-600 transition duration-300 ease-in-out"
         >

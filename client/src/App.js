@@ -19,7 +19,7 @@ function App() {
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Router>
           <Switch>
-            <Box h="100vh">
+            <Box h="100vh" maxHeight="100vh">
             <PrivateRoute exact path="/" component={Feed} />
             <PrivateRoute exact path="/post" component={CreatePost} />
             <PrivateRoute exact path="/user/:user" component={UserPage} />

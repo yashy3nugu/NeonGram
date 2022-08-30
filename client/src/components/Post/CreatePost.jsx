@@ -45,7 +45,7 @@ const CreatePost = () => {
 
   return (
     <Box >
-      <Box mt={50} bg={"primary.800"} maxWidth="3xl" mx="auto" px={10} py={10} borderRadius="xl">
+      <Box mt={50} mb={50} bg={"primary.900"} maxWidth="3xl" mx="auto" px={10} py={10} borderWidth="1px" borderRadius="xl">
         <Text fontSize="4xl" fontWeight="semibold" mb={3}>
           Create Post
         </Text>
@@ -61,7 +61,7 @@ const CreatePost = () => {
               onChange={handleCaption}
               maxLength={100}
               focusBorderColor="tertiary"
-              bg="primary.900"
+              bg="whiteAlpha.50"
             />
           </Box>
           <Box mt={5}>
