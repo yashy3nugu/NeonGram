@@ -4,12 +4,7 @@ import { Icon } from "@chakra-ui/react";
 const ButtonSpinner = (props) => {
   return (
     <Icon {...props}>
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle
           className="opacity-25"
           cx="12"
