@@ -7,6 +7,7 @@ const Hidden = ({ hide, children, w }) => {
 		<Box
 			w={w}
 			display={{
+				base: 'none',
 				sm: hide.sm ? 'none' : 'block',
 				md: hide.md ? 'none' : 'block',
 				lg: hide.lg ? 'none' : 'block',

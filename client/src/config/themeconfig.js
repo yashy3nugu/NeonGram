@@ -55,14 +55,52 @@ const colors = {
 const styles = {
   global: (props) => ({
     body: {
-      bg: mode("primary.900", "primary.900")(props),
+      bg: mode("primary.800", "primary.800")(props),
     },
     button: {
       color: mode("gray.100", "gray.100")(props),
     },
+    '&::-webkit-scrollbar': {
+      width: '6px',
+      // backgroundColor: 'primary.900',
+    },
+    '&::-webkit-scrollbar-track': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: "whiteAlpha.50",
+      borderRadius: '24px',
+    },
   }),
 };
 
-const theme = extendTheme({ colors, config, styles });
+// const IconButton = {
+//   // The styles all button have in common
+//   baseStyle: {
+    
+//     position: 'static',
+//   },
+// }
+
+const Button = {
+  // The styles all button have in common
+  baseStyle: {
+    
+    position: 'static',
+  },
+}
+
+const Avatar = {
+  // The styles all button have in common
+  baseStyle: {
+    
+    position: 'static',
+  },
+}
+
+
+
+
+const theme = extendTheme({ colors, config, styles, components: {Button, Avatar} });
 
 export default theme;

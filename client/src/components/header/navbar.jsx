@@ -45,7 +45,7 @@ const Navbar = () => {
         align="center"
         justify="space-between"
         py={8}
-        px={12}
+        px={{base:6, md:12}}
         bg="primary.900"
         className="flex items-center justify-between w-full py-8 px-3 bg-gray-900"
       >
