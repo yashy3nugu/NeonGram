@@ -70,7 +70,7 @@ exports.loginUser = async (req, res, next) => {
 exports.verifyToken = async (req, res, next) => {
   try {
     const user = await User.findById(req.user).select(
-      "username fname lname email bio profilePicture followers following"
+      "username fname lname email bio profilePicture profilePictureId followers following"
     );
 
     res.send(user);
