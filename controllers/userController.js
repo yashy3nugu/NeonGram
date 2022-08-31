@@ -115,12 +115,17 @@ exports.deleteProfilePicture = async (req, res, next) => {
 
     await cloudinary.uploader.destroy(profilePictureId);
 
-    await User.findByIdAndUpdate(req.user, {
+    const user = await User.findByIdAndUpdate(req.user, {
       profilePicture: "",
       profilePictureId: "",
-    });
+    },
+    {new: true}
+    );
 
-    res.sendStatus(200);
+    res.status(200).json({
+      status: "success",
+      user,
+    });
   } catch (err) {
     next(err);
   }

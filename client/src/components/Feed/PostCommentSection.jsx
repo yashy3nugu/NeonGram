@@ -12,6 +12,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
+import AppFormField from "../shared/AppFormField";
 
 const PostCommentSection = ({ post }) => {
   const { auth } = useContext(AuthContext);
@@ -107,7 +108,7 @@ const PostCommentSection = ({ post }) => {
         {({ isSubmitting, isValid, dirty }) => (
           <Form autoComplete="off" className="flex">
             <HStack alignItems="center">
-              <Field
+              <AppFormField
                 as={Input}
                 size="sm"
                 type="text"

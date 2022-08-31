@@ -15,6 +15,8 @@ import {
   Image,
   IconButton,
   HStack,
+  LinkBox,
+  LinkOverlay,
 } from "@chakra-ui/react";
 
 const FeedPost = ({ post }) => {
@@ -135,16 +137,20 @@ const FeedPost = ({ post }) => {
           w="full"
           
         >
+          <LinkBox>
           <HStack alignItems={"center"} spacing={2}>
             <Avatar position="static" size="sm" src={post.user.profilePicture} />
+            <LinkOverlay href={`/user/${post.user.username}`}>
             <Text
               fontSize="sm"
-              href={`/user/${post.user.username}`}
+              
               className="text-white"
             >
               {post.user.username}
             </Text>
+            </LinkOverlay>
           </HStack>
+          </LinkBox>
         </Box>
         <Box mb={3} className="mb-3">
           <Text fontWeight="semibold" className="text-white text-left">

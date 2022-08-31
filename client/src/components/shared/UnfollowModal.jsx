@@ -22,58 +22,19 @@ const UnfollowModal = ({
   onModalClose,
   searchResults,
   setSearchResults,
+  unFollowUser,
 }) => {
-  const { auth, toggleAuth } = useContext(AuthContext);
   const [unfollowLoading, setUnfollowLoading] = useState(false);
 
-  const unFollowUser = async () => {
+  const unFollow = async () => {
     try {
       setUnfollowLoading(true);
-      await axiosInstance.post("/api/unfollow/", {
-        followingUserId: modalDetails._id,
-      });
+
+      await unFollowUser();
+
       setUnfollowLoading(false);
-      let searchUsers = [...searchResults];
-      let unfollowedUser;
-      let unfollowedUserIndex;
-
-      searchUsers.forEach((searchUser, idx) => {
-        if (searchUser._id === modalDetails._id) {
-          unfollowedUserIndex = idx;
-        }
-      });
-
-      unfollowedUser = { ...searchUsers[unfollowedUserIndex] };
-
-      let index;
-
-      unfollowedUser.followers.forEach((follower, idx) => {
-        if (follower === auth._id) {
-          index = idx;
-        }
-      });
-
-      unfollowedUser.followers.splice(index, 1);
-
-      searchUsers[unfollowedUserIndex] = unfollowedUser;
-
-      setSearchResults(searchUsers);
-
-      let currentAuth = { ...auth };
-
-      let authIndex;
-
-      currentAuth.following.forEach((followingUser, idx) => {
-        if (modalDetails._id === followingUser) {
-          authIndex = idx;
-        }
-      });
-
-      currentAuth.following.splice(authIndex, 1);
-
-      toggleAuth(currentAuth);
       onModalClose();
-    } catch (err) {
+    } catch (error) {
       setUnfollowLoading(false);
     }
   };
@@ -87,11 +48,7 @@ const UnfollowModal = ({
         <ModalBody>
           <Center>
             <VStack>
-              <Avatar
-                size="lg"
-                
-                src={modalDetails.profilePicture}
-              />
+              <Avatar size="lg" src={modalDetails.profilePicture} />
 
               <Text>
                 Unfollow{" "}
@@ -106,7 +63,7 @@ const UnfollowModal = ({
         <ModalFooter justifyContent="space-between">
           <Button onClick={onModalClose}>Close</Button>
           <Button
-            onClick={unFollowUser}
+            onClick={async () => await unFollow()}
             variant="ghost"
             colorScheme={"crimsonScheme"}
             isLoading={unfollowLoading}

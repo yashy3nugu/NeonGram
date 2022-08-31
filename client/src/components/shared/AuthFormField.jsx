@@ -17,6 +17,7 @@ const AuthFormField = ({label, ...props}) => {
         focusBorderColor="tertiary"
         width="full"
         errorBorderColor="crimson"
+        bg="whiteAlpha.50"
         {...props}
       />
       <FormErrorMessage color="crimson">{error}</FormErrorMessage>

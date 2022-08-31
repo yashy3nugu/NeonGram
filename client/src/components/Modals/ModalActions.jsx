@@ -9,6 +9,21 @@ import { AuthContext } from "../contextProviders/authContext";
 import axiosInstance from "../../config/axios";
 import { Formik, Form, Field } from "formik";
 import ButtonSpinner from "../icons/ButtonSpinner";
+import ThumbDownIcon from "../icons/ThumbDownIcon";
+import ThumbUpIcon from "../icons/ThumbUpIcon";
+import {
+  Box,
+  LinkBox,
+  LinkOverlay,
+  HStack,
+  Avatar,
+  IconButton,
+  Flex,
+  Text,
+  Input,
+  Button,
+} from "@chakra-ui/react";
+import AppFormField from "../shared/AppFormField";
 
 const ModalActions = ({ post, addComment, onDelete }) => {
   const { auth } = useContext(AuthContext);
@@ -21,7 +36,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
   const [loading, setLoading] = useState(false);
 
   const handleLiked = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     if (!liked) {
       setLiked(true);
@@ -53,7 +68,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
     }
   };
   const handleDisliked = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     if (!disliked) {
       setDisliked(true);
@@ -88,73 +103,99 @@ const ModalActions = ({ post, addComment, onDelete }) => {
   };
 
   return (
-    <>
-      <div className="my-2 flex">
-        {post.user.profilePicture ? (
-          <img
-            className="w-8 mr-2 rounded-full inline"
-            src={post.user.profilePicture}
-            alt={post.user.username}
-          />
-        ) : (
-          <UserIcon className="w-8 mr-2 inline text-gray-200" />
-        )}
-        <a
-          href={`/user/${post.user.username}`}
-          className="text-gray-200 text-base font-normal"
-        >
-          {post.user.username}
-        </a>
+    <Box>
+      <Flex alignItems="center" justifyContent="space-between">
+        <LinkBox>
+          <HStack my={2}>
+            <Avatar src={post.user.profilePicture} size="sm" />
+
+            <Box className="ml-4">
+              <LinkOverlay
+                fontWeight="semibold"
+                href={`/user/${post.user.username}`}
+              >
+                {post.user.username}
+              </LinkOverlay>
+            </Box>
+          </HStack>
+        </LinkBox>
+
         {auth._id === post.user._id && (
-          <button
-            className="text-right ml-auto text-neon-red"
+          <IconButton
+            colorScheme="crimsonScheme"
+            variant="ghost"
+            isLoading={loading}
+            icon={<DeleteIconSolid boxSize={6} />}
             onClick={() => {
               setLoading(true);
               onDelete(post._id);
             }}
-          >
-            {loading && <ButtonSpinner className="animate-spin w-6 inline" />}{" "}
-            <DeleteIconSolid className="w-6 inline" />
-          </button>
+          />
         )}
-      </div>
-      <div className="text-gray-400 mt-2 mb-8">
-        <p>{post.text}</p>
-      </div>
-      <div className="flex justify-between align-middle mt-2 mb-3">
-        <div className="flex">
-          {/* <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up w-7" /> : <ThumbUpIcon className="w-7" />}</button> */}
-          <button
-            onClick={handleLiked}
-            className={`mx-2 outline-none w-7 sm:w-8 text-neon-blue ${
-              !liked && "opacity-50"
-            }`}
-          >
-            <ThumbUpIconFilled className="" />
-          </button>
-          <p className="text-neon-blue font-semibold mr-1 relative top-1.5">
-            {numLikes}
-          </p>
+      </Flex>
+      <Box mt={2} mb={8} className="text-gray-400 mt-2 mb-8">
+        <Text>{post.text}</Text>
+      </Box>
+      <Flex
+        mt={2}
+        mb={3}
+        alignItems="center"
+        className="flex justify-between align-middle mt-2 mb-3"
+      >
+        {/* <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up w-7" /> : <ThumbUpIcon className="w-7" />}</button> */}
 
-          <button
-            onClick={handleDisliked}
-            className={`mx-2 outline-none w-7 sm:w-8 text-neon-red relative top-0.5 ${
-              !disliked && "opacity-50"
-            }`}
-          >
-            <ThumbDownIconFilled className="" />
-          </button>
-          <span className="text-neon-red font-semibold mr-1 relative top-1.5">
-            {numDislikes}
-          </span>
-        </div>
+        <IconButton
+          mr={1}
+          variant="ghost"
+          color={"tertiary"}
+          rounded="full"
+          position="static"
+          onClick={handleLiked}
+          icon={
+            liked ? (
+              <ThumbUpIconFilled boxSize={{ base: 7, md: 8 }} />
+            ) : (
+              <ThumbUpIcon boxSize={{ base: 7, md: 8 }} className="" />
+            )
+          }
+        />
 
-        <div>
-          <button className="text-white">
-            <BookMarkIcon className="w-6 sm:w-7 text-white" />
-          </button>
-        </div>
-      </div>
+        <Text
+          mr={2}
+          fontWeight={"semibold"}
+          color={"tertiary"}
+          className="text-neon-blue font-semibold mr-1 relative top-1.5"
+        >
+          {numLikes}
+        </Text>
+        <IconButton
+          mr={1}
+          variant="ghost"
+          color={"#ff3366"}
+          rounded="full"
+          onClick={handleDisliked}
+          icon={
+            disliked ? (
+              <ThumbDownIconFilled
+                boxSize={{ base: 7, md: 8 }}
+                className="thumb-down"
+              />
+            ) : (
+              <ThumbDownIcon boxSize={{ base: 7, md: 8 }} className="" />
+            )
+          }
+        />
+
+        <Text
+          fontWeight={"semibold"}
+          color={"#ff3366"}
+          className="text-neon-red font-semibold mr-1 relative top-1.5"
+        >
+          {numDislikes}
+        </Text>
+
+        
+      </Flex>
 
       <Formik
         initialValues={{
@@ -187,28 +228,29 @@ const ModalActions = ({ post, addComment, onDelete }) => {
       >
         {({ isSubmitting, isValid, dirty }) => (
           <Form autoComplete="off" className="flex mb-4">
-            <Field
-              type="text"
-              maxLength="600"
-              name="comment"
-              placeholder="Add a comment..."
-              className="w-full bg-gray-800 rounded-lg mr-2 px-2 py-2 text-base text-gray-300 focus:outline-none"
-            />
-            <button
-              type="submit"
-              disabled={isSubmitting || !(isValid && dirty)}
-              className="w-10 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <ButtonSpinner className="animate-spin" />
-              ) : (
-                <PlusIcon className="" />
-              )}
-            </button>
+            <HStack alignItems="center">
+              <AppFormField
+                as={Input}
+                type="text"
+                maxLength="600"
+                name="comment"
+                placeholder="Add a comment..."
+              />
+              <Button
+                type="submit"
+                variant="ghost"
+                colorScheme="tertiaryScheme"
+                isLoading={isSubmitting}
+                disabled={!(isValid && dirty)}
+                className="w-10 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Post
+              </Button>
+            </HStack>
           </Form>
         )}
       </Formik>
-    </>
+    </Box>
   );
 };
 

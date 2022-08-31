@@ -31,11 +31,61 @@ const searchSchema = Yup.object().shape({
 const FindFollowers = () => {
   const [searchResults, setSearchResults] = useState([]);
 
-  const { auth } = useContext(AuthContext);
+  const { auth, toggleAuth } = useContext(AuthContext);
 
   const { setAlert, alertDetails, isAlertOpen } = useAlert();
 
   const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();
+
+  const unFollowUser = async () => {
+    // setUnfollowLoading(true);
+    await axiosInstance.post("/api/unfollow/", {
+      followingUserId: modalDetails._id,
+    });
+    // setUnfollowLoading(false);
+    let searchUsers = [...searchResults];
+    let unfollowedUser;
+    let unfollowedUserIndex;
+
+    searchUsers.forEach((searchUser, idx) => {
+      if (searchUser._id === modalDetails._id) {
+        unfollowedUserIndex = idx;
+      }
+    });
+
+    unfollowedUser = { ...searchUsers[unfollowedUserIndex] };
+
+    let index;
+
+    unfollowedUser.followers.forEach((follower, idx) => {
+      if (follower === auth._id) {
+        index = idx;
+      }
+    });
+
+    unfollowedUser.followers.splice(index, 1);
+
+    searchUsers[unfollowedUserIndex] = unfollowedUser;
+
+    setSearchResults(searchUsers);
+
+    let currentAuth = { ...auth };
+
+    let authIndex;
+
+    currentAuth.following.forEach((followingUser, idx) => {
+      if (modalDetails._id === followingUser) {
+        authIndex = idx;
+      }
+    });
+
+    currentAuth.following.splice(authIndex, 1);
+
+    toggleAuth(currentAuth);
+    onModalClose();
+
+    // setUnfollowLoading(false);
+  };
 
   return (
     <>
@@ -45,6 +95,7 @@ const FindFollowers = () => {
           isModalOpen={isModalOpen}
           onModalClose={onModalClose}
           modalDetails={modalDetails}
+          unFollowUser={unFollowUser}
           searchResults={searchResults}
           setSearchResults={setSearchResults}
         />

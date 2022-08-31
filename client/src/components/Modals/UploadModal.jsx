@@ -74,6 +74,7 @@ const UploadModal = ({
 
   return (
     <Modal
+    size="xl"
       isOpen={isModalOpen}
       onClose={() => {
         setImageURL(null);
@@ -82,7 +83,7 @@ const UploadModal = ({
       }}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="primary.800">
         <ModalCloseButton />
         <ModalHeader>Upload</ModalHeader>
         <ModalBody>

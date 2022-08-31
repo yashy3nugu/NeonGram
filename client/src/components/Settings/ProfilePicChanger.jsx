@@ -4,10 +4,19 @@ import ButtonSpinner from "../icons/ButtonSpinner";
 import PencilIcon from "../icons/PencilIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import axiosInstance from "../../config/axios";
-import { Box, Avatar, Button, chakra, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Avatar,
+  Button,
+  chakra,
+  VStack,
+  IconButton,
+  HStack,
+} from "@chakra-ui/react";
 import ColoredFormButton from "../shared/ColoredFormButton";
 import useModal from "../../hooks/useModal";
 import { AuthContext } from "../contextProviders/authContext";
+import PlusIcon from "../icons/PlusIcon";
 
 const ProfilePicChanger = () => {
   const fileInput = useRef(null);
@@ -17,7 +26,7 @@ const ProfilePicChanger = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { auth } = useContext(AuthContext);
+  const { auth, toggleAuth } = useContext(AuthContext);
 
   const { isModalOpen, onModalClose, setModal } = useModal();
 
@@ -28,11 +37,16 @@ const ProfilePicChanger = () => {
     setModal();
   };
 
-  const deleteProfilePicture = () => {
+  const deleteProfilePicture = async () => {
     setLoading(true);
-    axiosInstance
-      .delete("/api/deleteProfilePic")
-      .then(() => window.location.reload());
+
+    try {
+      const res = await axiosInstance.delete("/api/deleteProfilePic");
+      toggleAuth(res.data.user);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,24 +58,23 @@ const ProfilePicChanger = () => {
             alt={`${auth.username}'s profile`}
             size="2xl"
           />
-          <ColoredFormButton
-            w="full"
-            leftIcon={<PencilIcon />}
-            onClick={() => fileInput.current.click()}
-          >
-            {auth.profilePicture ? "Change" : "Upload"}
-          </ColoredFormButton>
-          {auth.profilePicture && (
-            <Button
-              w="full"
-              colorScheme="crimsonScheme"
-              color="white"
-              leftIcon={<DeleteIcon />}
-              onClick={deleteProfilePicture}
-            >
-              Delete
-            </Button>
-          )}
+          <HStack>
+            <IconButton
+              onClick={() => fileInput.current.click()}
+              variant="ghost"
+              colorScheme="tertiaryScheme"
+              icon={<PencilIcon boxSize={6} />}
+            />
+            {auth.profilePicture && (
+              <IconButton
+                isLoading={loading}
+                onClick={deleteProfilePicture}
+                variant="ghost"
+                colorScheme="crimsonScheme"
+                icon={<DeleteIcon boxSize={6} />}
+              />
+            )}
+          </HStack>
         </VStack>
 
         <chakra.input

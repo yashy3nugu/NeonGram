@@ -1,139 +1,186 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserIcon from "../icons/UserIcon";
-import UnfollowModal from "../Modals/UnfollowModal";
+// import UnfollowModal from "../Modals/UnfollowModal";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
 import { useHistory } from "react-router-dom";
 import SettingsIconSolid from "../icons/SettingsIconSolid";
 import ButtonSpinner from "../icons/ButtonSpinner";
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Center,
+  IconButton,
+  VStack,
+  Text,
+  SimpleGrid,
+  Button,
+  SkeletonCircle,
+  SkeletonText,
+} from "@chakra-ui/react";
+import useModal from "../../hooks/useModal";
+import UnfollowModal from "../shared/UnfollowModal";
+import ColoredFormButton from "../shared/ColoredFormButton";
 
-const ProfileDetails = ({
-  userDetails,
-  posts,
-  addFollower,
-  removeFollower,
-}) => {
+const ProfileDetails = ({ user }) => {
   const history = useHistory();
 
   const { auth } = useContext(AuthContext);
 
-  const [unfollowModal, setunfollowModal] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
 
   const [followLoading, setfollowLoading] = useState(false);
 
-  const [unfollowLoading, setUnfollowLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
 
-  const followUser = () => {
+  const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();
+
+  useEffect(() => {
+    setUserLoading(true);
+
+    axiosInstance.get(`/api/details/${user}`).then((res) => {
+      setUserDetails(res.data);
+      setUserLoading(false);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    console.log("changed to ", userDetails ? userDetails.followers : null);
+  }, [userDetails]);
+
+  const followUser = async () => {
     setfollowLoading(true);
-    axiosInstance
-      .patch("/api/follow", { followingUserId: userDetails._id })
-      .then(() => {
-        setfollowLoading(false);
-        addFollower(auth._id);
+
+    try {
+      await axiosInstance.patch("/api/follow", {
+        followingUserId: userDetails._id,
       });
+    } catch (error) {
+      setfollowLoading(false);
+    }
+    const followers = [...userDetails.followers];
+
+    followers.push(auth._id);
+
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        followers,
+      };
+    });
+
+    setfollowLoading(false);
   };
 
-  const unfollowUser = () => {
-    setUnfollowLoading(true);
-    axiosInstance
-      .post("/api/unfollow/", { followingUserId: userDetails._id })
-      .then(() => {
-        setUnfollowLoading(false);
-        setunfollowModal(false);
-        removeFollower(auth._id);
-      });
+  const unFollowUser = async () => {
+    await axiosInstance.post("/api/unfollow/", {
+      followingUserId: modalDetails._id,
+    });
+
+    const followers = [...userDetails.followers];
+
+    let followerIndex;
+
+    followers.forEach((follower, idx) => {
+      if (follower === auth._id) {
+        followerIndex = idx;
+      }
+    });
+
+    followers.splice(followerIndex, 1);
+
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        followers,
+      };
+    });
   };
-
-  let action;
-
-  if (userDetails.username === auth.username) {
-    action = null;
-  } else if (userDetails.followers.includes(auth._id)) {
-    action = (
-      <button
-        onClick={() => setunfollowModal(true)}
-        className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"
-      >
-        Following
-      </button>
-    );
-  } else {
-    action = (
-      <button
-        onClick={followUser}
-        className="w-2/3 sm:w-1/3 bg-neon-purple border border-transparent px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out"
-      >
-        {followLoading ? (
-          <ButtonSpinner className="w-5 animate-spin mx-auto" />
-        ) : (
-          "Follow"
-        )}
-      </button>
-    );
-  }
 
   return (
-    <div className="container mx-auto mt-5 sm:mt-20">
-      <div className="grid grid-cols-1">
-        <div className="w-full text-center">
-          <div className="inline-block relative p-3">
-            {userDetails.username === auth.username && (
-              <button
-                onClick={() => history.push("/settings")}
-                className="absolute bottom-0 right-0"
-              >
-                <SettingsIconSolid className="w-8 text-gray-400" />
-              </button>
-            )}
-
-            {userDetails.profilePicture ? (
-              <img
-                src={userDetails.profilePicture}
-                alt={userDetails.username}
-                className="w-24 sm:w-28 md:w-32 rounded-full"
-              />
-            ) : (
-              <UserIcon className="w-24 sm:w-28 md:w-32" />
-            )}
-          </div>
-        </div>
-
-        <div className=" text-center">
-          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl my-1 sm:my-2">
-            {userDetails.username}
-          </h1>
-          {userDetails.bio && (
-            <p className="text-gray-400">{userDetails.bio}</p>
-          )}
-
-          <div className="grid grid-cols-3 w-2/3 md:w-1/2 lg:1/3 mx-auto my-3 sm:my-3 text-sm md:text-base">
-            <span className="text-gray-300">
-              <strong>{posts.length}</strong> posts
-            </span>
-            <span className="text-gray-300">
-              <strong>{userDetails.followers.length}</strong> followers
-            </span>
-            <span className="text-gray-300">
-              <strong>{userDetails.following.length}</strong> following
-            </span>
-          </div>
-
-          {/* {userDetails.username === auth.username ? (
-                        <button className=" bg-neon-purple px-3 py-2 text-sm rounded-full text-white my-2 hover:bg-purple-900 transition duration-150 ease-in-out" onClick={() => history.push("/settings")}>Edit Profile<PencilIcon className="h-5 ml-1 inline relative bottom-0.5" /></button>
-                    ) : <button onClick={followUser} className="w-2/3 sm:w-1/3 bg-neon-purple px-3 py-2 mt-6 text-sm text-white rounded-lg hover:bg-purple-900 transition duration-150 ease-in-out">Follow</button>} */}
-          {action}
-        </div>
-      </div>
-
-      {unfollowModal && (
+    <>
+      {modalDetails && (
         <UnfollowModal
-          user={userDetails}
-          onClose={() => setunfollowModal(false)}
-          unfollowUser={unfollowUser}
-          loading={unfollowLoading}
+          isModalOpen={isModalOpen}
+          onModalClose={onModalClose}
+          modalDetails={modalDetails}
+          unFollowUser={unFollowUser}
         />
       )}
-    </div>
+
+      {userLoading && (
+        <>
+          <Center>
+            <Box>
+              <SkeletonCircle size="8rem" />
+            </Box>
+          </Center>
+          <SkeletonText w="md" mx={"auto"} noOfLines={4} mt={4} />
+        </>
+      )}
+
+      {userDetails && (
+        <Box className="container mx-auto mt-5 sm:mt-20">
+          <Center>
+            <Box>
+              <Avatar size="2xl" src={userDetails.profilePicture}>
+                {userDetails.username === auth.username && (
+                  <AvatarBadge borderWidth={0}>
+                    <IconButton
+                      onClick={() => history.push("/settings")}
+                      variant="ghost"
+                      color="gray"
+                      rounded="full"
+                      icon={<SettingsIconSolid boxSize={8} />}
+                    />
+                  </AvatarBadge>
+                )}
+              </Avatar>
+            </Box>
+          </Center>
+          <Center>
+            <VStack mt={4} spacing={3}>
+              <Text as="h1" fontSize="3xl" fontWeight="semibold">
+                {userDetails.username}
+              </Text>
+              <Text as="p" color="gray.400">
+                {userDetails.bio}
+              </Text>
+              <SimpleGrid columns={2} spacing={20}>
+                <Text as="span" className="text-gray-300">
+                  <Text as="strong">{userDetails.followers.length}</Text>{" "}
+                  followers
+                </Text>
+                <Text as="span" className="text-gray-300">
+                  <Text as="strong">{userDetails.following.length}</Text>{" "}
+                  following
+                </Text>
+              </SimpleGrid>
+              <Box w="full">
+                {userDetails.followers.includes(auth._id) ? (
+                  <Button
+                    w="full"
+                    onClick={() => setModal(userDetails)}
+                    className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"
+                  >
+                    Following
+                  </Button>
+                ) : (
+                  <ColoredFormButton
+                    onClick={followUser}
+                    isLoading={followLoading}
+                    w="full"
+                  >
+                    Follow
+                  </ColoredFormButton>
+                )}
+              </Box>
+            </VStack>
+          </Center>
+        </Box>
+      )}
+    </>
   );
 };
 
