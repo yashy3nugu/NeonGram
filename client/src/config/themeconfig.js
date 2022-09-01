@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { theme as originalTheme, extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 
 const config = {
@@ -68,16 +68,16 @@ const styles = {
     button: {
       color: mode("gray.100", "gray.100")(props),
     },
-    '&::-webkit-scrollbar': {
-      width: '6px',
+    "&::-webkit-scrollbar": {
+      width: "6px",
       // backgroundColor: 'primary.900',
     },
-    '&::-webkit-scrollbar-track': {
-      width: '6px',
+    "&::-webkit-scrollbar-track": {
+      width: "6px",
     },
-    '&::-webkit-scrollbar-thumb': {
+    "&::-webkit-scrollbar-thumb": {
       background: "whiteAlpha.50",
-      borderRadius: '24px',
+      borderRadius: "24px",
     },
   }),
 };
@@ -85,30 +85,34 @@ const styles = {
 // const IconButton = {
 //   // The styles all button have in common
 //   baseStyle: {
-    
+
 //     position: 'static',
 //   },
 // }
 
-const Button = {
-  // The styles all button have in common
-  baseStyle: {
-    
-    position: 'static',
+const Alert = {
+  variants: {
+    solid: (props) => {
+      // only applies to `subtle` variant
+      const { colorScheme: c } = props;
+
+      if(c==="red" ) {
+        return {
+          container: {
+            bg: "crimsonScheme.500",
+            color: "gray.50",
+          },
+        };
+      }
+      else {
+        return originalTheme.components.Alert.variants.solid(props)
+      }
+
+      
+    },
   },
-}
+};
 
-const Avatar = {
-  // The styles all button have in common
-  baseStyle: {
-    
-    position: 'static',
-  },
-}
-
-
-
-
-const theme = extendTheme({ colors, config, styles, components: {Button, Avatar} });
+const theme = extendTheme({ colors, config, styles, components: { Alert } });
 
 export default theme;

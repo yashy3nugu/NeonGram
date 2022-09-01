@@ -10,6 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const { auth, toggleAuth } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log("called private route")
     axios
       .post(
         "/api/verify",
