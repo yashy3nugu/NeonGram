@@ -7,18 +7,10 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,
-  Avatar,
   Center,
-  Text,
-  VStack,
   Image,
   Grid,
   GridItem,
-  HStack,
-  LinkBox,
-  LinkOverlay,
-  Box,
   Flex,
 } from "@chakra-ui/react";
 
@@ -36,7 +28,7 @@ const PostModal = ({
   modalDetails,
   onModalClose,
 }) => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
 
   useEffect(() => {
     axiosInstance
@@ -61,7 +53,6 @@ const PostModal = ({
       isCentered
       isOpen={isModalOpen}
       onClose={onModalClose}
-      onDelete={onDelete}
       
     >
       <ModalOverlay />
@@ -81,8 +72,8 @@ const PostModal = ({
               </Center>
             </GridItem>
             <GridItem bg="primary.900" colSpan={4} h="full" py={2} px={3}>
-              <Flex flexDirection={"column"} h="full" >
-                <ModalActions post={modalDetails} addComment={addComment} />
+              <Flex flexDirection={"column"} h="full">
+                <ModalActions post={modalDetails} addComment={addComment} onDelete={onDelete} />
                 <ModalComments post={modalDetails} comments={comments} />
               </Flex>
             </GridItem>

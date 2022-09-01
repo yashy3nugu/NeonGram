@@ -42,7 +42,7 @@ const UserPage = () => {
       >
         <ProfileDetails user={user} />
         <Divider my={8} />
-        <PostGallery user={user} posts={posts} removePost={removePost} />
+        <PostGallery user={user} removePost={removePost} />
 
       </Box>
 

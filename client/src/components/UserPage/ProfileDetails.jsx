@@ -158,23 +158,24 @@ const ProfileDetails = ({ user }) => {
                 </Text>
               </SimpleGrid>
               <Box w="full">
-                {userDetails.followers.includes(auth._id) ? (
-                  <Button
-                    w="full"
-                    onClick={() => setModal(userDetails)}
-                    className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"
-                  >
-                    Following
-                  </Button>
-                ) : (
-                  <ColoredFormButton
-                    onClick={followUser}
-                    isLoading={followLoading}
-                    w="full"
-                  >
-                    Follow
-                  </ColoredFormButton>
-                )}
+                {!userDetails._id === auth._id &&
+                  (userDetails.followers.includes(auth._id) ? (
+                    <Button
+                      w="full"
+                      onClick={() => setModal(userDetails)}
+                      className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"
+                    >
+                      Following
+                    </Button>
+                  ) : (
+                    <ColoredFormButton
+                      onClick={followUser}
+                      isLoading={followLoading}
+                      w="full"
+                    >
+                      Follow
+                    </ColoredFormButton>
+                  ))}
               </Box>
             </VStack>
           </Center>

@@ -4,9 +4,7 @@ import axiosInstance from "../../config/axios";
 import useModal from "../../hooks/useModal";
 import PostModal from "../shared/PostModal";
 
-const PostGallery = ({ removePost, user }) => {
-  const [clickedPost, setClickedPost] = useState(null);
-
+const PostGallery = ({ user }) => {
   const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();
 
   const [posts, setPosts] = useState(null);
@@ -20,24 +18,39 @@ const PostGallery = ({ removePost, user }) => {
     });
   }, [user]);
 
-  const onClose = () => {
-    setClickedPost(null);
-    document.body.style.overflow = "unset";
+  const removePost = (id) => {
+    const currentPosts = [...posts];
+    let removeIndex;
+
+    currentPosts.forEach((post, idx) => {
+      if (id === post._id) {
+        removeIndex = idx;
+      }
+    });
+
+    currentPosts.splice(removeIndex, 1);
+
+    setPosts(currentPosts);
   };
 
   const onDelete = (id) => {
     axiosInstance.delete(`/api/posts/${id}`).then(() => {
-      onClose();
       removePost(id);
+      onModalClose();
     });
   };
 
   return (
     <>
       {isModalOpen && (
-        <PostModal isModalOpen={isModalOpen} onModalClose={onModalClose} modalDetails={modalDetails} />
+        <PostModal
+          isModalOpen={isModalOpen}
+          onModalClose={onModalClose}
+          modalDetails={modalDetails}
+          onDelete={onDelete}
+        />
       )}
-      <div className="max-w-4xl px-3 mx-auto text-center">
+      <Box className="max-w-4xl px-3 mx-auto text-center">
         <SimpleGrid columns={3} spacing={8}>
           {posts &&
             posts.map((post, idx) => (
@@ -83,7 +96,7 @@ const PostGallery = ({ removePost, user }) => {
           <PostModal post={clickedPost} onClose={onClose} onDelete={onDelete} />
         )}
       </div> */}
-      </div>
+      </Box>
     </>
   );
 };

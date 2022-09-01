@@ -32,9 +32,10 @@ const ModalComments = ({ post, comments }) => {
         spacing={5}
         className=" text-white"
         maxHeight="30rem"
+        minHeight="30rem"
         overflowY="auto"
       >
-        {comments.length
+        {comments
           ? comments.map((comment, idx) => {
               return (
                 <Box py={1} className="py-1.5 flex items-center" key={idx}>
