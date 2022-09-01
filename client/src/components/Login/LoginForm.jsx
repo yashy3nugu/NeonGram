@@ -3,11 +3,18 @@ import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
 import { Formik, Form } from "formik";
 import NeonGramIcon from "../icons/NeonGramIcon";
-import { Button, Center, Box, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Box,
+  Text,
+  useToast,
+  Container,
+  VStack,
+} from "@chakra-ui/react";
 import AuthFormField from "../shared/AuthFormField";
 import * as Yup from "yup";
-import useAlert from "../../hooks/useAlert";
-import AppAlert from "../shared/AppAlert";
+import ColoredFormButton from "../shared/ColoredFormButton";
 
 const initialValues = {
   username: "",
@@ -21,62 +28,66 @@ const loginSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const { toggleAuth } = useContext(AuthContext);
-  const { setAlert, alertDetails, isAlertOpen } = useAlert();
+  const toast = useToast();
 
   return (
     <>
-    {isAlertOpen && <AppAlert details={alertDetails} />}
-    <Box
-      bg="gray.900"
-      border="2px"
-      borderColor="tertiary"
-      borderRadius="0.5rem"
-      className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
-    >
-      <Formik
-        initialValues={initialValues}
-        validationSchema={loginSchema}
-        validateOnMount={false}
-        onSubmit={async (values, { setSubmitting }) => {
-          setSubmitting(true);
-
-          try {
-            const res = await axiosInstance.post("/api/login", {
-              username: values.username,
-              password: values.password,
-            });
-
-            localStorage.setItem("accessToken", res.data.accessToken);
-            localStorage.setItem("refreshToken", res.data.refreshToken);
-            
-            toggleAuth(true);
-            window.location.reload();
-          } catch (error) {
-            toggleAuth(false);
-            setAlert('error',error.response.data.message);
-          }
-
-          
-          
-          setSubmitting(false);
-        }}
+      <Container
+        bg="primary.900"
+        border="1px"
+        borderColor="gray.800"
+        borderRadius="xl"
+        py={{base:20, sm:8}}
+        
+        flexGrow={{ base: 1, sm: 0 }}
+        className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
       >
-        {({ isSubmitting, isValid, dirty, errors, touched }) => (
-          <Form autoComplete="off">
-            <Box px={10} py={3} w="24rem">
-              <Center>
-                <NeonGramIcon />
-              </Center>
-              <Box mb={3} mt={3} className="mb-3 mt-10 px-3">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginSchema}
+          validateOnMount={false}
+          onSubmit={async (values, { setSubmitting }) => {
+            setSubmitting(true);
+
+            try {
+              const res = await axiosInstance.post("/api/login", {
+                username: values.username,
+                password: values.password,
+              });
+
+              localStorage.setItem("accessToken", res.data.accessToken);
+              localStorage.setItem("refreshToken", res.data.refreshToken);
+
+              toggleAuth(true);
+              window.location.reload();
+            } catch (error) {
+              toggleAuth(false);
+              toast({
+                title: "error",
+                description: error.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+              });
+              setSubmitting(false);
+            }
+
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting, isValid, dirty, errors, touched }) => (
+            <Form autoComplete="off">
+              <VStack px={10} py={3} spacing={3} w="full">
+                <Center>
+                  <NeonGramIcon />
+                </Center>
+
                 <AuthFormField name="username" type="text" />
-              </Box>
 
-              <Box mb={3} className="mb-5 px-3">
                 <AuthFormField name="password" type="password" />
-              </Box>
 
-              <Box>
-                <Button
+                <ColoredFormButton
                   mt={3}
                   type="submit"
                   disabled={isSubmitting || !(isValid && dirty)}
@@ -85,27 +96,21 @@ const LoginForm = () => {
                   colorScheme="tertiaryScheme"
                 >
                   Sign In
-                </Button>
-              </Box>
-              <Center mt={5} className="text-center mt-5">
-                {/* <p className="text-gray-300 text-sm">
-                  Don't have an account?{" "}
-                  <a href="/signup" className="text-neon-purple">
-                    Sign Up
-                  </a>
-                </p> */}
-                <Text fontSize="xs">
-                  Don't have an account?{" "}
-                  <Text as="a" href="/signup" color="tertiary">
-                    Sign Up
+                </ColoredFormButton>
+
+                <Center mt={5} className="text-center mt-5">
+                  <Text fontSize="xs">
+                    Don't have an account?{" "}
+                    <Text as="a" href="/signup" color="tertiary">
+                      Sign Up
+                    </Text>
                   </Text>
-                </Text>
-              </Center>
-            </Box>
-          </Form>
-        )}
-      </Formik>
-    </Box>
+                </Center>
+              </VStack>
+            </Form>
+          )}
+        </Formik>
+      </Container>
     </>
   );
 };

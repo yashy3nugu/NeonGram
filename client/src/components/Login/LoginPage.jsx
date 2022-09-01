@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 
 const LoginPage = () => {
   return (
-    <Flex align="center" justify="center" h="100vh">
+    <Flex flexDirection="column" align="center" justify="center" h="100vh">
       <LoginForm />
     </Flex>
   );

@@ -40,7 +40,7 @@ exports.registerUser = async (req, res, next) => {
       message: "User created successfully",
       accessToken,
       refreshToken,
-      user
+      user,
     });
   } catch (err) {
     console.log(err);
@@ -60,8 +60,12 @@ exports.loginUser = async (req, res, next) => {
 
     const user = await User.findOne({ username: username });
 
-    if (!user || !(await user.comparePassword(password, user.hashedPassword))) {
-      return next(new AppError("Incorrect username or password", 400));
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    if (!(await user.comparePassword(password, user.hashedPassword))) {
+      return next(new AppError("Incorrect password", 400));
     }
 
     const accessToken = generateAccessToken({ _id: user._id });
