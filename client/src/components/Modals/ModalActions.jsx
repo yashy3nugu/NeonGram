@@ -1,14 +1,11 @@
 import React, { useState, useContext } from "react";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
-import BookMarkIcon from "../icons/BookMarkIcon";
-import PlusIcon from "../icons/PlusIcon";
-import UserIcon from "../icons/UserIcon";
+
 import DeleteIconSolid from "../icons/DeleteIconSolid";
 import { AuthContext } from "../contextProviders/authContext";
 import axiosInstance from "../../config/axios";
-import { Formik, Form, Field } from "formik";
-import ButtonSpinner from "../icons/ButtonSpinner";
+import { Formik, Form } from "formik";
 import ThumbDownIcon from "../icons/ThumbDownIcon";
 import ThumbUpIcon from "../icons/ThumbUpIcon";
 import {
@@ -193,8 +190,6 @@ const ModalActions = ({ post, addComment, onDelete }) => {
         >
           {numDislikes}
         </Text>
-
-        
       </Flex>
 
       <Formik

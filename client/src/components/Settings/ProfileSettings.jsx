@@ -1,18 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../contextProviders/authContext";
-import { Formik, Form, Field } from "formik";
+import React from "react";
+
 import ProfilePicChanger from "./ProfilePicChanger";
-import UserIcon from "../icons/UserIcon";
-import axiosInstance from "../../config/axios";
-import ButtonSpinner from "../icons/ButtonSpinner";
-import { Avatar, Box, Button, HStack, VStack, Text } from "@chakra-ui/react";
-import ColoredFormButton from "../shared/ColoredFormButton";
-import PencilIcon from "../icons/PencilIcon";
+
+import { Box, HStack, Text } from "@chakra-ui/react";
+
 import DetailsForm from "./DetailsForm";
 
 const ProfileSettings = () => {
-  const { auth, toggleAuth } = useContext(AuthContext);
-
   return (
     <Box
       mt={50}
@@ -26,9 +20,9 @@ const ProfileSettings = () => {
       borderRadius="xl"
     >
       <Text fontSize="4xl" fontWeight="semibold" mb={3}>
-          Settings
-        </Text>
-      <HStack spacing={12} alignItems="" >
+        Settings
+      </Text>
+      <HStack spacing={12} alignItems="">
         <DetailsForm />
 
         <ProfilePicChanger />

@@ -1,9 +1,7 @@
 import React from "react";
-import UserIcon from "../icons/UserIcon";
 import {
   Avatar,
   Box,
-  Flex,
   HStack,
   LinkBox,
   LinkOverlay,
@@ -66,7 +64,9 @@ const ModalComments = ({ post, comments }) => {
             //   {" "}
             //   <p>No comments yet...</p>
             // </li>
-            [...Array(5)].map((_, idx) => <Skeleton key={idx} height={12} width="full" />)}
+            [...Array(5)].map((_, idx) => (
+              <Skeleton key={idx} height={12} width="full" />
+            ))}
       </VStack>
     </Box>
   );

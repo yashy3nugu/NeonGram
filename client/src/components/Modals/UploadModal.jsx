@@ -7,17 +7,12 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Avatar,
-  Center,
-  Text,
-  VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Cropper from "react-cropper";
-import { createPortal } from "react-dom";
-import useClickOutsideListener from "../../hooks/useClickOutsideListener";
+
 import axiosInstance from "../../config/axios";
-import ButtonSpinner from "../icons/ButtonSpinner";
+
 import "cropperjs/dist/cropper.css";
 import { useContext } from "react";
 import { AuthContext } from "../contextProviders/authContext";
@@ -36,7 +31,7 @@ const UploadModal = ({
 
   const [loading, setLoading] = useState(false);
 
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { toggleAuth } = useContext(AuthContext);
 
   const saveProfilePicture = async (e) => {
     setLoading(true);
@@ -74,7 +69,7 @@ const UploadModal = ({
 
   return (
     <Modal
-    size="xl"
+      size="xl"
       isOpen={isModalOpen}
       onClose={() => {
         setImageURL(null);

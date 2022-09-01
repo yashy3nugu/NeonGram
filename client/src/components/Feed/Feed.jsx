@@ -3,9 +3,8 @@ import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { Waypoint } from "react-waypoint";
-import SpinnerIcon from "../icons/SpinnerIcon";
 import styles from "./FeedStyles";
-import { Grid, GridItem, VStack, Spinner, Box, Center } from "@chakra-ui/react";
+import { Grid, GridItem, VStack, Spinner, Center } from "@chakra-ui/react";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -48,11 +47,10 @@ const Feed = () => {
       })
       .then((res) => {
         setLoading(false);
-        
+
         if (res.data.length) {
           setPosts((prev) => [...prev, ...res.data]);
         } else {
-          
           setHasNext(false);
         }
       });

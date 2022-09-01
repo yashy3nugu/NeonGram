@@ -4,11 +4,8 @@ import {
   LinkBox,
   Avatar,
   LinkOverlay,
-  Button,
   IconButton,
-  Text,
 } from "@chakra-ui/react";
-import FollowButton from "./FollowButton";
 import { useContext, useState } from "react";
 import { AuthContext } from "../contextProviders/authContext";
 import UserAddIconSolid from "../icons/UserAddIconSolid";
@@ -56,14 +53,22 @@ const FollowerCard = ({
   };
 
   return (
-    <HStack justifyContent="space-between" alignItems="center" {...props} w="full" >
+    <HStack
+      justifyContent="space-between"
+      alignItems="center"
+      {...props}
+      w="full"
+    >
       <HStack>
         <LinkBox href={`/user/${user.username}`}>
           <HStack>
             <Avatar src={user.profilePicture} size="sm" />
 
             <Box className="ml-4">
-              <LinkOverlay fontWeight="semibold" href={`/app/user/${user.username}`}>
+              <LinkOverlay
+                fontWeight="semibold"
+                href={`/app/user/${user.username}`}
+              >
                 {user.username}
               </LinkOverlay>
 
@@ -77,11 +82,15 @@ const FollowerCard = ({
       </HStack>
 
       {auth.following.includes(user._id) ? (
-        <IconButton  rounded="full" onClick={() => setModal(user)} icon={<TickIcon boxSize={5} />} />
+        <IconButton
+          rounded="full"
+          onClick={() => setModal(user)}
+          icon={<TickIcon boxSize={5} />}
+        />
       ) : (
         auth.username !== user.username && (
           <ColoredFormIconButton
-          rounded="full"
+            rounded="full"
             onClick={followUser}
             isLoading={followLoading}
             icon={<UserAddIconSolid />}

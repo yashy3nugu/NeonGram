@@ -1,8 +1,7 @@
-import { Box, Flex, Text, Image, Button, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, IconButton } from "@chakra-ui/react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import CrossIcon from "../icons/CrossIcon";
-import PlusIcon from "../icons/PlusIcon";
 
 const DropZone = (props) => {
   const { getRootProps, getInputProps } = useDropzone({
@@ -41,16 +40,14 @@ const DropZone = (props) => {
                   className="w-full"
                 />
                 <IconButton
-                position="absolute"
-                zIndex="10"
-                top={4}
-                right={4}
+                  position="absolute"
+                  zIndex="10"
+                  top={4}
+                  right={4}
                   className="absolute w-6 top-0 right-0 text-red-600 mr-1 mt-2"
                   onClick={() => props.setImage(null)}
                   icon={<CrossIcon />}
                 />
-                  
-                
               </Box>
             </>
           );

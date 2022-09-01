@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../../config/axios";
+
 import ProfileDetails from "./ProfileDetails";
-import SpinnerIcon from "../icons/SpinnerIcon";
+
 import PostGallery from "./PostGallery";
 import { Box, Divider } from "@chakra-ui/react";
 

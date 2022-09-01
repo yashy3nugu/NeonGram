@@ -1,17 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { AuthContext } from "../contextProviders/authContext";
 import axiosInstance from "../../config/axios";
-import PlusIcon from "../icons/PlusIcon";
-import {
-  Button,
-  IconButton,
-  Input,
-  Flex,
-  HStack,
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Input, HStack, Box, Text } from "@chakra-ui/react";
 import AppFormField from "../shared/AppFormField";
 
 const PostCommentSection = ({ post }) => {
@@ -40,7 +31,6 @@ const PostCommentSection = ({ post }) => {
           // border="1px"
           rounded="lg"
           borderColor="gray.700"
-          
           className="max-h-32 text-gray-300 rounded bg-gray-800 px-3 py-2 mb-4 text-sm overflow-scroll"
         >
           <Box overflowY="auto" maxHeight={"5rem"}>
@@ -51,11 +41,15 @@ const PostCommentSection = ({ post }) => {
                     as="span"
                     fontWeight="semibold"
                     className="font-semibold"
-                    fontSize={{base:"sm", md: "md"}}
+                    fontSize={{ base: "sm", md: "md" }}
                   >
                     {comment.user.username}
                   </Text>{" "}
-                  <Text fontSize={{base:"sm", md: "md"}} as="span" className="text-gray-300">
+                  <Text
+                    fontSize={{ base: "sm", md: "md" }}
+                    as="span"
+                    className="text-gray-300"
+                  >
                     {comment.content}
                   </Text>
                 </Box>

@@ -1,19 +1,10 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { AuthContext } from "../contextProviders/authContext";
-import FollowButton from "./FollowButton";
+
 import SearchIcon from "../icons/SearchIcon";
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  HStack,
-  LinkBox,
-  LinkOverlay,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import * as Yup from "yup";
 import AppFormField from "../shared/AppFormField";
 

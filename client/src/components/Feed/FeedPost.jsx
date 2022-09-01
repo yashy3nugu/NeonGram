@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
-import UserIcon from "../icons/UserIcon";
 import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../icons/ThumbDownIcon";
@@ -118,38 +117,30 @@ const FeedPost = ({ post }) => {
     <Box
       bg="primary.900"
       w="full"
-      
       borderColor="gray.800"
       borderRadius={{ base: "none", sm: "xl" }}
       borderWidth={{ base: "0px", sm: "1px" }}
       px={3}
       py={4}
-      
     >
       {/* <Box border="1px" borderColor="gray.800">
         Card
       </Box> */}
       <Box>
-        <Box
-          textAlign="left"
-          py={4}
-          justify="space-between"
-          w="full"
-          
-        >
+        <Box textAlign="left" py={4} justify="space-between" w="full">
           <LinkBox>
-          <HStack alignItems={"center"} spacing={2}>
-            <Avatar position="static" size="sm" src={post.user.profilePicture} />
-            <LinkOverlay href={`/app/user/${post.user.username}`}>
-            <Text
-              fontSize="sm"
-              
-              className="text-white"
-            >
-              {post.user.username}
-            </Text>
-            </LinkOverlay>
-          </HStack>
+            <HStack alignItems={"center"} spacing={2}>
+              <Avatar
+                position="static"
+                size="sm"
+                src={post.user.profilePicture}
+              />
+              <LinkOverlay href={`/app/user/${post.user.username}`}>
+                <Text fontSize="sm" className="text-white">
+                  {post.user.username}
+                </Text>
+              </LinkOverlay>
+            </HStack>
           </LinkBox>
         </Box>
         <Box mb={3} className="mb-3">
@@ -175,9 +166,12 @@ const FeedPost = ({ post }) => {
               onClick={handleLiked}
               icon={
                 liked ? (
-                  <ThumbUpIconFilled boxSize={{base:7, md:8}} className="thumb-up" />
+                  <ThumbUpIconFilled
+                    boxSize={{ base: 7, md: 8 }}
+                    className="thumb-up"
+                  />
                 ) : (
-                  <ThumbUpIcon boxSize={{base:7, md:8}} className="" />
+                  <ThumbUpIcon boxSize={{ base: 7, md: 8 }} className="" />
                 )
               }
             />
@@ -198,9 +192,12 @@ const FeedPost = ({ post }) => {
               onClick={handleDisliked}
               icon={
                 disliked ? (
-                  <ThumbDownIconFilled boxSize={{base:7, md:8}} className="thumb-down" />
+                  <ThumbDownIconFilled
+                    boxSize={{ base: 7, md: 8 }}
+                    className="thumb-down"
+                  />
                 ) : (
-                  <ThumbDownIcon boxSize={{base:7, md:8}} className="" />
+                  <ThumbDownIcon boxSize={{ base: 7, md: 8 }} className="" />
                 )
               }
             />

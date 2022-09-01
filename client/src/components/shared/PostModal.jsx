@@ -14,20 +14,11 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import CrossIcon from "../icons/CrossIcon";
-
 import axiosInstance from "../../config/axios";
 import ModalActions from "../Modals/ModalActions";
 import ModalComments from "../Modals/ModalComments";
 
-const PostModal = ({
-  post,
-  onClose,
-  onDelete,
-  isModalOpen,
-  modalDetails,
-  onModalClose,
-}) => {
+const PostModal = ({ onDelete, isModalOpen, modalDetails, onModalClose }) => {
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
@@ -37,7 +28,6 @@ const PostModal = ({
   }, [modalDetails._id]);
 
   const addComment = (values, auth) => {
-    
     setComments((prev) => [
       ...prev,
       {
@@ -48,13 +38,7 @@ const PostModal = ({
   };
 
   return (
-    <Modal
-      size={"full"}
-      isCentered
-      isOpen={isModalOpen}
-      onClose={onModalClose}
-      
-    >
+    <Modal size={"full"} isCentered isOpen={isModalOpen} onClose={onModalClose}>
       <ModalOverlay />
       <ModalContent bg="primary.800">
         <ModalHeader>Post</ModalHeader>
@@ -73,7 +57,11 @@ const PostModal = ({
             </GridItem>
             <GridItem bg="primary.900" colSpan={4} h="full" py={2} px={3}>
               <Flex flexDirection={"column"} h="full">
-                <ModalActions post={modalDetails} addComment={addComment} onDelete={onDelete} />
+                <ModalActions
+                  post={modalDetails}
+                  addComment={addComment}
+                  onDelete={onDelete}
+                />
                 <ModalComments post={modalDetails} comments={comments} />
               </Flex>
             </GridItem>

@@ -12,16 +12,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import axiosInstance from "../../config/axios";
-import { useContext, useState } from "react";
-import { AuthContext } from "../contextProviders/authContext";
+
+import { useState } from "react";
 
 const UnfollowModal = ({
   isModalOpen,
   modalDetails,
   onModalClose,
-  searchResults,
-  setSearchResults,
+
   unFollowUser,
 }) => {
   const [unfollowLoading, setUnfollowLoading] = useState(false);

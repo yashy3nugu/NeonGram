@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import NeonGramIcon from "../icons/NeonGramIcon";
 
-import { useLocation } from "react-router-dom";
 import { AuthContext } from "../contextProviders/authContext";
 
 import {

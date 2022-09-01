@@ -1,29 +1,27 @@
 import React, { useRef, useState, useContext } from "react";
 import UploadModal from "../Modals/UploadModal";
-import ButtonSpinner from "../icons/ButtonSpinner";
+
 import PencilIcon from "../icons/PencilIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import axiosInstance from "../../config/axios";
 import {
   Box,
   Avatar,
-  Button,
   chakra,
   VStack,
   IconButton,
   HStack,
 } from "@chakra-ui/react";
-import ColoredFormButton from "../shared/ColoredFormButton";
+
 import useModal from "../../hooks/useModal";
 import { AuthContext } from "../contextProviders/authContext";
-import PlusIcon from "../icons/PlusIcon";
 
 const ProfilePicChanger = () => {
   const fileInput = useRef(null);
 
   const [imageURL, setImageURL] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const { auth, toggleAuth } = useContext(AuthContext);
@@ -33,7 +31,7 @@ const ProfilePicChanger = () => {
   const handleFiles = (e) => {
     setImageURL(URL.createObjectURL(e.target.files[0]));
     setImageFile(e.target.files[0]);
-    setShowModal(true);
+
     setModal();
   };
 

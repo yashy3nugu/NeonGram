@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useRouteMatch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpPage from "./components/SignUp/SignUpPage";
-import Feed from "./components/Feed/Feed";
-import PrivateRoute from "./components/contextProviders/privateRoute";
-import CreatePost from "./components/Post/CreatePost";
-import UserPage from "./components/UserPage/UserPage";
-import Settings from "./components/Settings/Settings";
-import FindFollowers from "./components/Followers/FindFollowers";
-import ExplorePage from "./components/Explore/ExplorePage";
-import NotFound from "./components/NotFound/NotFound";
+
 import { Box, ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./config/themeconfig";
 import LoginPage from "./components/Login/LoginPage";

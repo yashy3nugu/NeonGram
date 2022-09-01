@@ -1,17 +1,14 @@
 import React, { useEffect, useContext } from "react";
-import { Redirect, Route, useRouteMatch } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { AuthContext } from "./authContext";
-import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
 import SpinnerIcon from "../icons/SpinnerIcon";
-import axiosInstance from '../../config/axios';
+import axiosInstance from "../../config/axios";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { auth, toggleAuth } = useContext(AuthContext);;
+  const { auth, toggleAuth } = useContext(AuthContext);
 
   useEffect(() => {
-    
-
     axiosInstance
       .post(
         "/api/verify",

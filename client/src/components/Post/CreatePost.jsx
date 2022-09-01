@@ -3,16 +3,8 @@ import DropZone from "./DropZone";
 import UploadIcon from "../icons/UploadIcon";
 import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
-import ButtonSpinner from "../icons/ButtonSpinner";
-import {
-  Box,
-  Center,
-  HStack,
-  Textarea,
-  VStack,
-  Button,
-  Text
-} from "@chakra-ui/react";
+
+import { Box, Textarea, Button, Text } from "@chakra-ui/react";
 
 const CreatePost = () => {
   const [image, setImage] = useState(null);
@@ -44,13 +36,22 @@ const CreatePost = () => {
   };
 
   return (
-    <Box >
-      <Box mt={50} mb={50} bg={"primary.900"} maxWidth="3xl" mx="auto" px={10} py={10} borderWidth="1px" borderRadius="xl">
+    <Box>
+      <Box
+        mt={50}
+        mb={50}
+        bg={"primary.900"}
+        maxWidth="3xl"
+        mx="auto"
+        px={10}
+        py={10}
+        borderWidth="1px"
+        borderRadius="xl"
+      >
         <Text fontSize="4xl" fontWeight="semibold" mb={3}>
           Create Post
         </Text>
         <form onSubmit={submitPost}>
-
           <Box>
             <Textarea
               type="text"
@@ -70,7 +71,7 @@ const CreatePost = () => {
 
           <Box mt={5}>
             <Button
-            colorScheme="tertiaryScheme"
+              colorScheme="tertiaryScheme"
               isLoading={loading}
               loadingText="Uploading"
               leftIcon={<UploadIcon />}

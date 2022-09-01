@@ -1,22 +1,13 @@
-import React, {useContext} from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import NeonGramIcon from "../icons/NeonGramIcon";
-import {
-  Button,
-  Center,
-  Box,
-  Text,
-  VStack,
-  Container,
-  useToast,
-} from "@chakra-ui/react";
+import { Center, Box, VStack, Container, useToast } from "@chakra-ui/react";
 import AuthFormField from "../shared/AuthFormField";
 import * as Yup from "yup";
 import ColoredFormButton from "../shared/ColoredFormButton";
-import { AuthContext } from "../contextProviders/authContext";
-import axiosInstance from "../../config/axios";
 
+import axiosInstance from "../../config/axios";
 
 const signupSchema = Yup.object().shape({
   username: Yup.string().required("Please enter your username"),
@@ -79,9 +70,6 @@ const SignUpForm = () => {
 
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
-              
-
-              
 
               setTimeout(() => {
                 history.push("/");
