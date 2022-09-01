@@ -4,56 +4,12 @@ import axiosInstance from "../../config/axios";
 import ProfileDetails from "./ProfileDetails";
 import SpinnerIcon from "../icons/SpinnerIcon";
 import PostGallery from "./PostGallery";
+import { Box, Divider } from "@chakra-ui/react";
 
 const UserPage = () => {
   const [posts, setPosts] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
 
   const { user } = useParams();
-
-  useEffect(() => {
-    axiosInstance
-      .get(`/api/posts/user/${user}`)
-      .then((res) => setPosts(res.data));
-
-    axiosInstance
-      .get(`/api/details/${user}`)
-      .then((res) => setUserDetails(res.data));
-  }, [user]);
-
-  const addFollower = (followerID) => {
-    const followers = [...userDetails.followers];
-
-    followers.push(followerID);
-
-    setUserDetails((prev) => {
-      return {
-        ...prev,
-        followers: followers,
-      };
-    });
-  };
-
-  const removeFollower = (followerId) => {
-    const followers = [...userDetails.followers];
-
-    let followerIndex;
-
-    followers.forEach((follower, idx) => {
-      if (follower === followerId) {
-        followerIndex = idx;
-      }
-    });
-
-    followers.splice(followerIndex, 1);
-
-    setUserDetails((prev) => {
-      return {
-        ...prev,
-        followers,
-      };
-    });
-  };
 
   const removePost = (id) => {
     const currentPosts = [...posts];
@@ -72,21 +28,25 @@ const UserPage = () => {
 
   return (
     <>
-      {userDetails && posts ? (
-        <>
-          <ProfileDetails
-            userDetails={userDetails}
-            posts={posts}
-            addFollower={addFollower}
-            removeFollower={removeFollower}
-          />
-          <PostGallery posts={posts} removePost={removePost} />
-        </>
-      ) : (
-        <div>
-          <SpinnerIcon styles="block mx-auto" enabled={true} size="6rem" />
-        </div>
-      )}
+      <Box
+        mt={50}
+        mb={50}
+        bg={"primary.900"}
+        width="4xl"
+        maxWidth="4xl"
+        mx="auto"
+        px={10}
+        py={10}
+        borderWidth="1px"
+        borderRadius="xl"
+      >
+        <ProfileDetails user={user} />
+        <Divider my={8} />
+        <PostGallery user={user} removePost={removePost} />
+
+      </Box>
+
+      
     </>
   );
 };

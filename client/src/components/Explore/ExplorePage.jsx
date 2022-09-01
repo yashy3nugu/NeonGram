@@ -4,13 +4,17 @@ import axiosInstance from "../../config/axios";
 import { Waypoint } from "react-waypoint";
 import ExplorePost from "./ExplorePost";
 import SpinnerIcon from "../icons/SpinnerIcon";
-import PostModal from "../Modals/PostModal";
+import PostModal from "../shared/PostModal";
+import { Box, SimpleGrid, Skeleton } from "@chakra-ui/react";
+import useModal from "../../hooks/useModal";
 
 const ExplorePage = () => {
   const [explorePosts, setExplorePosts] = useState([]);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [clickedPost, setClickedPost] = useState(null);
+  
+
+  const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();
 
   useEffect(() => {
     axiosInstance.get("/api/posts/").then((res) => {
@@ -47,13 +51,8 @@ const ExplorePage = () => {
       });
   };
 
-  const onClose = () => {
-    setClickedPost(null);
-    document.body.style.overflow = "unset";
-  };
-
   const showPost = (post) => {
-    setClickedPost(post);
+    setModal(post);
   };
 
   const onDelete = (id) => {
@@ -66,34 +65,63 @@ const ExplorePage = () => {
         return remainingPosts;
       });
 
-      onClose();
+      onModalClose();
     });
   };
 
   return (
-    <div className="container px-2 mx-auto">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-10">
-        {/* <pre className="text-white">{JSON.stringify(explorePosts,null,2)}</pre> */}
-        {explorePosts.map((post, idx) => (
-          <div key={idx}>
-            {idx === explorePosts.length - 1 && (
-              <Waypoint
-                onEnter={handlePagination}
-                scrollableAncestor={window}
-              />
-            )}
-            <ExplorePost post={post} showPost={showPost} />
-          </div>
-        ))}
-      </div>
-      <div>
-        <SpinnerIcon styles="block mx-auto" enabled={loading} size="6rem" />
-      </div>
-
-      {clickedPost && (
-        <PostModal post={clickedPost} onClose={onClose} onDelete={onDelete} />
+    <>
+      {isModalOpen && (
+        <PostModal
+          isModalOpen={isModalOpen}
+          onModalClose={onModalClose}
+          modalDetails={modalDetails}
+          onDelete={onDelete}
+        />
       )}
-    </div>
+      <Box
+        mt={50}
+        mb={50}
+        width="1280px"
+        maxWidth="1280px"
+        mx="auto"
+        px={10}
+        py={10}
+        className="container px-2 mx-auto"
+      >
+        <SimpleGrid
+          columns={{ base: 2, sm: 3, lg: 4, xl: 5 }}
+          spacing={5}
+          my={10}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-10"
+        >
+          {/* <pre className="text-white">{JSON.stringify(explorePosts,null,2)}</pre> */}
+          {explorePosts.map((post, idx) => (
+            <Box key={idx}>
+              {idx === explorePosts.length - 1 && (
+                <Waypoint
+                  onEnter={handlePagination}
+                  // scrollableAncestor={window}
+                />
+              )}
+              <ExplorePost post={post} showPost={showPost} />
+            </Box>
+          ))}
+
+          {loading && (
+            <>
+              <Skeleton
+                w="full"
+                h={{ base: "13rem", md: "50rem", xl: "18rem" }}
+              />
+            </>
+          )}
+        </SimpleGrid>
+        {/* <Box>
+          <SpinnerIcon styles="block mx-auto" enabled={loading} size="6rem" />
+        </Box> */}
+      </Box>
+    </>
   );
 };
 

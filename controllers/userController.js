@@ -7,21 +7,19 @@ const AppError = require("../utils/AppError");
 
 /////////////////////////////////////////////////////
 // Get details of user from username
-exports.getUserFromUserName = async (req, res,next) => {
+exports.getUserFromUserName = async (req, res, next) => {
   const { username } = req.params;
 
   try {
-    const foundUser = await User.findOne({ username: username })
-      .select(
-        "username fname lname email bio profilePicture profilePictureId followers following"
-      )
-      
-    if(!foundUser) {
+    const foundUser = await User.findOne({ username: username }).select(
+      "username fname lname email bio profilePicture profilePictureId followers following"
+    );
+
+    if (!foundUser) {
       return next(new AppError("User not found", 404));
     }
 
     res.send(foundUser);
-    
   } catch (err) {
     next(err);
   }
@@ -68,7 +66,6 @@ exports.uploadProfilePicture = (req, res, next) => {
 
           //Find user
           User.findById(req.user, (err, foundUser) => {
-
             const publicId = foundUser.profilePictureId;
             // Delete the previous profile picture
             cloudinary.api.delete_resources([publicId], (err, response) => {
@@ -76,17 +73,26 @@ exports.uploadProfilePicture = (req, res, next) => {
                 return next(new AppError("error deleting image", 500));
               }
               // add the new URL to database
-              User.updateOne(
+
+              User.findOneAndUpdate(
                 { _id: req.user },
+
                 {
                   profilePicture: result.url,
                   profilePictureId: result.public_id,
                 },
-                (err) => {
+                { new: true },
+                (err, user) => {
                   if (err) {
+                    console.log(err);
                     next(err);
-                  } 
-                  res.sendStatus(200);
+                  }
+
+                  res.status(200).json({
+                    status: "success",
+                    user,
+                  });
+                  // res.sendStatus(200);
                 }
               );
             });
@@ -109,13 +115,18 @@ exports.deleteProfilePicture = async (req, res, next) => {
 
     await cloudinary.uploader.destroy(profilePictureId);
 
-    await User.findByIdAndUpdate(req.user, {
+    const user = await User.findByIdAndUpdate(req.user, {
       profilePicture: "",
       profilePictureId: "",
-    });
+    },
+    {new: true}
+    );
 
-    res.sendStatus(200);
-  } catch {
+    res.status(200).json({
+      status: "success",
+      user,
+    });
+  } catch (err) {
     next(err);
   }
 };
@@ -164,7 +175,7 @@ exports.followUser = async (req, res, next) => {
       followingUserId,
       {
         $addToSet: {
-          follower: mongoose.Types.ObjectId(followerId),
+          followers: mongoose.Types.ObjectId(followerId),
         },
       },
       {

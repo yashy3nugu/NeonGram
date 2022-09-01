@@ -4,6 +4,15 @@ import UploadIcon from "../icons/UploadIcon";
 import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 import ButtonSpinner from "../icons/ButtonSpinner";
+import {
+  Box,
+  Center,
+  HStack,
+  Textarea,
+  VStack,
+  Button,
+  Text
+} from "@chakra-ui/react";
 
 const CreatePost = () => {
   const [image, setImage] = useState(null);
@@ -35,19 +44,15 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl w-full bg-gray-900 h-screen sm:h-auto my-40 border-2 border-transparent sm:border-neon-purple sm:rounded-2xl">
-      <form className="px-10 py-10" onSubmit={submitPost}>
-        <div className="col-span-2 text-center mt-6 mb-8 px-4">
-          <h1 className="text-gray-200 text-3xl font-bold">Upload</h1>
-        </div>
+    <Box >
+      <Box mt={50} mb={50} bg={"primary.900"} maxWidth="3xl" mx="auto" px={10} py={10} borderWidth="1px" borderRadius="xl">
+        <Text fontSize="4xl" fontWeight="semibold" mb={3}>
+          Create Post
+        </Text>
+        <form onSubmit={submitPost}>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="">
-            <DropZone setImage={handleImage} image={image} />
-          </div>
-
-          <div className="">
-            <textarea
+          <Box>
+            <Textarea
               type="text"
               placeholder="Specify what the picture is about..."
               name="caption"
@@ -55,26 +60,46 @@ const CreatePost = () => {
               value={caption}
               onChange={handleCaption}
               maxLength={100}
+              focusBorderColor="tertiary"
+              bg="whiteAlpha.50"
             />
-          </div>
-        </div>
+          </Box>
+          <Box mt={5}>
+            <DropZone setImage={handleImage} image={image} />
+          </Box>
 
-        <div className="col-span-2 text-center sm:text-right mt-6 px-4">
-          <button
-            type="submit"
-            disabled={!(caption && image)}
-            style={{ visibility: !(caption && image) ? "hidden" : "visible" }}
-            className="w-12  text-neon-green rounded-full px-2 py-2"
-          >
-            {loading ? (
-              <ButtonSpinner className="animate-spin" />
-            ) : (
-              <UploadIcon />
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+          <Box mt={5}>
+            <Button
+            colorScheme="tertiaryScheme"
+              isLoading={loading}
+              loadingText="Uploading"
+              leftIcon={<UploadIcon />}
+              disabled={!(caption && image)}
+              type="submit"
+              color="white"
+            >
+              Upload
+            </Button>
+          </Box>
+
+          {/* <div className="col-span-2 text-center sm:text-right mt-6 px-4">
+            <button
+              type="submit"
+              disabled={!(caption && image)}
+              style={{ visibility: !(caption && image) ? "hidden" : "visible" }}
+              className="w-12  text-neon-green rounded-full px-2 py-2"
+            >
+              {loading ? (
+                <ButtonSpinner className="animate-spin" />
+              ) : (
+                <UploadIcon />
+              )}
+              
+            </button>
+          </div> */}
+        </form>
+      </Box>
+    </Box>
   );
 };
 

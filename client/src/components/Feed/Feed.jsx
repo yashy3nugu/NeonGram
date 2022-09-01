@@ -4,8 +4,10 @@ import { useHistory } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { Waypoint } from "react-waypoint";
 import SpinnerIcon from "../icons/SpinnerIcon";
+import styles from "./FeedStyles";
+import { Grid, GridItem, VStack, Spinner, Box, Center } from "@chakra-ui/react";
 
-const Home = () => {
+const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -57,20 +59,26 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      {posts.map((post, idx) => (
-        <div key={idx}>
-          {idx === posts.length - 1 && (
-            <Waypoint onEnter={handlePagination} scrollableAncestor={window} />
-          )}
-          <FeedPost post={post} />
-        </div>
-      ))}
-      <div>
-        <SpinnerIcon styles="block mx-auto" enabled={loading} size="6rem" />
-      </div>
-    </div>
+    <Grid {...styles.container}>
+      <GridItem {...styles.content}>
+        <VStack spacing={{ base: 4, md: 10 }} align="stretch">
+          {posts.map((post, idx) => (
+            <div key={idx}>
+              {idx === posts.length - 1 && (
+                <Waypoint onEnter={handlePagination} />
+              )}
+              <FeedPost post={post} />
+            </div>
+          ))}
+        </VStack>
+        {loading && (
+          <Center mt={4}>
+            <Spinner thickness="4px" color="tertiary" size="xl" />
+          </Center>
+        )}
+      </GridItem>
+    </Grid>
   );
 };
 
-export default Home;
+export default Feed;

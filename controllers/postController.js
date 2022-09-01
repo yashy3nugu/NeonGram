@@ -8,12 +8,11 @@ const AppError = require("../utils/AppError");
 /////////////////////////////////////////////////////
 // Create a post
 exports.createPost = async (req, res, next) => {
-
-  if(!req.file) {
+  if (!req.file) {
     next(new AppError("No image provided", 400));
   }
 
-  if(!req.body.text) {
+  if (!req.body.text) {
     next(new AppError("No caption provided", 400));
   }
 
@@ -190,8 +189,7 @@ exports.getPostsFromUsername = async (req, res, next) => {
           path: "user",
           select: ["fname", "lname", "username", "profilePicture"],
         })
-        .sort({ time: -1 })
-        .limit(2);
+        .sort({ time: -1 });
 
       res.send(foundPosts);
     } else {

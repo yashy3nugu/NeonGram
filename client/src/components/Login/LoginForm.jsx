@@ -1,97 +1,117 @@
 import React, { useContext } from "react";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { AuthContext } from "../contextProviders/authContext";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import NeonGramIcon from "../icons/NeonGramIcon";
+import {
+  Button,
+  Center,
+  Box,
+  Text,
+  useToast,
+  Container,
+  VStack,
+} from "@chakra-ui/react";
+import AuthFormField from "../shared/AuthFormField";
+import * as Yup from "yup";
+import ColoredFormButton from "../shared/ColoredFormButton";
+
+const initialValues = {
+  username: "",
+  password: "",
+};
+
+const loginSchema = Yup.object().shape({
+  username: Yup.string().required("Please enter your username"),
+  password: Yup.string().required("Please enter your password"),
+});
 
 const LoginForm = () => {
   const { toggleAuth } = useContext(AuthContext);
+  const toast = useToast();
 
   return (
-    <div className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple">
-      <Formik
-        initialValues={{
-          username: "",
-          password: "",
-        }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.username) {
-            errors.username = "username required";
-          }
-          if (!values.password) {
-            errors.password = "password required";
-          }
-          return errors;
-        }}
-        validateOnMount={false}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(true);
-          axios
-            .post("/api/login", {
-              username: values.username,
-              password: values.password,
-            })
-            .then((res) => {
+    <>
+      <Container
+        bg="primary.900"
+        border="1px"
+        borderColor="gray.800"
+        borderRadius="xl"
+        py={{base:20, sm:8}}
+        
+        flexGrow={{ base: 1, sm: 0 }}
+        className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
+      >
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginSchema}
+          validateOnMount={false}
+          onSubmit={async (values, { setSubmitting }) => {
+            setSubmitting(true);
+
+            try {
+              const res = await axiosInstance.post("/api/login", {
+                username: values.username,
+                password: values.password,
+              });
+
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
+
               toggleAuth(true);
               window.location.reload();
-            })
-            .catch((err) => {
-              if (err.response.status === 400) {
-                alert("wrong password");
-              }
-            });
-          setSubmitting(false);
-        }}
-      >
-        {({ isSubmitting, isValid, dirty }) => (
-          <Form autoComplete="off" className="px-10 py-10">
-            <div className="text-center">
-              <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium" />
-            </div>
-            <div className="mb-3 mt-10 px-3">
-              <Field
-                type="text"
-                name="username"
-                placeholder="username"
-                className="rounded text-white bg-gray-800 px-2 py-2 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent w-full"
-              />
-              {/* <ErrorMessage name="username" component="p" className="text-red-600 text-xs italic mt-1 ml-1" /> */}
-            </div>
+            } catch (error) {
+              toggleAuth(false);
+              toast({
+                title: "error",
+                description: error.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+              });
+              setSubmitting(false);
+            }
 
-            <div className="mb-5 px-3">
-              <Field
-                type="password"
-                name="password"
-                placeholder="password"
-                className="rounded text-white bg-gray-800 px-2 py-2 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent w-full"
-              />
-              {/* <ErrorMessage name="password" component="p" className="text-red-600 text-xs italic mt-1 ml-1" /> */}
-            </div>
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting, isValid, dirty, errors, touched }) => (
+            <Form autoComplete="off">
+              <VStack px={10} py={3} spacing={3} w="full">
+                <Center>
+                  <NeonGramIcon />
+                </Center>
 
-            <div>
-              <button
-                type="submit"
-                disabled={isSubmitting || !(isValid && dirty)}
-                className="w-full bg-purple-800 hover:bg-purple-900 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ease-in-out text-white rounded-full py-2 focus:outline-none"
-              >
-                Sign In
-              </button>
-            </div>
-            <div className="text-center mt-5">
-              <p className="text-gray-300 text-sm">
-                Don't have an account?{" "}
-                <a href="/signup" className="text-neon-purple">
-                  Sign Up
-                </a>
-              </p>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+                <AuthFormField name="username" type="text" />
+
+                <AuthFormField name="password" type="password" />
+
+                <ColoredFormButton
+                  mt={3}
+                  type="submit"
+                  disabled={isSubmitting || !(isValid && dirty)}
+                  width="full"
+                  color="white"
+                  colorScheme="tertiaryScheme"
+                >
+                  Sign In
+                </ColoredFormButton>
+
+                <Center mt={5} className="text-center mt-5">
+                  <Text fontSize="xs">
+                    Don't have an account?{" "}
+                    <Text as="a" href="/signup" color="tertiary">
+                      Sign Up
+                    </Text>
+                  </Text>
+                </Center>
+              </VStack>
+            </Form>
+          )}
+        </Formik>
+      </Container>
+    </>
   );
 };
 

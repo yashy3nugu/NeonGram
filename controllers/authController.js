@@ -18,19 +18,32 @@ exports.registerUser = async (req, res, next) => {
 
     let foundUser;
 
-    foundUser = await User.findOne({ username: username }, { email: email });
+    foundUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
     if (foundUser) {
       return next(new AppError("Username or email already exists", 400));
     }
-    await User.create({
+    const user = await User.create({
       email,
       fname,
       lname,
       username,
       hashedPassword,
     });
-    res.status(201).send(`User ${username} saved successfully`);
+
+    const accessToken = generateAccessToken({ _id: user._id });
+    const refreshToken = generateRefreshToken({ _id: user._id });
+
+    res.status(201).json({
+      status: "success",
+      message: "User created successfully",
+      accessToken,
+      refreshToken,
+      user,
+    });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
@@ -47,8 +60,12 @@ exports.loginUser = async (req, res, next) => {
 
     const user = await User.findOne({ username: username });
 
-    if (!user || !(await user.comparePassword(password, user.hashedPassword))) {
-      return next(new AppError("Incorrect username or password", 400));
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    if (!(await user.comparePassword(password, user.hashedPassword))) {
+      return next(new AppError("Incorrect password", 400));
     }
 
     const accessToken = generateAccessToken({ _id: user._id });
@@ -70,7 +87,7 @@ exports.loginUser = async (req, res, next) => {
 exports.verifyToken = async (req, res, next) => {
   try {
     const user = await User.findById(req.user).select(
-      "username fname lname email bio profilePicture followers following"
+      "username fname lname email bio profilePicture profilePictureId followers following"
     );
 
     res.send(user);

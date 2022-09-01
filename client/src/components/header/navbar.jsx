@@ -1,160 +1,90 @@
 import React, { useState, useContext } from "react";
-import MenuIcon from "../icons/MenuIcon";
-import CrossIcon from "../icons/CrossIcon";
-import HomeIcon from "../icons/HomeIcon";
-import PlusIcon from "../icons/PlusIcon";
-import PlusIconSolid from "../icons/PlusIconSolid";
-import GlobeIcon from "../icons/GlobeIcon";
-import GlobeIconSolid from "../icons/GlobeIconSolid";
 import NeonGramIcon from "../icons/NeonGramIcon";
-import ProfileDropDown from "./ProfileDropDown";
+
 import { useLocation } from "react-router-dom";
-import HomeIconSolid from "../icons/HomeIconSolid";
 import { AuthContext } from "../contextProviders/authContext";
+
+import {
+  Box,
+  Flex,
+  Text,
+  HStack,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
+import NavLink from "./NavLink";
+
+import Avatarmenu from "./AvatarMenu";
+import Hidden from "../shared/Hidden";
+import MenuIcon from "../icons/MenuIcon";
+import MobileDrawer from "./MobileDrawer";
 
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
 
-  const [navExpanded, setNavExpanded] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [dropDownOpen, setDropDownOpen] = useState(false);
-
-  const { pathname } = useLocation();
-
-  function toggleNavExpanded() {
-    setNavExpanded((prev) => !prev);
-  }
+  const links = [
+    {
+      label: "Feed",
+      url: "/app/feed",
+    },
+    {
+      label: "Explore",
+      url: "/app/explore",
+    },
+    {
+      label: "Post",
+      url: "/app/post",
+    },
+  ];
 
   return (
     <>
-      {/* <div className="navbar  bg-gray-900"> */}
-      <div className="flex items-center justify-between w-full py-8 px-3 bg-gray-900">
-        {/* <h1 className="logo">Neongram</h1> */}
-        <a href="/" className="ml-10">
-          <NeonGramIcon className="text-2xl sm:text-4xl text-white font-medium" />
-        </a>
+      <Flex
+        align="center"
+        justify="space-between"
+        py={8}
+        px={{ base: 6, md: 12 }}
+        bg="primary.900"
+        className="flex items-center justify-between w-full py-8 px-3 bg-gray-900"
+      >
+        <MobileDrawer isOpen={isOpen} onClose={onClose} />
 
-        <nav className="p-1">
-          <ul className="m-0 p-0 list-none flex">
-            {!navExpanded ? (
-              <span className="inline sm:invisible" onClick={toggleNavExpanded}>
-                <MenuIcon className="w-8 text-gray-300" />
-              </span>
-            ) : (
-              <span className="inline sm:invisible" onClick={toggleNavExpanded}>
-                <CrossIcon className="w-8 text-gray-300" />
-              </span>
-            )}
+        <Text as="a" href="/app/feed" className="ml-10">
+          <NeonGramIcon />
+        </Text>
 
-            <li className="py-2 mx-6 hidden sm:inline">
-              <a href="/">
-                {pathname === "/" ? (
-                  <HomeIconSolid className="w-8 text-neon-purple" />
-                ) : (
-                  <HomeIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />
-                )}
-              </a>
-            </li>
-            <li className="py-2 mx-6 hidden sm:inline">
-              <a href="/post" className="">
-                {pathname === "/post" ? (
-                  <PlusIconSolid className="w-8 text-neon-purple" />
-                ) : (
-                  <PlusIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />
-                )}
-              </a>
-            </li>
-            <li className="py-2 mx-6 hidden sm:inline">
-              <a href="/explore">
-                {pathname === "/explore" ? (
-                  <GlobeIconSolid className="w-8 text-neon-purple" />
-                ) : (
-                  <GlobeIcon className="w-8 text-gray-300 hover:text-neon-green transition ease-in-out duration-200" />
-                )}
-              </a>
-            </li>
-            <span
-              onClick={() => setDropDownOpen(true)}
-              className="relative py-2 mx-6 rounded-full hidden sm:inline"
-            >
-              <img
-                src={auth.profilePicture}
-                className="w-8 rounded-full border-2 border-transparent hover:border-neon-green transition ease-in-out duration-200"
-                alt={auth.username}
-              />
-              {dropDownOpen && (
-                <ProfileDropDown
-                  auth={auth}
-                  onClose={() => setDropDownOpen(false)}
-                />
-              )}
-            </span>
-          </ul>
-        </nav>
-      </div>
-      {navExpanded && (
-        <div className="bg-gray-900 text-center sidebar">
-          <a href={`/user/${auth.username}`} className=" block mb-4">
-            <img
-              src={auth.profilePicture}
-              className="w-16 rounded-full mx-auto"
-              alt={auth.username}
-            />
-            <strong className="text-gray-300 font-semibold">
-              {auth.username}
-            </strong>
-          </a>
-          <hr className="border-gray-600 mx-10" />
+        <Hidden hide={{ sm: true, md: true }}>
+          <Box as="nav">
+            <HStack as="ul" gap={3}>
+              {links.map(({ url, label }, index) => {
+                return <NavLink key={index} url={url} label={label} />;
+              })}
+              <Box>
+                <Avatarmenu auth={auth} />
+              </Box>
+            </HStack>
+          </Box>
+        </Hidden>
 
-          <ul className="">
-            <li className="py-2 mx-6">
-              <a href="/">
-                {pathname === "/" ? (
-                  <>
-                    <HomeIconSolid className="block mx-auto w-6 max-w-6 text-neon-purple" />
-                    <span className="text-neon-purple">Home</span>
-                  </>
-                ) : (
-                  <>
-                    <HomeIcon className=" block mx-auto max-w-6 w-6 text-gray-300" />
-                    <span className="text-gray-300">Home</span>
-                  </>
-                )}
-              </a>
-            </li>
-            <li className="py-2 mx-6">
-              <a href="/post" className="">
-                {pathname === "/post" ? (
-                  <>
-                    <PlusIconSolid className="block mx-auto w-6 max-w-6 text-neon-purple" />
-                    <span className="text-neon-purple">Post</span>
-                  </>
-                ) : (
-                  <>
-                    <PlusIcon className="block mx-auto max-w-6 w-6 text-gray-300" />
-                    <span className="text-gray-300">Post</span>
-                  </>
-                )}
-              </a>
-            </li>
-            <li className="py-2 mx-6">
-              <a href="/explore">
-                {pathname === "/explore" ? (
-                  <>
-                    <GlobeIconSolid className="block mx-auto w-6 max-w-6 text-neon-purple" />
-                    <span className="text-neon-purple">Explore</span>
-                  </>
-                ) : (
-                  <>
-                    <GlobeIcon className="block mx-auto max-w-6 w-6 text-gray-300" />
-                    <span className="text-gray-300">Explore</span>
-                  </>
-                )}
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
+        <IconButton
+          variant="ghost"
+          aria-label="Hamburger Menu"
+          cursor="pointer"
+          _focus={{
+            outline: "none",
+          }}
+          display={{
+            sm: "block",
+            md: "block",
+            lg: "none",
+            xl: "none",
+          }}
+          onClick={onOpen}
+          icon={<MenuIcon boxSize={6} />}
+        />
+      </Flex>
     </>
   );
 };

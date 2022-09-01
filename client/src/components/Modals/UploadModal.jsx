@@ -1,3 +1,17 @@
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Avatar,
+  Center,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import Cropper from "react-cropper";
 import { createPortal } from "react-dom";
@@ -5,64 +19,93 @@ import useClickOutsideListener from "../../hooks/useClickOutsideListener";
 import axiosInstance from "../../config/axios";
 import ButtonSpinner from "../icons/ButtonSpinner";
 import "cropperjs/dist/cropper.css";
+import { useContext } from "react";
+import { AuthContext } from "../contextProviders/authContext";
 
-const UploadModal = ({ onClose, imageURL, imageFile }) => {
+const UploadModal = ({
+  onModalClose,
+  imageURL,
+  imageFile,
+  isModalOpen,
+  setImageURL,
+  setImageFile,
+}) => {
   // const [imageURL, setImageURL] = useState(null);
 
   const [croppedImage, setCroppedImage] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
-  const ref = useClickOutsideListener(onClose);
+  const { auth, toggleAuth } = useContext(AuthContext);
 
-  const saveProfilePicture = (e) => {
+  const saveProfilePicture = async (e) => {
     setLoading(true);
-    if (croppedImage) {
+    // if (croppedImage) {
+    //   const fd = new FormData();
+    //   const imageSettings = JSON.stringify(
+    //     croppedImage.getData({ rounded: true })
+    //   );
+    //   fd.append("profilePicture", imageFile);
+    //   fd.append("imageSettings", imageSettings);
+    //   axiosInstance
+    //     .post("/api/addProfilePic", fd)
+    //     .then((res) => window.location.reload());
+    // }
+
+    if (!croppedImage) {
+      return;
+    }
+
+    try {
       const fd = new FormData();
       const imageSettings = JSON.stringify(
         croppedImage.getData({ rounded: true })
       );
       fd.append("profilePicture", imageFile);
       fd.append("imageSettings", imageSettings);
-      axiosInstance
-        .post("/api/addProfilePic", fd)
-        .then((res) => window.location.reload());
+      const res = await axiosInstance.post("/api/addProfilePic", fd);
+      toggleAuth(res.data.user);
+      setLoading(false);
+      onModalClose();
+    } catch (err) {
+      setLoading(false);
     }
   };
 
-  return createPortal(
-    <div className="upload-modal z-10 fixed top-0 left-0 right-0 bottom-0">
-      <div ref={ref} className="upload-modal__cropper bg-gray-900 w-5/6">
-        <div className="py-2 px-1 text-center">
-          <h1 className="text-gray-300 text-xl">Upload</h1>
-        </div>
-
-        {imageURL && imageFile && (
-          <Cropper
-            src={imageURL}
-            style={{ height: 300, width: "100%" }}
-            background={false}
-            aspectRatio={1}
-            viewMode={1}
-            onInitialized={(instance) => setCroppedImage(instance)}
-            responsive={true}
-          ></Cropper>
-        )}
-        <div className="text-right py-4 px-2">
-          <button
-            onClick={saveProfilePicture}
-            className="text-white bg-neon-purple rounded-lg py-2 w-1/5 hover:bg-purple-900 transition ease-in-out duration-200"
-          >
-            {loading ? (
-              <ButtonSpinner className="animate-spin w-6 mx-auto" />
-            ) : (
-              "Save"
-            )}
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.getElementById("modal")
+  return (
+    <Modal
+    size="xl"
+      isOpen={isModalOpen}
+      onClose={() => {
+        setImageURL(null);
+        setImageFile(null);
+        onModalClose();
+      }}
+    >
+      <ModalOverlay />
+      <ModalContent bg="primary.800">
+        <ModalCloseButton />
+        <ModalHeader>Upload</ModalHeader>
+        <ModalBody>
+          {imageURL && imageFile && (
+            <Cropper
+              src={imageURL}
+              style={{ height: 300, width: "100%" }}
+              background={false}
+              aspectRatio={1}
+              viewMode={1}
+              onInitialized={(instance) => setCroppedImage(instance)}
+              responsive={true}
+            ></Cropper>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button isLoading={loading} onClick={saveProfilePicture}>
+            Save
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 
