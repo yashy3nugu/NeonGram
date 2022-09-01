@@ -43,7 +43,7 @@ exports.registerUser = async (req, res, next) => {
       user,
     });
   } catch (err) {
-    console.log(err);
+    
     next(err);
   }
 };

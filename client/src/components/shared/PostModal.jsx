@@ -37,7 +37,7 @@ const PostModal = ({
   }, [modalDetails._id]);
 
   const addComment = (values, auth) => {
-    console.log(values);
+    
     setComments((prev) => [
       ...prev,
       {

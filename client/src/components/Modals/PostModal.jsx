@@ -20,7 +20,7 @@ export default function PostModal({ post, onClose, onDelete }) {
   }, [post._id]);
 
   const addComment = (values, auth) => {
-    console.log(values);
+    
     setComments((prev) => [
       ...prev,
       {

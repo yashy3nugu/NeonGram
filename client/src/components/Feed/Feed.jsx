@@ -48,11 +48,11 @@ const Feed = () => {
       })
       .then((res) => {
         setLoading(false);
-        console.log(res);
+        
         if (res.data.length) {
           setPosts((prev) => [...prev, ...res.data]);
         } else {
-          console.log("no data");
+          
           setHasNext(false);
         }
       });

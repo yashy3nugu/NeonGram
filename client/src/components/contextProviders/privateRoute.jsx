@@ -4,7 +4,7 @@ import { AuthContext } from "./authContext";
 import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
 import SpinnerIcon from "../icons/SpinnerIcon";
-import axios from "axios";
+import axiosInstance from '../../config/axios';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { auth, toggleAuth } = useContext(AuthContext);;
@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   useEffect(() => {
     
 
-    axios
+    axiosInstance
       .post(
         "/api/verify",
         {},

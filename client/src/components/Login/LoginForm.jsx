@@ -15,6 +15,7 @@ import {
 import AuthFormField from "../shared/AuthFormField";
 import * as Yup from "yup";
 import ColoredFormButton from "../shared/ColoredFormButton";
+import { useHistory } from "react-router-dom";
 
 const initialValues = {
   username: "",
@@ -29,6 +30,7 @@ const loginSchema = Yup.object().shape({
 const LoginForm = () => {
   const { toggleAuth } = useContext(AuthContext);
   const toast = useToast();
+  const history = useHistory();
 
   return (
     <>
@@ -37,8 +39,7 @@ const LoginForm = () => {
         border="1px"
         borderColor="gray.800"
         borderRadius="xl"
-        py={{base:20, sm:8}}
-        
+        py={{ base: 20, sm: 8 }}
         flexGrow={{ base: 1, sm: 0 }}
         className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
       >
@@ -59,7 +60,8 @@ const LoginForm = () => {
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
               toggleAuth(true);
-              window.location.reload();
+              history.replace("/app/feed");
+              // window.location.reload();
             } catch (error) {
               toggleAuth(false);
               toast({

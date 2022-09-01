@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import NeonGramIcon from "../icons/NeonGramIcon";
@@ -16,6 +15,7 @@ import AuthFormField from "../shared/AuthFormField";
 import * as Yup from "yup";
 import ColoredFormButton from "../shared/ColoredFormButton";
 import { AuthContext } from "../contextProviders/authContext";
+import axiosInstance from "../../config/axios";
 
 
 const signupSchema = Yup.object().shape({
@@ -67,7 +67,7 @@ const SignUpForm = () => {
             setSubmitting(true);
 
             try {
-              const res = await axios.post("/api/register", values);
+              const res = await axiosInstance.post("/api/register", values);
               setSubmitting(false);
               toast({
                 title: "success",

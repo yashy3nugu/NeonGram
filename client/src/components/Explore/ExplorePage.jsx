@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import axiosInstance from "../../config/axios";
 import { Waypoint } from "react-waypoint";
 import ExplorePost from "./ExplorePost";
@@ -31,7 +30,7 @@ const ExplorePage = () => {
 
     setLoading(true);
 
-    axios
+    axiosInstance
       .get("/api/posts", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

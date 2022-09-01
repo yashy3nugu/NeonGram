@@ -84,7 +84,7 @@ exports.uploadProfilePicture = (req, res, next) => {
                 { new: true },
                 (err, user) => {
                   if (err) {
-                    console.log(err);
+                    
                     next(err);
                   }
 
