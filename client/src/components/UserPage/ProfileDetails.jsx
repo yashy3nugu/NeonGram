@@ -45,10 +45,6 @@ const ProfileDetails = ({ user }) => {
     });
   }, [user]);
 
-  useEffect(() => {
-    console.log("changed to ", userDetails ? userDetails.followers : null);
-  }, [userDetails]);
-
   const followUser = async () => {
     setfollowLoading(true);
 

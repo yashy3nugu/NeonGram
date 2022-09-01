@@ -25,8 +25,8 @@ function App() {
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Router>
-          <Switch>
-            <Box h="100vh" maxHeight="100vh">
+          <Box h="100vh" maxHeight="100vh">
+            <Switch>
               <Route path="/app">
                 <AppRoutes />
               </Route>
@@ -39,8 +39,8 @@ function App() {
               </Route>
 
               {/* <Route component={NotFound} /> */}
-            </Box>
-          </Switch>
+            </Switch>
+          </Box>
         </Router>
       </ChakraProvider>
     </>

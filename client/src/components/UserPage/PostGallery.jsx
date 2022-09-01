@@ -54,7 +54,7 @@ const PostGallery = ({ user }) => {
         <SimpleGrid columns={3} spacing={8}>
           {posts &&
             posts.map((post, idx) => (
-              <Box>
+              <Box key={idx}>
                 <Image
                   key={post._id}
                   objectFit="cover"
@@ -62,6 +62,7 @@ const PostGallery = ({ user }) => {
                   width="full"
                   src={post.postImage}
                   alt={post.text}
+                  cursor="pointer"
                   onClick={() => {
                     setModal(post);
                   }}
