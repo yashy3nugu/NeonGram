@@ -112,7 +112,7 @@ const ModalActions = ({ post, addComment, onDelete }) => {
             <Box className="ml-4">
               <LinkOverlay
                 fontWeight="semibold"
-                href={`/user/${post.user.username}`}
+                href={`/app/user/${post.user.username}`}
               >
                 {post.user.username}
               </LinkOverlay>

@@ -63,7 +63,7 @@ const FollowerCard = ({
             <Avatar src={user.profilePicture} size="sm" />
 
             <Box className="ml-4">
-              <LinkOverlay fontWeight="semibold" href={`/user/${user.username}`}>
+              <LinkOverlay fontWeight="semibold" href={`/app/user/${user.username}`}>
                 {user.username}
               </LinkOverlay>
 

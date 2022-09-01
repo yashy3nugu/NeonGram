@@ -21,9 +21,9 @@ const Avatarmenu = () => {
               </MenuButton>
               <MenuList bg="primary.800">
                 <VStack align="left">
-                  <MenuItem icon={<UserIcon boxSize={5} />} as={RouterNavLink} to={`/user/${auth.username}`}>Profile</MenuItem>
-                  <MenuItem icon={<SettingsIcon boxSize={5} />} as={RouterNavLink} to="/settings">Settings</MenuItem>
-                  <MenuItem icon={<SearchIcon boxSize={5} />} as={RouterNavLink} to="/find">Search</MenuItem>
+                  <MenuItem icon={<UserIcon boxSize={5} />} as={RouterNavLink} to={`/app/user/${auth.username}`}>Profile</MenuItem>
+                  <MenuItem icon={<SettingsIcon boxSize={5} />} as={RouterNavLink} to="/app/settings">Settings</MenuItem>
+                  <MenuItem icon={<SearchIcon boxSize={5} />} as={RouterNavLink} to="/app/find">Search</MenuItem>
 
                 </VStack>
               </MenuList>

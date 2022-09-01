@@ -27,15 +27,15 @@ const Navbar = () => {
   const links = [
     {
       label: "Feed",
-      url: "/",
+      url: "/app/feed",
     },
     {
       label: "Explore",
-      url: "/explore",
+      url: "/app/explore",
     },
     {
       label: "Post",
-      url: "/post",
+      url: "/app/post",
     },
   ];
 
@@ -45,13 +45,13 @@ const Navbar = () => {
         align="center"
         justify="space-between"
         py={8}
-        px={{base:6, md:12}}
+        px={{ base: 6, md: 12 }}
         bg="primary.900"
         className="flex items-center justify-between w-full py-8 px-3 bg-gray-900"
       >
         <MobileDrawer isOpen={isOpen} onClose={onClose} />
-        {/* <h1 className="logo">Neongram</h1> */}
-        <Text as="a" href="/" className="ml-10">
+
+        <Text as="a" href="/app/feed" className="ml-10">
           <NeonGramIcon />
         </Text>
 

@@ -47,7 +47,7 @@ const ModalComments = ({ post, comments }) => {
                         alt={comment.user.username}
                       />
                       <LinkOverlay
-                        href={`/${comment.user.username}`}
+                        href={`/app/user/${comment.user.username}`}
                         className="font-semibold"
                       >
                         <Text fontWeight="semibold">

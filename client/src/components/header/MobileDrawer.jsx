@@ -41,7 +41,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
                   <Center>
                     <VStack>
                       <Avatar src={auth.profilePicture} size="md" />
-                      <LinkOverlay href={`/user/${auth.username}`}>
+                      <LinkOverlay href={`/app/user/${auth.username}`}>
                         {auth.username}
                       </LinkOverlay>
                     </VStack>
@@ -52,7 +52,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
               <Divider />
               <MobileDrawerLink
                 onClose={onClose}
-                to={`/user/${auth.username}`}
+                to={`/app/user/${auth.username}`}
                 icon={<UserIcon boxSize={5} />}
               >
                 Account
@@ -60,14 +60,14 @@ const MobileDrawer = ({ isOpen, onClose }) => {
 
               <MobileDrawerLink
                 onClose={onClose}
-                to="/settings"
+                to="/app/settings"
                 icon={<SettingsIcon boxSize={5} />}
               >
                 Settings
               </MobileDrawerLink>
               <MobileDrawerLink
                 onClose={onClose}
-                to="/find"
+                to="/app/find"
                 icon={<SearchIcon boxSize={5} />}
               >
                 Search
@@ -75,15 +75,15 @@ const MobileDrawer = ({ isOpen, onClose }) => {
 
               <Divider />
 
-              <MobileDrawerLink onClose={onClose} to="/">
+              <MobileDrawerLink onClose={onClose} to="/app/feed">
                 Feed
               </MobileDrawerLink>
 
-              <MobileDrawerLink onClose={onClose} to="/explore">
+              <MobileDrawerLink onClose={onClose} to="/app/explore">
                 Explore
               </MobileDrawerLink>
 
-              <MobileDrawerLink onClose={onClose} to="/post">
+              <MobileDrawerLink onClose={onClose} to="/app/post">
                 Post
               </MobileDrawerLink>
             </VStack>

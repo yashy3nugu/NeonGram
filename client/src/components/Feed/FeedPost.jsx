@@ -140,7 +140,7 @@ const FeedPost = ({ post }) => {
           <LinkBox>
           <HStack alignItems={"center"} spacing={2}>
             <Avatar position="static" size="sm" src={post.user.profilePicture} />
-            <LinkOverlay href={`/user/${post.user.username}`}>
+            <LinkOverlay href={`/app/user/${post.user.username}`}>
             <Text
               fontSize="sm"
               

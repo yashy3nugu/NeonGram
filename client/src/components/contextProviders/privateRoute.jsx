@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route, useRouteMatch } from "react-router-dom";
 import { AuthContext } from "./authContext";
 import LoginPage from "../Login/LoginPage";
 import Header from "../header/header";
@@ -7,10 +7,11 @@ import SpinnerIcon from "../icons/SpinnerIcon";
 import axios from "axios";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { auth, toggleAuth } = useContext(AuthContext);;
 
   useEffect(() => {
-    console.log("called private route")
+    
+
     axios
       .post(
         "/api/verify",
@@ -44,7 +45,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         !auth ? (
-          <LoginPage />
+          // <LoginPage />
+          <Redirect to="/login" />
         ) : (
           <>
             <Header />
