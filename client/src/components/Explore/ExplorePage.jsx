@@ -10,7 +10,7 @@ const ExplorePage = () => {
   const [explorePosts, setExplorePosts] = useState([]);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
-  
+  const [latestLastTimestamp, setLatestLastTimestamp] = useState(null);
 
   const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();
 
@@ -26,6 +26,12 @@ const ExplorePage = () => {
     }
 
     const lastTime = explorePosts[explorePosts.length - 1].time;
+
+    if (lastTime === latestLastTimestamp) {
+      return;
+    }
+
+    setLatestLastTimestamp(lastTime);
 
     setLoading(true);
 
