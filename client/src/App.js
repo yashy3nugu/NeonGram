@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpPage from "./components/SignUp/SignUpPage";
 
-import { Box, ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./config/themeconfig";
 import LoginPage from "./components/Login/LoginPage";
 import AppRoutes from "./components/layout/AppRoutes";
@@ -13,7 +13,7 @@ function App() {
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Router>
-          <Box h="100vh" maxHeight="100vh">
+          
             <Switch>
               <Route path="/app">
                 <AppRoutes />
@@ -28,7 +28,7 @@ function App() {
 
               {/* <Route component={NotFound} /> */}
             </Switch>
-          </Box>
+          
         </Router>
       </ChakraProvider>
     </>
