@@ -3,7 +3,7 @@ import Header from "../header/header";
 
 const AppLayout = ({ children }) => {
   return (
-    <Flex direction="column" align="center" w="full" h="100vh">
+    <Flex direction="column" align="center" w="full" h="100vh" overflow="auto">
       <Header />
       {children}
     </Flex>
