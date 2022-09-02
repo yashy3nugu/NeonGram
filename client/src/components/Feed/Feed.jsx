@@ -10,6 +10,7 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [latestLastTimestamp, setLatestLastTimestamp] = useState(null);
 
   const history = useHistory();
 
@@ -39,6 +40,13 @@ const Feed = () => {
     }
     setLoading(true);
     const lastTime = posts[posts.length - 1].time;
+
+    if (lastTime === latestLastTimestamp) {
+      return;
+    }
+
+    setLatestLastTimestamp(lastTime);
+
     axiosInstance
       .get("/api/posts/following", {
         params: {
