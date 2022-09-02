@@ -13,7 +13,7 @@ const ExplorePost = ({ post, showPost }) => {
         src={post.postImage}
         alt={post.text}
         w="full"
-        h={{ base: "13rem", md: "50rem", xl: "18rem" }}
+        h={{ base: "13rem", md: "15rem", xl: "18rem" }}
         objectFit="cover"
         rounded="lg"
         className="w-full object-cover h-52 md:h-60 lg:h-60 xl:h-72"

@@ -86,8 +86,7 @@ const ExplorePage = () => {
       <Box
         mt={50}
         mb={50}
-        width="1280px"
-        maxWidth="1280px"
+        w="full"
         mx="auto"
         px={10}
         py={10}
@@ -115,8 +114,9 @@ const ExplorePage = () => {
           {loading && (
             <>
               <Skeleton
+                rounded="lg"
                 w="full"
-                h={{ base: "13rem", md: "50rem", xl: "18rem" }}
+                h={{ base: "13rem", md: "15rem", xl: "18rem" }}
               />
             </>
           )}
