@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../ContextProviders/AuthContext";
 import { useHistory } from "react-router-dom";
-import SettingsIconSolid from "../shared/icons/SettingsIconSolid";
+import SettingsIconSolid from "../Shared/icons/SettingsIconSolid";
 
 import {
   Avatar,
@@ -20,8 +20,8 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import useModal from "../../hooks/useModal";
-import UnfollowModal from "../shared/modal/UnfollowModal";
-import ColoredFormButton from "../shared/ui/ColoredFormButton";
+import UnfollowModal from "../Shared/modal/UnfollowModal";
+import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 
 const ProfileDetails = ({ user }) => {
   const history = useHistory();

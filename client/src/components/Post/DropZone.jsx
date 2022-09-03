@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Image, IconButton } from "@chakra-ui/react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import CrossIcon from "../shared/icons/CrossIcon";
+import CrossIcon from "../Shared/icons/CrossIcon";
 
 const DropZone = (props) => {
   const { getRootProps, getInputProps } = useDropzone({

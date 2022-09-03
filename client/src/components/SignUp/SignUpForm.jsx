@@ -1,11 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
-import NeonGramIcon from "../shared/icons/NeonGramIcon";
+import NeonGramIcon from "../Shared/icons/NeonGramIcon";
 import { Center, Box, VStack, Container, useToast } from "@chakra-ui/react";
-import AuthFormField from "../shared/ui/AuthFormField";
+import AuthFormField from "../Shared/ui/AuthFormField";
 import * as Yup from "yup";
-import ColoredFormButton from "../shared/ui/ColoredFormButton";
+import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 
 import axiosInstance from "../../config/axios";
 

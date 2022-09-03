@@ -2,7 +2,7 @@ import { Image, SimpleGrid, Box, Skeleton } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../config/axios";
 import useModal from "../../hooks/useModal";
-import PostModal from "../shared/modal/PostModal";
+import PostModal from "../Shared/modal/PostModal";
 
 const PostGallery = ({ user }) => {
   const { isModalOpen, onModalClose, modalDetails, setModal } = useModal();

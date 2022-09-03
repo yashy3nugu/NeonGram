@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import { AuthContext } from "../ContextProviders/AuthContext";
 import axiosInstance from "../../config/axios";
 import { Button, Input, HStack, Box, Text } from "@chakra-ui/react";
-import AppFormField from "../shared/ui/AppFormField";
+import AppFormField from "../Shared/ui/AppFormField";
 
 const PostCommentSection = ({ post }) => {
   const { auth } = useContext(AuthContext);

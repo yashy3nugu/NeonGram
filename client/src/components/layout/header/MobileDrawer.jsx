@@ -15,9 +15,9 @@ import {
 import React, { useContext } from "react";
 // import ThemeToggler from "../../components/ThemeToggler/ThemeToggler";
 import { AuthContext } from "../../ContextProviders/AuthContext";
-import SearchIcon from "../../shared/icons/SearchIcon";
-import SettingsIcon from "../../shared/icons/SettingsIcon";
-import UserIcon from "../../shared/icons/UserIcon";
+import SearchIcon from "../../Shared/icons/SearchIcon";
+import SettingsIcon from "../../Shared/icons/SettingsIcon";
+import UserIcon from "../../Shared/icons/UserIcon";
 import MobileDrawerLink from "./MobileDrawerLink";
 // import NavItem from "./NavItem";
 

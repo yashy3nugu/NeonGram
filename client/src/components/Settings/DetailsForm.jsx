@@ -3,8 +3,8 @@ import { Formik, Form } from "formik";
 import axiosInstance from "../../config/axios";
 import { useContext } from "react";
 import { AuthContext } from "../ContextProviders/AuthContext";
-import AuthFormField from "../shared/ui/AuthFormField";
-import ColoredFormButton from "../shared/ui/ColoredFormButton";
+import AuthFormField from "../Shared/ui/AuthFormField";
+import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({

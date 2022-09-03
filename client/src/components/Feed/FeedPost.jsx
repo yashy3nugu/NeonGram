@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../ContextProviders/AuthContext";
-import ThumbDownIconFilled from "../shared/icons/ThumbDownIconFilled";
-import ThumbUpIconFilled from "../shared/icons/ThumbUpIconFilled";
-import ThumbDownIcon from "../shared/icons/ThumbDownIcon";
-import ThumbUpIcon from "../shared/icons/ThumbUpIcon";
+import ThumbDownIconFilled from "../Shared/icons/ThumbDownIconFilled";
+import ThumbUpIconFilled from "../Shared/icons/ThumbUpIconFilled";
+import ThumbDownIcon from "../Shared/icons/ThumbDownIcon";
+import ThumbUpIcon from "../Shared/icons/ThumbUpIcon";
 import PostCommentSection from "./PostCommentSection";
 import {
   Avatar,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DropZone from "./DropZone";
-import UploadIcon from "../shared/icons/UploadIcon";
+import UploadIcon from "../Shared/icons/UploadIcon";
 import axiosInstance from "../../config/axios";
 import { useHistory } from "react-router-dom";
 

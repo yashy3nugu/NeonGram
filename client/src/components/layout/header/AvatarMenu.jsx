@@ -7,9 +7,9 @@ import {
   MenuButton,
   MenuItem,
 } from "@chakra-ui/react";
-import UserIcon from "../../shared/icons/UserIcon";
-import SettingsIcon from "../../shared/icons/SettingsIcon";
-import SearchIcon from "../../shared/icons/SearchIcon";
+import UserIcon from "../../Shared/icons/UserIcon";
+import SettingsIcon from "../../Shared/icons/SettingsIcon";
+import SearchIcon from "../../Shared/icons/SearchIcon";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../ContextProviders/AuthContext";

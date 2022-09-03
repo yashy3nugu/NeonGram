@@ -8,9 +8,9 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../ContextProviders/AuthContext";
-import UserAddIconSolid from "../shared/icons/UserAddIconSolid";
-import ColoredFormIconButton from "../shared/ui/ColoredFormIconButton";
-import TickIcon from "../shared/icons/TickIcon";
+import UserAddIconSolid from "../Shared/icons/UserAddIconSolid";
+import ColoredFormIconButton from "../Shared/ui/ColoredFormIconButton";
+import TickIcon from "../Shared/icons/TickIcon";
 import axiosInstance from "../../config/axios";
 
 const FollowerCard = ({

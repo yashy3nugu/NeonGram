@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import axiosInstance from "../../config/axios";
 import { AuthContext } from "../ContextProviders/AuthContext";
 import { Formik, Form } from "formik";
-import NeonGramIcon from "../shared/icons/NeonGramIcon";
+import NeonGramIcon from "../Shared/icons/NeonGramIcon";
 import { Center, Text, useToast, Container, VStack } from "@chakra-ui/react";
-import AuthFormField from "../shared/ui/AuthFormField";
+import AuthFormField from "../Shared/ui/AuthFormField";
 import * as Yup from "yup";
-import ColoredFormButton from "../shared/ui/ColoredFormButton";
+import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 import { useHistory } from "react-router-dom";
 
 const initialValues = {

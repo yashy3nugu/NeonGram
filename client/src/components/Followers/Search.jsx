@@ -3,16 +3,16 @@ import axiosInstance from "../../config/axios";
 import { Formik, Form } from "formik";
 import { AuthContext } from "../ContextProviders/AuthContext";
 
-import SearchIcon from "../shared/icons/SearchIcon";
+import SearchIcon from "../Shared/icons/SearchIcon";
 import { Box, HStack, VStack } from "@chakra-ui/react";
 import * as Yup from "yup";
-import AppFormField from "../shared/ui/AppFormField";
+import AppFormField from "../Shared/ui/AppFormField";
 
 import useAlert from "../../hooks/useAlert";
-import AppAlert from "../shared/ui/AppAlert";
-import ColoredFormIconButton from "../shared/ui/ColoredFormIconButton";
+import AppAlert from "../Shared/ui/AppAlert";
+import ColoredFormIconButton from "../Shared/ui/ColoredFormIconButton";
 import useModal from "../../hooks/useModal";
-import UnfollowModal from "../shared/modal/UnfollowModal";
+import UnfollowModal from "../Shared/modal/UnfollowModal";
 import FollowerCard from "./FollowerCard";
 
 const searchSchema = Yup.object().shape({

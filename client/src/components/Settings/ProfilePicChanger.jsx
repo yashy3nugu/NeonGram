@@ -1,8 +1,8 @@
 import React, { useRef, useState, useContext } from "react";
 import UploadModal from "../Modals/UploadModal";
 
-import PencilIcon from "../shared/icons/PencilIcon";
-import DeleteIcon from "../shared/icons/DeleteIcon";
+import PencilIcon from "../Shared/icons/PencilIcon";
+import DeleteIcon from "../Shared/icons/DeleteIcon";
 import axiosInstance from "../../config/axios";
 import {
   Box,
