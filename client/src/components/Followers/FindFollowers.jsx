@@ -93,15 +93,17 @@ const FindFollowers = () => {
       )}
 
       <Box
-        mt={{ lg: 50 }}
+        mt={{ md: 50 }}
         mb={{ md: 50 }}
         bg={"primary.900"}
         maxWidth={"3xl"}
         mx="auto"
+        w={{ base: "full", md: "sm", lg: "md", xl: "lg" }}
         px={10}
         py={10}
-        borderWidth="1px"
-        borderRadius="xl"
+        flexGrow={1}
+        borderWidth={{ md: "1px" }}
+        borderRadius={{ md: "xl" }}
       >
         <Box>
           <Formik
