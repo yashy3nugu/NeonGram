@@ -15,7 +15,7 @@ import axiosInstance from "../../config/axios";
 
 import "cropperjs/dist/cropper.css";
 import { useContext } from "react";
-import { AuthContext } from "../contextProviders/authContext";
+import { AuthContext } from "../ContextProviders/AuthContext";
 
 const UploadModal = ({
   onModalClose,

@@ -14,10 +14,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 // import ThemeToggler from "../../components/ThemeToggler/ThemeToggler";
-import { AuthContext } from "../contextProviders/authContext";
-import SearchIcon from "../icons/SearchIcon";
-import SettingsIcon from "../icons/SettingsIcon";
-import UserIcon from "../icons/UserIcon";
+import { AuthContext } from "../../ContextProviders/AuthContext";
+import SearchIcon from "../../shared/icons/SearchIcon";
+import SettingsIcon from "../../shared/icons/SettingsIcon";
+import UserIcon from "../../shared/icons/UserIcon";
 import MobileDrawerLink from "./MobileDrawerLink";
 // import NavItem from "./NavItem";
 

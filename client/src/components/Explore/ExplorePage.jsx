@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../config/axios";
 import { Waypoint } from "react-waypoint";
 import ExplorePost from "./ExplorePost";
-import PostModal from "../shared/PostModal";
+import PostModal from "../shared/modal/PostModal";
 import { Box, SimpleGrid, Skeleton } from "@chakra-ui/react";
 import useModal from "../../hooks/useModal";
 

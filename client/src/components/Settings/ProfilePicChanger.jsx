@@ -1,8 +1,8 @@
 import React, { useRef, useState, useContext } from "react";
 import UploadModal from "../Modals/UploadModal";
 
-import PencilIcon from "../icons/PencilIcon";
-import DeleteIcon from "../icons/DeleteIcon";
+import PencilIcon from "../shared/icons/PencilIcon";
+import DeleteIcon from "../shared/icons/DeleteIcon";
 import axiosInstance from "../../config/axios";
 import {
   Box,
@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import useModal from "../../hooks/useModal";
-import { AuthContext } from "../contextProviders/authContext";
+import { AuthContext } from "../ContextProviders/AuthContext";
 
 const ProfilePicChanger = () => {
   const fileInput = useRef(null);

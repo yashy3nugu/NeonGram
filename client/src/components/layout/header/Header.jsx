@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 
 const Header = () => {
   return (

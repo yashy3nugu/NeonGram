@@ -2,11 +2,11 @@ import Feed from "../Feed/Feed";
 import CreatePost from "../Post/CreatePost";
 import UserPage from "../UserPage/UserPage";
 import Settings from "../Settings/Settings";
-import FindFollowers from "../Followers/FindFollowers";
+import Search from "../Followers/Search";
 import ExplorePage from "../Explore/ExplorePage";
 import { useContext, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { AuthContext } from "../contextProviders/authContext";
+import { AuthContext } from "../ContextProviders/AuthContext";
 import AppLayout from "./AppLayout";
 import axiosInstance from "../../config/axios";
 import { Route, Redirect } from "react-router-dom";
@@ -53,7 +53,7 @@ const AppRoutes = () => {
       <Route exact path={`${route.url}/post`} component={CreatePost} />
       <Route exact path={`${route.url}/user/:user`} component={UserPage} />
       <Route exact path={`${route.url}/settings`} component={Settings} />
-      <Route exact path={`${route.url}/find`} component={FindFollowers} />
+      <Route exact path={`${route.url}/find`} component={Search} />
       <Route exact path={`${route.url}/explore`} component={ExplorePage} />
     </AppLayout>
   );

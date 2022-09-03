@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import NeonGramIcon from "../icons/NeonGramIcon";
+import NeonGramIcon from "../../shared/icons/NeonGramIcon";
 
-import { AuthContext } from "../contextProviders/authContext";
+import { AuthContext } from "../../ContextProviders/AuthContext";
 
 import {
   Box,
@@ -14,8 +14,8 @@ import {
 import NavLink from "./NavLink";
 
 import Avatarmenu from "./AvatarMenu";
-import Hidden from "../shared/Hidden";
-import MenuIcon from "../icons/MenuIcon";
+import Hidden from "../../shared/ui/Hidden";
+import MenuIcon from "../../shared/icons/MenuIcon";
 import MobileDrawer from "./MobileDrawer";
 
 const Navbar = () => {

@@ -3,11 +3,11 @@ import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
 
 import DeleteIconSolid from "../icons/DeleteIconSolid";
-import { AuthContext } from "../contextProviders/authContext";
-import axiosInstance from "../../config/axios";
+import { AuthContext } from "../../ContextProviders/AuthContext";
+import axiosInstance from "../../../config/axios";
 import { Formik, Form } from "formik";
-import ThumbDownIcon from "../icons/ThumbDownIcon";
-import ThumbUpIcon from "../icons/ThumbUpIcon";
+import ThumbDownIcon from "../icons/ThumbDownIconFilled";
+import ThumbUpIcon from "../icons/ThumbUpIconFilled";
 import {
   Box,
   LinkBox,
@@ -20,9 +20,9 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import AppFormField from "../shared/AppFormField";
+import AppFormField from "../ui/AppFormField";
 
-const ModalActions = ({ post, addComment, onDelete }) => {
+const PostModalActions = ({ post, addComment, onDelete }) => {
   const { auth } = useContext(AuthContext);
 
   const [liked, setLiked] = useState(post.likes.includes(auth._id));
@@ -249,4 +249,4 @@ const ModalActions = ({ post, addComment, onDelete }) => {
   );
 };
 
-export default ModalActions;
+export default PostModalActions;

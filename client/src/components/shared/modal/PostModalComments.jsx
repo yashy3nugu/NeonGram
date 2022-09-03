@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const ModalComments = ({ post, comments }) => {
+const PostModalComments = ({ post, comments }) => {
   return (
     <Box
       px={2}
@@ -72,4 +72,4 @@ const ModalComments = ({ post, comments }) => {
   );
 };
 
-export default ModalComments;
+export default PostModalComments;

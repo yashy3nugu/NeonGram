@@ -1,25 +1,25 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
 import { Formik, Form } from "formik";
-import { AuthContext } from "../contextProviders/authContext";
+import { AuthContext } from "../ContextProviders/AuthContext";
 
-import SearchIcon from "../icons/SearchIcon";
+import SearchIcon from "../shared/icons/SearchIcon";
 import { Box, HStack, VStack } from "@chakra-ui/react";
 import * as Yup from "yup";
-import AppFormField from "../shared/AppFormField";
+import AppFormField from "../shared/ui/AppFormField";
 
 import useAlert from "../../hooks/useAlert";
-import AppAlert from "../shared/AppAlert";
-import ColoredFormIconButton from "../shared/ColoredFormIconButton";
+import AppAlert from "../shared/ui/AppAlert";
+import ColoredFormIconButton from "../shared/ui/ColoredFormIconButton";
 import useModal from "../../hooks/useModal";
-import UnfollowModal from "../shared/UnfollowModal";
+import UnfollowModal from "../shared/modal/UnfollowModal";
 import FollowerCard from "./FollowerCard";
 
 const searchSchema = Yup.object().shape({
   search: Yup.string().required(""),
 });
 
-const FindFollowers = () => {
+const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   const { auth, toggleAuth } = useContext(AuthContext);
@@ -168,4 +168,4 @@ const FindFollowers = () => {
   );
 };
 
-export default FindFollowers;
+export default Search;

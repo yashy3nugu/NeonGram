@@ -14,9 +14,9 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import axiosInstance from "../../config/axios";
-import ModalActions from "../Modals/ModalActions";
-import ModalComments from "../Modals/ModalComments";
+import axiosInstance from "../../../config/axios";
+import PostModalActions from "./PostModalActions";
+import PostModalComments from "./PostModalComments";
 
 const PostModal = ({ onDelete, isModalOpen, modalDetails, onModalClose }) => {
   const [comments, setComments] = useState(null);
@@ -57,12 +57,12 @@ const PostModal = ({ onDelete, isModalOpen, modalDetails, onModalClose }) => {
             </GridItem>
             <GridItem bg="primary.900" colSpan={4} h="full" py={2} px={3}>
               <Flex flexDirection={"column"} h="full">
-                <ModalActions
+                <PostModalActions
                   post={modalDetails}
                   addComment={addComment}
                   onDelete={onDelete}
                 />
-                <ModalComments post={modalDetails} comments={comments} />
+                <PostModalComments post={modalDetails} comments={comments} />
               </Flex>
             </GridItem>
           </Grid>
@@ -73,7 +73,6 @@ const PostModal = ({ onDelete, isModalOpen, modalDetails, onModalClose }) => {
     </Modal>
   );
 
-  //   return createPortal(
   //     <div className="post-modal z-10 fixed top-0 left-0 right-0 bottom-0">
   //       <div
   //         ref={ref}

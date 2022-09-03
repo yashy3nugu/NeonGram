@@ -2,9 +2,9 @@ import { Box, VStack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import axiosInstance from "../../config/axios";
 import { useContext } from "react";
-import { AuthContext } from "../contextProviders/authContext";
-import AuthFormField from "../shared/AuthFormField";
-import ColoredFormButton from "../shared/ColoredFormButton";
+import { AuthContext } from "../ContextProviders/AuthContext";
+import AuthFormField from "../shared/ui/AuthFormField";
+import ColoredFormButton from "../shared/ui/ColoredFormButton";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({

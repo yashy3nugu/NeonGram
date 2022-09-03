@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import Header from "../header/header";
+import Header from "./header/Header";
 
 const AppLayout = ({ children }) => {
   return (
