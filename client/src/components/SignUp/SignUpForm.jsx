@@ -72,7 +72,7 @@ const SignUpForm = () => {
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
               setTimeout(() => {
-                history.push("/");
+                history.push("/app/feed");
               }, 4000);
 
               // history.push("/");

@@ -4,16 +4,16 @@ import UserPage from "../UserPage/UserPage";
 import Settings from "../Settings/Settings";
 import Search from "../Followers/Search";
 import ExplorePage from "../Explore/ExplorePage";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useCallback } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { AuthContext } from "../../store/context/AuthContext";
 import AppLayout from "./AppLayout";
 import axiosInstance from "../../config/axios";
 import { Route, Redirect } from "react-router-dom";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const AppRoutes = () => {
-  const {user, setUser} = useContext(AuthContext);
-  
+  const { user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
     axiosInstance
@@ -32,15 +32,15 @@ const AppRoutes = () => {
       .catch((err) => {
         setUser(false);
       });
-  }, [setUser]);
+  }, []);
 
   const route = useRouteMatch();
 
-  if (user === null) {
+  if (user == null) {
     return (
-      <div className="relative">
-        <div className="fixed top-50"></div>
-      </div>
+      <Center height="100vh" className="relative">
+        <Spinner thickness="4px" color="tertiary" size="xl" />
+      </Center>
     );
   } else if (user === false) {
     return <Redirect to="/login" />;
