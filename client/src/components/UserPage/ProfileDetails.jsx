@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 
 // import UnfollowModal from "../Modals/UnfollowModal";
 import axiosInstance from "../../config/axios";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import { useHistory } from "react-router-dom";
 import SettingsIconSolid from "../Shared/icons/SettingsIconSolid";
 
@@ -26,7 +26,7 @@ import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 const ProfileDetails = ({ user }) => {
   const history = useHistory();
 
-  const { auth } = useContext(AuthContext);
+  const { user: authUser } = useContext(AuthContext);
 
   const [userDetails, setUserDetails] = useState(null);
 
@@ -57,7 +57,7 @@ const ProfileDetails = ({ user }) => {
     }
     const followers = [...userDetails.followers];
 
-    followers.push(auth._id);
+    followers.push(authUser._id);
 
     setUserDetails((prev) => {
       return {
@@ -79,7 +79,7 @@ const ProfileDetails = ({ user }) => {
     let followerIndex;
 
     followers.forEach((follower, idx) => {
-      if (follower === auth._id) {
+      if (follower === authUser._id) {
         followerIndex = idx;
       }
     });
@@ -121,7 +121,7 @@ const ProfileDetails = ({ user }) => {
           <Center>
             <Box>
               <Avatar size={{base:"lg", sm:"xl", md: "2xl"}} src={userDetails.profilePicture}>
-                {userDetails.username === auth.username && (
+                {userDetails.username === authUser.username && (
                   <AvatarBadge borderWidth={0}>
                     <IconButton
                       onClick={() => history.push("/settings")}
@@ -154,8 +154,8 @@ const ProfileDetails = ({ user }) => {
                 </Text>
               </SimpleGrid>
               <Box w="full">
-                {!userDetails._id === auth._id &&
-                  (userDetails.followers.includes(auth._id) ? (
+                {!userDetails._id === authUser._id &&
+                  (userDetails.followers.includes(authUser._id) ? (
                     <Button
                       w="full"
                       onClick={() => setModal(userDetails)}

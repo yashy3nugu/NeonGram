@@ -7,7 +7,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import UserAddIconSolid from "../Shared/icons/UserAddIconSolid";
 import ColoredFormIconButton from "../Shared/ui/ColoredFormIconButton";
 import TickIcon from "../Shared/icons/TickIcon";
@@ -20,7 +20,7 @@ const FollowerCard = ({
   setSearchResults,
   ...props
 }) => {
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { user: authUser, addFollowing } = useContext(AuthContext);
   const [followLoading, setFollowLoading] = useState(false);
 
   const followUser = async () => {
@@ -40,13 +40,11 @@ const FollowerCard = ({
       });
 
       followedUser = { ...searchUsers[followedUserIndex] };
-      followedUser.followers.push(auth._id);
+      followedUser.followers.push(authUser._id);
       searchUsers[followedUserIndex] = followedUser;
       setSearchResults(searchUsers);
-
-      let currentAuth = { ...auth };
-      currentAuth.following.push(user._id);
-      toggleAuth(currentAuth);
+      addFollowing(user._id);
+      
     } catch (error) {
       setFollowLoading(false);
     }
@@ -81,14 +79,14 @@ const FollowerCard = ({
         </LinkBox>
       </HStack>
 
-      {auth.following.includes(user._id) ? (
+      {authUser.following.includes(user._id) ? (
         <IconButton
           rounded="full"
           onClick={() => setModal(user)}
           icon={<TickIcon boxSize={5} />}
         />
       ) : (
-        auth.username !== user.username && (
+        authUser.username !== user.username && (
           <ColoredFormIconButton
             rounded="full"
             onClick={followUser}

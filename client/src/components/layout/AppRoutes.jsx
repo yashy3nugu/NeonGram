@@ -6,14 +6,14 @@ import Search from "../Followers/Search";
 import ExplorePage from "../Explore/ExplorePage";
 import { useContext, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import AppLayout from "./AppLayout";
 import axiosInstance from "../../config/axios";
 import { Route, Redirect } from "react-router-dom";
 
 const AppRoutes = () => {
-  const { auth, toggleAuth } = useContext(AuthContext);
-
+  const {user, setUser} = useContext(AuthContext);
+  
 
   useEffect(() => {
     axiosInstance
@@ -27,22 +27,22 @@ const AppRoutes = () => {
         }
       )
       .then((res) => {
-        toggleAuth(res.data);
+        setUser(res.data);
       })
       .catch((err) => {
-        toggleAuth(false);
+        setUser(false);
       });
-  }, [toggleAuth]);
+  }, [setUser]);
 
   const route = useRouteMatch();
 
-  if (auth === null) {
+  if (user === null) {
     return (
       <div className="relative">
         <div className="fixed top-50"></div>
       </div>
     );
-  } else if (auth === false) {
+  } else if (user === false) {
     return <Redirect to="/login" />;
   }
 

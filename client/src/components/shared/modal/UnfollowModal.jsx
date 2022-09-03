@@ -33,6 +33,7 @@ const UnfollowModal = ({
       setUnfollowLoading(false);
       onModalClose();
     } catch (error) {
+      console.log(error);
       setUnfollowLoading(false);
     }
   };

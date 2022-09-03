@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import NeonGramIcon from "../../Shared/icons/NeonGramIcon";
-
-import { AuthContext } from "../../ContextProviders/AuthContext";
 
 import {
   Box,
@@ -19,7 +17,7 @@ import MenuIcon from "../../Shared/icons/MenuIcon";
 import MobileDrawer from "./MobileDrawer";
 
 const Navbar = () => {
-  const { auth } = useContext(AuthContext);
+  
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -61,7 +59,7 @@ const Navbar = () => {
                 return <NavLink key={index} url={url} label={label} />;
               })}
               <Box>
-                <Avatarmenu auth={auth} />
+                <Avatarmenu  />
               </Box>
             </HStack>
           </Box>

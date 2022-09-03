@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import ThumbDownIconFilled from "../Shared/icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../Shared/icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../Shared/icons/ThumbDownIcon";
@@ -19,10 +19,10 @@ import {
 } from "@chakra-ui/react";
 
 const FeedPost = ({ post }) => {
-  const { auth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const [liked, setLiked] = useState(post.likes.includes(auth._id));
-  const [disliked, setDisliked] = useState(post.dislikes.includes(auth._id));
+  const [liked, setLiked] = useState(post.likes.includes(user._id));
+  const [disliked, setDisliked] = useState(post.dislikes.includes(user._id));
 
   const [numLikes, setNumLikes] = useState(post.likes.length);
   const [numDislikes, setNumDislikes] = useState(post.dislikes.length);

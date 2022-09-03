@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import axiosInstance from "../../config/axios";
-import { AuthContext } from "../ContextProviders/AuthContext";
 import { Formik, Form } from "formik";
 import NeonGramIcon from "../Shared/icons/NeonGramIcon";
 import { Center, Text, useToast, Container, VStack } from "@chakra-ui/react";
@@ -20,7 +19,7 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  const { toggleAuth } = useContext(AuthContext);
+  
   const toast = useToast();
   const history = useHistory();
 
@@ -51,11 +50,10 @@ const LoginForm = () => {
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
-              toggleAuth(true);
+              
               history.replace("/app/feed");
               // window.location.reload();
             } catch (error) {
-              toggleAuth(false);
               toast({
                 title: "error",
                 description: error.response.data.message,

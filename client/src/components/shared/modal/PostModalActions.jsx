@@ -3,7 +3,7 @@ import ThumbDownIconFilled from "../icons/ThumbDownIconFilled";
 import ThumbUpIconFilled from "../icons/ThumbUpIconFilled";
 
 import DeleteIconSolid from "../icons/DeleteIconSolid";
-import { AuthContext } from "../../ContextProviders/AuthContext";
+import { AuthContext } from "../../../store/context/AuthContext";
 import axiosInstance from "../../../config/axios";
 import { Formik, Form } from "formik";
 import ThumbDownIcon from "../icons/ThumbDownIconFilled";
@@ -23,10 +23,10 @@ import {
 import AppFormField from "../ui/AppFormField";
 
 const PostModalActions = ({ post, addComment, onDelete }) => {
-  const { auth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const [liked, setLiked] = useState(post.likes.includes(auth._id));
-  const [disliked, setDisliked] = useState(post.dislikes.includes(auth._id));
+  const [liked, setLiked] = useState(post.likes.includes(user._id));
+  const [disliked, setDisliked] = useState(post.dislikes.includes(user._id));
 
   const [numLikes, setNumLikes] = useState(post.likes.length);
   const [numDislikes, setNumDislikes] = useState(post.dislikes.length);
@@ -117,7 +117,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
           </HStack>
         </LinkBox>
 
-        {auth._id === post.user._id && (
+        {user._id === post.user._id && (
           <IconButton
             colorScheme="crimsonScheme"
             variant="ghost"
@@ -212,7 +212,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
             })
             .then((res) => {
               console.log(values);
-              addComment(values, auth);
+              addComment(values, user);
               values.comment = "";
             })
             .catch((err) => console.log(err));

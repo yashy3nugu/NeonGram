@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 // import ThemeToggler from "../../components/ThemeToggler/ThemeToggler";
-import { AuthContext } from "../../ContextProviders/AuthContext";
+import { AuthContext } from "../../../store/context/AuthContext";
 import SearchIcon from "../../Shared/icons/SearchIcon";
 import SettingsIcon from "../../Shared/icons/SettingsIcon";
 import UserIcon from "../../Shared/icons/UserIcon";
@@ -22,7 +22,7 @@ import MobileDrawerLink from "./MobileDrawerLink";
 // import NavItem from "./NavItem";
 
 const MobileDrawer = ({ isOpen, onClose }) => {
-  const { auth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
@@ -36,9 +36,9 @@ const MobileDrawer = ({ isOpen, onClose }) => {
                 <LinkBox>
                   <Center>
                     <VStack>
-                      <Avatar src={auth.profilePicture} size="md" />
-                      <LinkOverlay href={`/app/user/${auth.username}`}>
-                        {auth.username}
+                      <Avatar src={user.profilePicture} size="md" />
+                      <LinkOverlay href={`/app/user/${user.username}`}>
+                        {user.username}
                       </LinkOverlay>
                     </VStack>
                   </Center>
@@ -48,7 +48,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
               <Divider />
               <MobileDrawerLink
                 onClose={onClose}
-                to={`/app/user/${auth.username}`}
+                to={`/app/user/${user.username}`}
                 icon={<UserIcon boxSize={5} />}
               >
                 Account

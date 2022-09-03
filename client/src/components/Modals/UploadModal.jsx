@@ -15,7 +15,7 @@ import axiosInstance from "../../config/axios";
 
 import "cropperjs/dist/cropper.css";
 import { useContext } from "react";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 
 const UploadModal = ({
   onModalClose,
@@ -31,21 +31,11 @@ const UploadModal = ({
 
   const [loading, setLoading] = useState(false);
 
-  const { toggleAuth } = useContext(AuthContext);
+  const { addProfilePicture } = useContext(AuthContext);
 
   const saveProfilePicture = async (e) => {
     setLoading(true);
-    // if (croppedImage) {
-    //   const fd = new FormData();
-    //   const imageSettings = JSON.stringify(
-    //     croppedImage.getData({ rounded: true })
-    //   );
-    //   fd.append("profilePicture", imageFile);
-    //   fd.append("imageSettings", imageSettings);
-    //   axiosInstance
-    //     .post("/api/addProfilePic", fd)
-    //     .then((res) => window.location.reload());
-    // }
+    
 
     if (!croppedImage) {
       return;
@@ -59,7 +49,7 @@ const UploadModal = ({
       fd.append("profilePicture", imageFile);
       fd.append("imageSettings", imageSettings);
       const res = await axiosInstance.post("/api/addProfilePic", fd);
-      toggleAuth(res.data.user);
+      addProfilePicture(res.data.user.profilePicture);
       setLoading(false);
       onModalClose();
     } catch (err) {

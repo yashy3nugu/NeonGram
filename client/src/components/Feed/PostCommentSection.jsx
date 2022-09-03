@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Formik, Form } from "formik";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import axiosInstance from "../../config/axios";
 import { Button, Input, HStack, Box, Text } from "@chakra-ui/react";
 import AppFormField from "../Shared/ui/AppFormField";
 
 const PostCommentSection = ({ post }) => {
-  const { auth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -75,22 +75,22 @@ const PostCommentSection = ({ post }) => {
           setSubmitting(true);
 
           try {
-            await axiosInstance.post(
-              `api/comment/${post._id}`,
-              {
-                content: values.comment,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem(
-                    "accessToken"
-                  )}`,
-                },
-              }
-            );
+            // await axiosInstance.post(
+            //   `api/comment/${post._id}`,
+            //   {
+            //     content: values.comment,
+            //   },
+            //   {
+            //     headers: {
+            //       Authorization: `Bearer ${localStorage.getItem(
+            //         "accessToken"
+            //       )}`,
+            //     },
+            //   }
+            // );
             setComments((prev) => [
               ...prev,
-              { content: values.comment, user: { username: auth.username } },
+              { content: values.comment, user: { username: user.username } },
             ]);
             values.comment = "";
             setSubmitting(false);

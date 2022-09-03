@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../config/axios";
 import { Formik, Form } from "formik";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 
 import SearchIcon from "../Shared/icons/SearchIcon";
 import { Box, HStack, VStack } from "@chakra-ui/react";
@@ -22,7 +22,7 @@ const searchSchema = Yup.object().shape({
 const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
 
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { user, removeFollowing } = useContext(AuthContext);
 
   const { setAlert, alertDetails, isAlertOpen } = useAlert();
 
@@ -46,36 +46,17 @@ const Search = () => {
 
     unfollowedUser = { ...searchUsers[unfollowedUserIndex] };
 
-    let index;
-
-    unfollowedUser.followers.forEach((follower, idx) => {
-      if (follower === auth._id) {
-        index = idx;
-      }
-    });
-
-    unfollowedUser.followers.splice(index, 1);
+    unfollowedUser.followers = unfollowedUser.followers.filter(
+      (follower) => follower !== user._id
+    );
 
     searchUsers[unfollowedUserIndex] = unfollowedUser;
 
     setSearchResults(searchUsers);
 
-    let currentAuth = { ...auth };
+    removeFollowing(modalDetails._id);
 
-    let authIndex;
-
-    currentAuth.following.forEach((followingUser, idx) => {
-      if (modalDetails._id === followingUser) {
-        authIndex = idx;
-      }
-    });
-
-    currentAuth.following.splice(authIndex, 1);
-
-    toggleAuth(currentAuth);
     onModalClose();
-
-    // setUnfollowLoading(false);
   };
 
   return (

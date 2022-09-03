@@ -12,10 +12,10 @@ import SettingsIcon from "../../Shared/icons/SettingsIcon";
 import SearchIcon from "../../Shared/icons/SearchIcon";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../../ContextProviders/AuthContext";
+import { AuthContext } from "../../../store/context/AuthContext";
 
 const Avatarmenu = () => {
-  const { auth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <Menu>
       <MenuButton
@@ -25,14 +25,14 @@ const Avatarmenu = () => {
         as={Button}
         variant="text"
       >
-        <Avatar src={auth.profilePicture} size="sm" />
+        <Avatar src={user.profilePicture} size="sm" />
       </MenuButton>
       <MenuList bg="primary.800">
         <VStack align="left">
           <MenuItem
             icon={<UserIcon boxSize={5} />}
             as={RouterNavLink}
-            to={`/app/user/${auth.username}`}
+            to={`/app/user/${user.username}`}
           >
             Profile
           </MenuItem>

@@ -2,7 +2,7 @@ import { Box, VStack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import axiosInstance from "../../config/axios";
 import { useContext } from "react";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 import AuthFormField from "../Shared/ui/AuthFormField";
 import ColoredFormButton from "../Shared/ui/ColoredFormButton";
 import * as Yup from "yup";
@@ -24,12 +24,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const DetailsForm = () => {
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { user, updateUserDetails } = useContext(AuthContext);
 
   return (
     <Box flexGrow={1}>
       <Formik
-        initialValues={auth}
+        initialValues={user}
         validationSchema={validationSchema}
         enableReinitialize
         validateOnMount={false}
@@ -38,7 +38,7 @@ const DetailsForm = () => {
           axiosInstance
             .patch("/api/updateDetails", { userDetails: values })
             .then(() => {
-              toggleAuth(values);
+              updateUserDetails(values);
               setSubmitting(false);
             })
             .catch(() => setSubmitting(false));

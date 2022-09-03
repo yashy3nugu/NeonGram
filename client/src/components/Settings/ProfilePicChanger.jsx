@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import useModal from "../../hooks/useModal";
-import { AuthContext } from "../ContextProviders/AuthContext";
+import { AuthContext } from "../../store/context/AuthContext";
 
 const ProfilePicChanger = () => {
   const fileInput = useRef(null);
@@ -24,7 +24,7 @@ const ProfilePicChanger = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { auth, toggleAuth } = useContext(AuthContext);
+  const { user, removeProfilePicture } = useContext(AuthContext);
 
   const { isModalOpen, onModalClose, setModal } = useModal();
 
@@ -39,8 +39,9 @@ const ProfilePicChanger = () => {
     setLoading(true);
 
     try {
-      const res = await axiosInstance.delete("/api/deleteProfilePic");
-      toggleAuth(res.data.user);
+      await axiosInstance.delete("/api/deleteProfilePic");
+      // toggleAuth(res.data.user);
+      removeProfilePicture();
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -52,8 +53,8 @@ const ProfilePicChanger = () => {
       <Box>
         <VStack>
           <Avatar
-            src={auth.profilePicture}
-            alt={`${auth.username}'s profile`}
+            src={user.profilePicture}
+            alt={`${user.username}'s profile`}
             size="2xl"
           />
           <HStack>
@@ -63,7 +64,7 @@ const ProfilePicChanger = () => {
               colorScheme="tertiaryScheme"
               icon={<PencilIcon boxSize={6} />}
             />
-            {auth.profilePicture && (
+            {user.profilePicture && (
               <IconButton
                 isLoading={loading}
                 onClick={deleteProfilePicture}
