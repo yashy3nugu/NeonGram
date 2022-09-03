@@ -28,7 +28,7 @@ const CreatePost = () => {
       .post("/api/posts", fd)
       .then(() => {
         setLoading(false);
-        history.push("/");
+        history.push("/app/feed");
       })
       .catch((err) => {
         console.log(err);
@@ -36,54 +36,56 @@ const CreatePost = () => {
   };
 
   return (
-    <Box>
-      <Box
-        mt={50}
-        mb={50}
-        bg={"primary.900"}
-        maxWidth="3xl"
-        mx="auto"
-        px={10}
-        py={10}
-        borderWidth="1px"
-        borderRadius="xl"
-      >
-        <Text fontSize="4xl" fontWeight="semibold" mb={3}>
-          Create Post
-        </Text>
-        <form onSubmit={submitPost}>
-          <Box>
-            <Textarea
-              type="text"
-              placeholder="Specify what the picture is about..."
-              name="caption"
-              className="rounded resize-y text-white bg-gray-800 px-2 py-3 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:border-b focus:border-neon-purple h-32 max-h-96 w-full"
-              value={caption}
-              onChange={handleCaption}
-              maxLength={100}
-              focusBorderColor="tertiary"
-              bg="whiteAlpha.50"
-            />
-          </Box>
-          <Box mt={5}>
-            <DropZone setImage={handleImage} image={image} />
-          </Box>
+    <Box
+      mt={{md:50}}
+      mb={{md:50}}
+      bg={"primary.900"}
+      
+      mx="auto"
+      px={10}
+      py={10}
+      // w="md"
+      w={{base:"full", md: "sm", lg: "md", xl: "lg"}}
+      flexGrow={1}
+      borderWidth={{md:"1px"}}
+      borderRadius={{md:"xl"}}
+    >
+      <Text fontSize="4xl" fontWeight="semibold" mb={3}>
+        Create Post
+      </Text>
+      <form onSubmit={submitPost}>
+        <Box>
+          <Textarea
+            type="text"
+            placeholder="Specify what the picture is about..."
+            name="caption"
+            className="rounded resize-y text-white bg-gray-800 px-2 py-3 transition duration-150 ease-in-out border border-transparent focus:outline-none focus:border-b focus:border-neon-purple h-32 max-h-96 w-full"
+            value={caption}
+            onChange={handleCaption}
+            maxLength={100}
+            focusBorderColor="tertiary"
+            bg="whiteAlpha.50"
+          />
+        </Box>
+        <Box mt={5}>
+          <DropZone setImage={handleImage} image={image} />
+        </Box>
 
-          <Box mt={5}>
-            <Button
-              colorScheme="tertiaryScheme"
-              isLoading={loading}
-              loadingText="Uploading"
-              leftIcon={<UploadIcon />}
-              disabled={!(caption && image)}
-              type="submit"
-              color="white"
-            >
-              Upload
-            </Button>
-          </Box>
+        <Box mt={5}>
+          <Button
+            colorScheme="tertiaryScheme"
+            isLoading={loading}
+            loadingText="Uploading"
+            leftIcon={<UploadIcon />}
+            disabled={!(caption && image)}
+            type="submit"
+            color="white"
+          >
+            Upload
+          </Button>
+        </Box>
 
-          {/* <div className="col-span-2 text-center sm:text-right mt-6 px-4">
+        {/* <div className="col-span-2 text-center sm:text-right mt-6 px-4">
             <button
               type="submit"
               disabled={!(caption && image)}
@@ -98,8 +100,7 @@ const CreatePost = () => {
               
             </button>
           </div> */}
-        </form>
-      </Box>
+      </form>
     </Box>
   );
 };
