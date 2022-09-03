@@ -120,7 +120,7 @@ const ProfileDetails = ({ user }) => {
         <Box className="container mx-auto mt-5 sm:mt-20">
           <Center>
             <Box>
-              <Avatar size="2xl" src={userDetails.profilePicture}>
+              <Avatar size={{base:"lg", sm:"xl", md: "2xl"}} src={userDetails.profilePicture}>
                 {userDetails.username === auth.username && (
                   <AvatarBadge borderWidth={0}>
                     <IconButton
@@ -128,7 +128,7 @@ const ProfileDetails = ({ user }) => {
                       variant="ghost"
                       color="gray"
                       rounded="full"
-                      icon={<SettingsIconSolid boxSize={8} />}
+                      icon={<SettingsIconSolid boxSize={{base: 5, sm:7, md: 8}} />}
                     />
                   </AvatarBadge>
                 )}
@@ -137,13 +137,13 @@ const ProfileDetails = ({ user }) => {
           </Center>
           <Center>
             <VStack mt={4} spacing={3}>
-              <Text as="h1" fontSize="3xl" fontWeight="semibold">
+              <Text as="h1" fontSize={{base:"xl", sm:"2xl", md:"3xl"}} fontWeight="semibold">
                 {userDetails.username}
               </Text>
-              <Text as="p" color="gray.400">
+              <Text as="p" fontSize={{base:"sm", sm: "md", md: "lg"}} color="gray.400">
                 {userDetails.bio}
               </Text>
-              <SimpleGrid columns={2} spacing={20}>
+              <SimpleGrid columns={2} spacing={20} fontSize={{base:"sm", sm: "md", md: "lg"}}>
                 <Text as="span" className="text-gray-300">
                   <Text as="strong">{userDetails.followers.length}</Text>{" "}
                   followers

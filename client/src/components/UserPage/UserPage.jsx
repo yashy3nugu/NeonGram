@@ -29,24 +29,21 @@ const UserPage = () => {
   return (
     <>
       <Box
-        mt={50}
-        mb={50}
+        mt={{ lg: 50 }}
+        mb={{ lg: 50 }}
         bg={"primary.900"}
-        width="4xl"
-        maxWidth="4xl"
+        w={{ base: "full", md: "full", lg: "full" }}
+        maxWidth={{lg: "3xl"}}
         mx="auto"
         px={10}
         py={10}
-        borderWidth="1px"
-        borderRadius="xl"
+        borderWidth={{ lg: "1px" }}
+        borderRadius={{ lg: "xl" }}
       >
         <ProfileDetails user={user} />
         <Divider my={8} />
         <PostGallery user={user} removePost={removePost} />
-
       </Box>
-
-      
     </>
   );
 };

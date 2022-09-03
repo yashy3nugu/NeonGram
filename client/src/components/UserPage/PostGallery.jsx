@@ -51,7 +51,7 @@ const PostGallery = ({ user }) => {
         />
       )}
       <Box className="max-w-4xl px-3 mx-auto text-center">
-        <SimpleGrid columns={3} spacing={8}>
+        <SimpleGrid columns={{ base: 2, sm: 2 }} spacing={5}>
           {posts &&
             posts.map((post, idx) => (
               <Box key={idx}>
@@ -63,6 +63,7 @@ const PostGallery = ({ user }) => {
                   src={post.postImage}
                   alt={post.text}
                   cursor="pointer"
+                  rounded="lg"
                   onClick={() => {
                     setModal(post);
                   }}
@@ -70,7 +71,7 @@ const PostGallery = ({ user }) => {
               </Box>
             ))}
           {loading &&
-            [...Array(3)].map((_, idx) => (
+            [...Array(2)].map((_, idx) => (
               <Skeleton
                 key={idx}
                 height={{ base: "12rem", sm: "14rem", md: "18rem" }}
