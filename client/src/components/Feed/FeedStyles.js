@@ -1,6 +1,7 @@
 const styles = {
   container: {
     templateColumns: "repeat(14, 1fr)",
+    mt:12
   },
 
   content: {
