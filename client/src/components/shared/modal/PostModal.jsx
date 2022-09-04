@@ -38,24 +38,41 @@ const PostModal = ({ onDelete, isModalOpen, modalDetails, onModalClose }) => {
   };
 
   return (
-    <Modal size={"full"} isCentered isOpen={isModalOpen} onClose={onModalClose}>
+    <Modal
+      size={"full"}
+      isCentered
+      isOpen={isModalOpen}
+      onClose={onModalClose}
+      scrollBehavior={"inside"}
+    >
       <ModalOverlay />
       <ModalContent bg="primary.800">
         <ModalHeader>Post</ModalHeader>
         <ModalCloseButton />
-        <ModalBody display={"flex"} flexDirection="column">
+        <ModalBody>
           <Grid templateColumns="repeat(12, 1fr)" h="full" flexGrow="1">
-            <GridItem colSpan={8} h="full">
-              <Center h="full" bg="black">
+            <GridItem colSpan={{ base: 12, lg: 8 }} h="full">
+              <Center h="full" bg="black" pos="relative">
                 <Image
-                  maxHeight="full"
-                  maxWidth="full"
+                  maxHeight={{ lg: "full" }}
+                  maxWidth={{ lg: "full" }}
+                  height="auto"
+                  position={{ lg: "absolute" }}
+                  top="0"
+                  bottom="0"
+                  mx="auto"
                   src={modalDetails.postImage}
                   alt={modalDetails.text}
                 />
               </Center>
             </GridItem>
-            <GridItem bg="primary.900" colSpan={4} h="full" py={2} px={3}>
+            <GridItem
+              bg="primary.900"
+              colSpan={{ base: 12, lg: 4 }}
+              h="full"
+              py={2}
+              px={3}
+            >
               <Flex flexDirection={"column"} h="full">
                 <PostModalActions
                   post={modalDetails}

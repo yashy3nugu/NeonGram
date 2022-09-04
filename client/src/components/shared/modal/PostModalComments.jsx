@@ -29,8 +29,8 @@ const PostModalComments = ({ post, comments }) => {
         align="stretch"
         spacing={5}
         className=" text-white"
-        maxHeight="30rem"
-        minHeight="30rem"
+        maxHeight={{base:"12rem",lg:"30rem"}}
+        minHeight={{base:"12rem",lg:"30rem"}}
         overflowY="auto"
       >
         {comments
@@ -60,11 +60,7 @@ const PostModalComments = ({ post, comments }) => {
                 </Box>
               );
             })
-          : // <li className="text-gray-400">
-            //   {" "}
-            //   <p>No comments yet...</p>
-            // </li>
-            [...Array(5)].map((_, idx) => (
+          : [...Array(5)].map((_, idx) => (
               <Skeleton key={idx} height={12} width="full" />
             ))}
       </VStack>

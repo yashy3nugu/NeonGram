@@ -6,8 +6,8 @@ import DeleteIconSolid from "../icons/DeleteIconSolid";
 import { AuthContext } from "../../../store/context/AuthContext";
 import axiosInstance from "../../../config/axios";
 import { Formik, Form } from "formik";
-import ThumbDownIcon from "../icons/ThumbDownIconFilled";
-import ThumbUpIcon from "../icons/ThumbUpIconFilled";
+import ThumbDownIcon from "../icons/ThumbDownIcon";
+import ThumbUpIcon from "../icons/ThumbUpIcon";
 import {
   Box,
   LinkBox,
