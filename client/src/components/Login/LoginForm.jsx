@@ -19,7 +19,6 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  
   const toast = useToast();
   const history = useHistory();
 
@@ -50,8 +49,7 @@ const LoginForm = () => {
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
-              
-              history.replace("/app/feed");
+              history.push("/app/feed");
               // window.location.reload();
             } catch (error) {
               toast({
@@ -68,7 +66,7 @@ const LoginForm = () => {
             setSubmitting(false);
           }}
         >
-          {({ isSubmitting, isValid, dirty, errors, touched }) => (
+          {({ isSubmitting, isValid, dirty }) => (
             <Form autoComplete="off">
               <VStack px={10} py={3} spacing={3} w="full">
                 <Center>
@@ -82,7 +80,8 @@ const LoginForm = () => {
                 <ColoredFormButton
                   mt={3}
                   type="submit"
-                  disabled={isSubmitting || !(isValid && dirty)}
+                  disabled={!(isValid && dirty)}
+                  isLoading={isSubmitting}
                   width="full"
                   color="white"
                   colorScheme="tertiaryScheme"
