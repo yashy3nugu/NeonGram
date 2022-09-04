@@ -46,11 +46,25 @@ const LoginForm = () => {
                 password: values.password,
               });
 
+              toast({
+                title: "success",
+                description: "You have successfully logged in",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+
+              
+
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
+              setTimeout(() => {
+                history.push("/app/feed");
+              }, 4000);
+
               history.push("/app/feed");
-              // window.location.reload();
+              
             } catch (error) {
               toast({
                 title: "error",

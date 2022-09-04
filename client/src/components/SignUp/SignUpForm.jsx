@@ -129,7 +129,8 @@ const SignUpForm = () => {
                   <ColoredFormButton
                     my={3}
                     type="submit"
-                    disabled={isSubmitting || !(isValid && dirty)}
+                    disabled={!(isValid && dirty)}
+                    isLoading={isSubmitting}
                     width="full"
                   >
                     Sign Up

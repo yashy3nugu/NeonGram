@@ -104,6 +104,14 @@ const Alert = {
           },
         };
       }
+      if (c === "green") {
+        return {
+          container: {
+            bg: "green.500",
+            color: "gray.50",
+          },
+        };
+      }
       else {
         return originalTheme.components.Alert.variants.solid(props)
       }
