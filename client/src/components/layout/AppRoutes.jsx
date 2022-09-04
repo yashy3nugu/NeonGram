@@ -4,7 +4,7 @@ import UserPage from "../UserPage/UserPage";
 import Settings from "../Settings/Settings";
 import Search from "../Followers/Search";
 import ExplorePage from "../Explore/ExplorePage";
-import { useContext, useEffect, useCallback } from "react";
+import { useContext, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { AuthContext } from "../../store/context/AuthContext";
 import AppLayout from "./AppLayout";
@@ -32,6 +32,7 @@ const AppRoutes = () => {
       .catch((err) => {
         setUser(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const route = useRouteMatch();

@@ -6,6 +6,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./config/themeconfig";
 import LoginPage from "./components/Login/LoginPage";
 import AppRoutes from "./components/Layout/AppRoutes";
+import LandingPage from "./components/Landing/LandingPage";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
               </Route>
               <Route exact path="/login">
                 <LoginPage />
+              </Route>
+
+              <Route exact path="/">
+                <LandingPage />
               </Route>
 
               
