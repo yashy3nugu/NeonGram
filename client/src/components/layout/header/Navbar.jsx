@@ -1,14 +1,7 @@
 import React from "react";
 import NeonGramIcon from "../../Shared/icons/NeonGramIcon";
 
-import {
-  Box,
-  Flex,
-  Text,
-  HStack,
-  IconButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, useDisclosure } from "@chakra-ui/react";
 import NavLink from "./NavLink";
 
 import Avatarmenu from "./AvatarMenu";
