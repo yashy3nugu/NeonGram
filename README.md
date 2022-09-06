@@ -1,27 +1,30 @@
 # NeonGram
 
 It's an instagram inspired social media application built using MERN stack.  
-Hosted at: https://neongram.herokuapp.com/.
+Hosted at: https://neongram.netlify.app/.
 
 ## Features
-#### User Feed
+#### Feed
 <img src="assets/feed.png">
 
-#### Upload Picture
-<img src="assets/upload-posts.png">
+#### Create post
+<img src="assets/create.png">
 
 #### Explore Feed
-<img src="assets/explore-feed.png">
+<img src="assets/explore.png">
 
 #### User Profile
-<img src="assets/user-profile.png">
+<img src="assets/profile.png">
 
 #### Post Modal
-<img src="assets/post-modal.png">
+<img src="assets/modal.png">
 
 
 #### Find users
-<img src="assets/find-followers.png">
+<img src="assets/find.png">
 
-### Profile
-<img src="assets/profile.png">
+#### Login
+<img src="assets/login.png">
+
+#### Signup
+<img src="assets/signup.png">

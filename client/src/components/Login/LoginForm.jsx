@@ -82,9 +82,9 @@ const LoginForm = () => {
                   <NeonGramIcon />
                 </Center>
 
-                <AuthFormField name="username" type="text" />
+                <AuthFormField name="username" label="Username" type="text" />
 
-                <AuthFormField name="password" type="password" />
+                <AuthFormField name="password" label="Password" type="password" />
 
                 <ColoredFormButton
                   mt={3}
