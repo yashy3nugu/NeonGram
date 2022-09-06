@@ -55,23 +55,32 @@ const LandingPage = () => {
         <Box textAlign="center">
           <Text
             color="gray.200"
-            sx={{
-              // 'text-shadow': "0 0 0.08em #fffff, 0 0 1rem tertiary, 0 0 1.5rem #ffffff, 0 0 1.8rem #ffffff"
-              textShadow: "4px 4px #7a27ff",
+            textShadow={{
+              base: "2px 2px #7a27ff",
+              sm: "3px 3px #7a27ff",
+              md: "4px 4px #7a27ff",
             }}
             as="h1"
-            fontSize="8xl"
+            fontSize={{ base: "4xl", sm: "6xl", md: "8xl" }}
           >
             NeonGram
           </Text>
-          <Text fontSize="3xl" mb={10}>
+          <Text
+            as="h2"
+            fontSize={{ base: "sm", sm: "xl", md: "3xl" }}
+            mb={{ base: 4, md: 10 }}
+          >
             the neon social media app
           </Text>
-          <HStack spacing={12} justify="center">
-            <Button as={Link} to="/login">
+          <HStack spacing={{ base: 4, md: 8 }} justify="center">
+            <Button size={{ base: "xs", sm: "md" }} as={Link} to="/login">
               Login
             </Button>
-            <ColoredFormButton as={Link} to="/signup">
+            <ColoredFormButton
+              size={{ base: "xs", sm: "md" }}
+              as={Link}
+              to="/signup"
+            >
               Signup
             </ColoredFormButton>
           </HStack>
