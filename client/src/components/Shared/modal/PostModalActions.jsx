@@ -107,7 +107,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
           <HStack my={2}>
             <Avatar src={post.user.profilePicture} size="sm" />
 
-            <Box className="ml-4">
+            <Box >
               <LinkOverlay
                 fontWeight="semibold"
                 as={Link}
@@ -132,16 +132,16 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
           />
         )}
       </Flex>
-      <Box mt={2} mb={8} className="text-gray-400 mt-2 mb-8">
+      <Box mt={2} mb={8} >
         <Text>{post.text}</Text>
       </Box>
       <Flex
         mt={2}
         mb={3}
         alignItems="center"
-        className="flex justify-between align-middle mt-2 mb-3"
+        
       >
-        {/* <button onClick={handleLiked} className="mx-2 outline-none w-7 sm:w-8 text-neon-blue">{liked ? <ThumbUpIconFilled className="thumb-up w-7" /> : <ThumbUpIcon className="w-7" />}</button> */}
+        {/* <button onClick={handleLiked} >{liked ? <ThumbUpIconFilled  /> : <ThumbUpIcon  />}</button> */}
 
         <IconButton
           mr={1}
@@ -154,7 +154,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
             liked ? (
               <ThumbUpIconFilled boxSize={{ base: 7, md: 8 }} />
             ) : (
-              <ThumbUpIcon boxSize={{ base: 7, md: 8 }} className="" />
+              <ThumbUpIcon boxSize={{ base: 7, md: 8 }}  />
             )
           }
         />
@@ -163,7 +163,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
           mr={2}
           fontWeight={"semibold"}
           color={"tertiary"}
-          className="text-neon-blue font-semibold mr-1 relative top-1.5"
+          
         >
           {numLikes}
         </Text>
@@ -177,10 +177,10 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
             disliked ? (
               <ThumbDownIconFilled
                 boxSize={{ base: 7, md: 8 }}
-                className="thumb-down"
+                
               />
             ) : (
-              <ThumbDownIcon boxSize={{ base: 7, md: 8 }} className="" />
+              <ThumbDownIcon boxSize={{ base: 7, md: 8 }}  />
             )
           }
         />
@@ -188,7 +188,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
         <Text
           fontWeight={"semibold"}
           color={"#ff3366"}
-          className="text-neon-red font-semibold mr-1 relative top-1.5"
+          
         >
           {numDislikes}
         </Text>
@@ -224,7 +224,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
         }}
       >
         {({ isSubmitting, isValid, dirty }) => (
-          <Form autoComplete="off" className="flex mb-4">
+          <Form autoComplete="off" >
             <HStack alignItems="center">
               <AppFormField
                 as={Input}
@@ -239,7 +239,7 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
                 colorScheme="tertiaryScheme"
                 isLoading={isSubmitting}
                 disabled={!(isValid && dirty)}
-                className="w-10 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"
+                
               >
                 Post
               </Button>

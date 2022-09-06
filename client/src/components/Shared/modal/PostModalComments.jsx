@@ -23,12 +23,12 @@ const PostModalComments = ({ post, comments }) => {
       border="1px"
       rounded="lg"
       borderColor="gray.700"
-      className="bg-gray-800 px-2 py-2 h-40 sm:flex-grow sm:mb-2 overflow-scroll rounded-lg"
+      
     >
       <VStack
         align="stretch"
         spacing={5}
-        className=" text-white"
+        
         maxHeight={{base:"12rem",lg:"30rem"}}
         minHeight={{base:"12rem",lg:"30rem"}}
         overflowY="auto"
@@ -36,7 +36,7 @@ const PostModalComments = ({ post, comments }) => {
         {comments
           ? comments.map((comment, idx) => {
               return (
-                <Box py={1} className="py-1.5 flex items-center" key={idx}>
+                <Box py={1}  key={idx}>
                   <LinkBox>
                     <HStack alignItems="center">
                       <Avatar
@@ -47,7 +47,7 @@ const PostModalComments = ({ post, comments }) => {
                       <LinkOverlay
                         as={Link}
                         to={`/app/user/${comment.user.username}`}
-                        className="font-semibold"
+                        
                       >
                         <Text fontWeight="semibold">
                           {comment.user.username}
@@ -56,7 +56,7 @@ const PostModalComments = ({ post, comments }) => {
                     </HStack>
                   </LinkBox>
 
-                  <Text as="span" className="relative bottom-1"></Text>
+                  <Text as="span" ></Text>
                   {comment.content}
                 </Box>
               );

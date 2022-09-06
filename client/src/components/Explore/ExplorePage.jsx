@@ -90,15 +90,13 @@ const ExplorePage = () => {
         mx="auto"
         px={10}
         py={10}
-        className="container px-2 mx-auto"
+        
       >
         <SimpleGrid
           columns={{ base: 2, sm: 3, lg: 4, xl: 5 }}
           spacing={5}
           my={10}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-10"
         >
-          {/* <pre className="text-white">{JSON.stringify(explorePosts,null,2)}</pre> */}
           {explorePosts.map((post, idx) => (
             <Box key={idx}>
               {idx === explorePosts.length - 1 && (

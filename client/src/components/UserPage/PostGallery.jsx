@@ -50,7 +50,7 @@ const PostGallery = ({ user }) => {
           onDelete={onDelete}
         />
       )}
-      <Box className="max-w-4xl px-3 mx-auto text-center">
+      <Box >
         <SimpleGrid columns={{ base: 2, sm: 2 }} spacing={5}>
           {posts &&
             posts.map((post, idx) => (
@@ -80,15 +80,15 @@ const PostGallery = ({ user }) => {
             ))}
         </SimpleGrid>
 
-        {/* <div className="text-center grid grid-cols-2 sm:grid-cols-3 gap-6 mx-auto w-full mb-6">
+        {/* <div >
         {posts &&
           posts.map((post) => (
-            <div className="">
+            <div >
               <img
                 src={post.postImage}
                 alt={post.text}
                 key={post._id}
-                className="object-cover h-48 sm:h-56 md:h-72 w-full"
+                
                 onClick={() => setClickedPost(post)}
               />
             </div>

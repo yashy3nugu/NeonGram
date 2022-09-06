@@ -39,7 +39,7 @@ const LandingPage = () => {
 
   if (loading) {
     return (
-      <Center height="100vh" className="relative">
+      <Center height="100vh" >
         <Spinner thickness="4px" color="tertiary" size="xl" />
       </Center>
     );

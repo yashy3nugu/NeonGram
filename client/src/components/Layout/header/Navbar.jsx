@@ -35,7 +35,7 @@ const Navbar = () => {
         py={8}
         px={{ base: 6, md: 12 }}
         bg="primary.900"
-        className="flex items-center justify-between w-full py-8 px-3 bg-gray-900"
+        
       >
         <MobileDrawer isOpen={isOpen} onClose={onClose} />
 

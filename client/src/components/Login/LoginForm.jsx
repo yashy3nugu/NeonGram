@@ -31,7 +31,7 @@ const LoginForm = () => {
         borderRadius="xl"
         py={{ base: 20, sm: 8 }}
         flexGrow={{ base: 1, sm: 0 }}
-        className="absolute top-1/2 transform -translate-y-1/2 sm:relative sm:max-w-md mx-auto w-full bg-gray-900 overflow-hidden rounded-lg border-2 border-transparent sm:border-neon-purple"
+        
       >
         <Formik
           initialValues={initialValues}
@@ -98,7 +98,7 @@ const LoginForm = () => {
                   Sign In
                 </ColoredFormButton>
 
-                <Center mt={5} className="text-center mt-5">
+                <Center mt={5} >
                   <Text fontSize="xs">
                     Don't have an account?{" "}
                     <Text as={Link} to="/signup" color="tertiary">

@@ -45,7 +45,7 @@ const DetailsForm = () => {
         }}
       >
         {({ isSubmitting, isValid, dirty, errors }) => (
-          <Form autoComplete="off" className="w-full">
+          <Form autoComplete="off" >
             <VStack align="left" spacing={4}>
               <AuthFormField name="fname" type="text" label="First Name" />
               <AuthFormField name="lname" type="text" label="Last Name" />

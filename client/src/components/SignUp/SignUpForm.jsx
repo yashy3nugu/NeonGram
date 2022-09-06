@@ -56,7 +56,7 @@ const SignUpForm = () => {
         borderRadius="xl"
         flexGrow={{ base: 1, sm: 0 }}
         // width={{ base: "full", sm: "sm", md: "md", lg: "lg", xl: "xl" }}
-        className="loginForm container mx-auto w-full max-w-md bg-gray-900 border-2 border-transparent sm:border-neon-purple rounded-lg"
+        
       >
         <Formik
           initialValues={initialValues}
@@ -98,18 +98,18 @@ const SignUpForm = () => {
           }}
         >
           {({ isSubmitting, isValid, dirty }) => (
-            <Form autoComplete="off" className="px-10 py-10">
+            <Form autoComplete="off" >
               <VStack px={10} py={3} spacing={3} w="full">
                 <Center>
                   <NeonGramIcon />
                 </Center>
                 <AuthFormField label="Email" name="email" type="email" />
 
-                <Box w="full" className="mb-3 mt-10 px-3">
+                <Box w="full" >
                   <AuthFormField name="fname" type="text" label="First name" />
                 </Box>
 
-                <Box w="full" className="mb-3 mt-10 px-3">
+                <Box w="full" >
                   <AuthFormField name="lname" type="text" label="Last name" />
                 </Box>
 

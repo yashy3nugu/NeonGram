@@ -117,7 +117,7 @@ const ProfileDetails = ({ user }) => {
       )}
 
       {userDetails && (
-        <Box className="container mx-auto mt-5 sm:mt-20">
+        <Box >
           <Center>
             <Box>
               <Avatar size={{base:"lg", sm:"xl", md: "2xl"}} src={userDetails.profilePicture}>
@@ -144,11 +144,11 @@ const ProfileDetails = ({ user }) => {
                 {userDetails.bio}
               </Text>
               <SimpleGrid columns={2} spacing={20} fontSize={{base:"sm", sm: "md", md: "lg"}}>
-                <Text as="span" className="text-gray-300">
+                <Text as="span" >
                   <Text as="strong">{userDetails.followers.length}</Text>{" "}
                   followers
                 </Text>
-                <Text as="span" className="text-gray-300">
+                <Text as="span" >
                   <Text as="strong">{userDetails.following.length}</Text>{" "}
                   following
                 </Text>
@@ -159,7 +159,7 @@ const ProfileDetails = ({ user }) => {
                     <Button
                       w="full"
                       onClick={() => setModal(userDetails)}
-                      className="w-2/3 sm:w-1/3 bg-gray-900 border border-gray-300 px-3 py-2 mt-6 text-sm text-gray-300 rounded-lg"
+                      
                     >
                       Following
                     </Button>

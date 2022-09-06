@@ -137,27 +137,25 @@ const FeedPost = ({ post }) => {
                 src={post.user.profilePicture}
               />
               <LinkOverlay as={Link} to={`/app/user/${post.user.username}`}>
-                <Text fontSize="sm" fontWeight="semibold" className="text-white">
+                <Text fontSize="sm" fontWeight="semibold">
                   {post.user.username}
                 </Text>
               </LinkOverlay>
             </HStack>
           </LinkBox>
         </Box>
-        <Box mb={3} className="mb-3">
-          <Text fontWeight="semibold" className="text-white text-left">
-            {post.text}
-          </Text>
+        <Box mb={3}>
+          <Text fontWeight="semibold">{post.text}</Text>
         </Box>
       </Box>
 
-      <Box className="">
+      <Box>
         <Image src={post.postImage} alt={post.text} w="full" />
       </Box>
 
       <Box mt={2}>
-        <Box mb={3} className="flex justify-between align-middle mt-2 mb-3">
-          <Flex className="flex" alignItems="center">
+        <Box mb={3}>
+          <Flex alignItems="center">
             <IconButton
               mr={1}
               variant="ghost"
@@ -167,22 +165,14 @@ const FeedPost = ({ post }) => {
               onClick={handleLiked}
               icon={
                 liked ? (
-                  <ThumbUpIconFilled
-                    boxSize={{ base: 7, md: 8 }}
-                    className="thumb-up"
-                  />
+                  <ThumbUpIconFilled boxSize={{ base: 7, md: 8 }} />
                 ) : (
-                  <ThumbUpIcon boxSize={{ base: 7, md: 8 }} className="" />
+                  <ThumbUpIcon boxSize={{ base: 7, md: 8 }} />
                 )
               }
             />
 
-            <Text
-              mr={2}
-              fontWeight={"semibold"}
-              color={"tertiary"}
-              className="text-neon-blue font-semibold mr-1 relative top-1.5"
-            >
+            <Text mr={2} fontWeight={"semibold"} color={"tertiary"}>
               {numLikes}
             </Text>
             <IconButton
@@ -193,21 +183,14 @@ const FeedPost = ({ post }) => {
               onClick={handleDisliked}
               icon={
                 disliked ? (
-                  <ThumbDownIconFilled
-                    boxSize={{ base: 7, md: 8 }}
-                    className="thumb-down"
-                  />
+                  <ThumbDownIconFilled boxSize={{ base: 7, md: 8 }} />
                 ) : (
-                  <ThumbDownIcon boxSize={{ base: 7, md: 8 }} className="" />
+                  <ThumbDownIcon boxSize={{ base: 7, md: 8 }} />
                 )
               }
             />
 
-            <Text
-              fontWeight={"semibold"}
-              color={"#ff3366"}
-              className="text-neon-red font-semibold mr-1 relative top-1.5"
-            >
+            <Text fontWeight={"semibold"} color={"#ff3366"}>
               {numDislikes}
             </Text>
           </Flex>
@@ -215,7 +198,7 @@ const FeedPost = ({ post }) => {
           <Box></Box>
         </Box>
 
-        <Box className="mb-3">
+        <Box>
           <PostCommentSection post={post} />
         </Box>
       </Box>

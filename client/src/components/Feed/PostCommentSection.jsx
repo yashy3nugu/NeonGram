@@ -31,25 +31,19 @@ const PostCommentSection = ({ post }) => {
           // border="1px"
           rounded="lg"
           borderColor="gray.700"
-          className="max-h-32 text-gray-300 rounded bg-gray-800 px-3 py-2 mb-4 text-sm overflow-scroll"
         >
           <Box overflowY="auto" maxHeight={"5rem"}>
             {comments.map((comment, idx) => {
               return (
-                <Box className="my-0.5" key={idx}>
+                <Box key={idx}>
                   <Text
                     as="span"
                     fontWeight="semibold"
-                    className="font-semibold"
                     fontSize={{ base: "sm", md: "md" }}
                   >
                     {comment.user.username}
                   </Text>{" "}
-                  <Text
-                    fontSize={{ base: "sm", md: "md" }}
-                    as="span"
-                    className="text-gray-300"
-                  >
+                  <Text fontSize={{ base: "sm", md: "md" }} as="span">
                     {comment.content}
                   </Text>
                 </Box>
@@ -100,7 +94,7 @@ const PostCommentSection = ({ post }) => {
         }}
       >
         {({ isSubmitting, isValid, dirty }) => (
-          <Form autoComplete="off" className="flex">
+          <Form autoComplete="off">
             <HStack alignItems="center">
               <AppFormField
                 as={Input}
@@ -111,7 +105,6 @@ const PostCommentSection = ({ post }) => {
                 variant="filled"
                 name="comment"
                 placeholder="Add a comment..."
-                className="w-full bg-gray-800 rounded mr-2 px-2 text-xs text-gray-300 focus:outline-none"
                 focusBorderColor="tertiary"
               />
               {/* <IconButton
@@ -120,7 +113,7 @@ const PostCommentSection = ({ post }) => {
                 type="submit"
                 size="sm"
                 disabled={isSubmitting || !(isValid && dirty)}
-                className="w-8 text-neon-green disabled:opacity-50 disabled:cursor-not-allowed"
+                
                 isLoading={isSubmitting}
                 icon={<PlusIcon boxSize={6} />}
               /> */}

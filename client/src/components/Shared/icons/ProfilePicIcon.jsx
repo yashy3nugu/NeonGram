@@ -16,7 +16,7 @@ const ProfilePicIcon = ({ username, size }) => {
   }, [username]);
 
   return (
-    <div className={`w-${size} rounded-full`}>
+    <div>
       {userDetails && userDetails.profilePicture ? (
         <img src={userDetails.profilePicture} alt={username} />
       ) : (

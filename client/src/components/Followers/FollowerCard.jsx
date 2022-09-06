@@ -63,7 +63,7 @@ const FollowerCard = ({
           <HStack>
             <Avatar src={user.profilePicture} size="sm" />
 
-            <Box className="ml-4">
+            <Box >
               <LinkOverlay
                 fontWeight="semibold"
                 as={Link}
@@ -72,7 +72,7 @@ const FollowerCard = ({
                 {user.username}
               </LinkOverlay>
 
-              {/* <Text className="text-gray-300 text-xs sm:text-sm text-left">
+              {/* <Text >
                 {user.followers.length}{" "}
                 {user.followers.length === 1 ? "follower" : "followers"}
               </Text> */}
