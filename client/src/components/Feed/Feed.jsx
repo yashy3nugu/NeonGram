@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import FeedPost from "./FeedPost";
 import { Waypoint } from "react-waypoint";
 import styles from "./FeedStyles";
-import { Grid, GridItem, VStack, Spinner, Center } from "@chakra-ui/react";
+import { Grid, GridItem, VStack, Spinner, Center,Text } from "@chakra-ui/react";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
   const [latestLastTimestamp, setLatestLastTimestamp] = useState(null);
+  const [feedEmpty, setFeedEmpty] = useState(false);
 
   const history = useHistory();
 
@@ -23,6 +24,7 @@ const Feed = () => {
         if (res.data.length) {
           setPosts(res.data);
         } else {
+          setFeedEmpty(true);
           setHasNext(false);
         }
       })
@@ -76,6 +78,13 @@ const Feed = () => {
               <FeedPost post={post} />
             </div>
           ))}
+          {posts.length === 0 && feedEmpty && (
+            <Center>
+              <Text fontSize={{base:"md",md:"xl"}} color="gray.400" textAlign={"center"}>
+                No posts to show. Try following someone by visiting the explore page
+              </Text>
+            </Center>
+          )} 
         </VStack>
         {loading && (
           <Center mt={4}>

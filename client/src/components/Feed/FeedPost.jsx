@@ -6,6 +6,7 @@ import ThumbUpIconFilled from "../Shared/icons/ThumbUpIconFilled";
 import ThumbDownIcon from "../Shared/icons/ThumbDownIcon";
 import ThumbUpIcon from "../Shared/icons/ThumbUpIcon";
 import PostCommentSection from "./PostCommentSection";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -135,8 +136,8 @@ const FeedPost = ({ post }) => {
                 size="sm"
                 src={post.user.profilePicture}
               />
-              <LinkOverlay href={`/app/user/${post.user.username}`}>
-                <Text fontSize="sm" className="text-white">
+              <LinkOverlay as={Link} to={`/app/user/${post.user.username}`}>
+                <Text fontSize="sm" fontWeight="semibold" className="text-white">
                   {post.user.username}
                 </Text>
               </LinkOverlay>
