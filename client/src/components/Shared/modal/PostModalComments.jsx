@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 const PostModalComments = ({ post, comments }) => {
   return (
     <Box
@@ -45,7 +45,8 @@ const PostModalComments = ({ post, comments }) => {
                         alt={comment.user.username}
                       />
                       <LinkOverlay
-                        href={`/app/user/${comment.user.username}`}
+                        as={Link}
+                        to={`/app/user/${comment.user.username}`}
                         className="font-semibold"
                       >
                         <Text fontWeight="semibold">

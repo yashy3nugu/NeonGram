@@ -12,6 +12,7 @@ import UserAddIconSolid from "../Shared/icons/UserAddIconSolid";
 import ColoredFormIconButton from "../Shared/ui/ColoredFormIconButton";
 import TickIcon from "../Shared/icons/TickIcon";
 import axiosInstance from "../../config/axios";
+import { Link } from "react-router-dom";
 
 const FollowerCard = ({
   user,
@@ -58,14 +59,15 @@ const FollowerCard = ({
       w="full"
     >
       <HStack>
-        <LinkBox href={`/user/${user.username}`}>
+        <LinkBox>
           <HStack>
             <Avatar src={user.profilePicture} size="sm" />
 
             <Box className="ml-4">
               <LinkOverlay
                 fontWeight="semibold"
-                href={`/app/user/${user.username}`}
+                as={Link}
+                to={`/app/user/${user.username}`}
               >
                 {user.username}
               </LinkOverlay>

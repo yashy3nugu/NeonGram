@@ -19,7 +19,7 @@ import SearchIcon from "../../Shared/icons/SearchIcon";
 import SettingsIcon from "../../Shared/icons/SettingsIcon";
 import UserIcon from "../../Shared/icons/UserIcon";
 import MobileDrawerLink from "./MobileDrawerLink";
-// import NavItem from "./NavItem";
+import { Link } from "react-router-dom";
 
 const MobileDrawer = ({ isOpen, onClose }) => {
   const { user } = useContext(AuthContext);
@@ -37,7 +37,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
                   <Center>
                     <VStack>
                       <Avatar src={user.profilePicture} size="md" />
-                      <LinkOverlay href={`/app/user/${user.username}`}>
+                      <LinkOverlay as={Link} to={`/app/user/${user.username}`}>
                         {user.username}
                       </LinkOverlay>
                     </VStack>

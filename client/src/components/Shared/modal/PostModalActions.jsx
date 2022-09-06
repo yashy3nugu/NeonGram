@@ -18,8 +18,9 @@ import {
   Flex,
   Text,
   Input,
-  Button,
+  Button
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import AppFormField from "../ui/AppFormField";
 
 const PostModalActions = ({ post, addComment, onDelete }) => {
@@ -109,7 +110,8 @@ const PostModalActions = ({ post, addComment, onDelete }) => {
             <Box className="ml-4">
               <LinkOverlay
                 fontWeight="semibold"
-                href={`/app/user/${post.user.username}`}
+                as={Link}
+                to={`/app/user/${post.user.username}`}
               >
                 {post.user.username}
               </LinkOverlay>
