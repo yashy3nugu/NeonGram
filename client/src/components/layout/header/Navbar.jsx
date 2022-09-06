@@ -17,8 +17,6 @@ import MenuIcon from "../../Shared/icons/MenuIcon";
 import MobileDrawer from "./MobileDrawer";
 
 const Navbar = () => {
-  
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const links = [
@@ -48,9 +46,7 @@ const Navbar = () => {
       >
         <MobileDrawer isOpen={isOpen} onClose={onClose} />
 
-        <Text as="a" href="/app/feed" className="ml-10">
-          <NeonGramIcon />
-        </Text>
+        <NeonGramIcon />
 
         <Hidden hide={{ sm: true, md: true }}>
           <Box as="nav">
@@ -59,7 +55,7 @@ const Navbar = () => {
                 return <NavLink key={index} url={url} label={label} />;
               })}
               <Box>
-                <Avatarmenu  />
+                <Avatarmenu />
               </Box>
             </HStack>
           </Box>

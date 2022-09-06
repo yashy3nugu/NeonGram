@@ -6,7 +6,7 @@ import { Center, Text, useToast, Container, VStack } from "@chakra-ui/react";
 import AuthFormField from "../Shared/ui/AuthFormField";
 import * as Yup from "yup";
 import ColoredFormButton from "../Shared/ui/ColoredFormButton";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const initialValues = {
   username: "",
@@ -101,7 +101,7 @@ const LoginForm = () => {
                 <Center mt={5} className="text-center mt-5">
                   <Text fontSize="xs">
                     Don't have an account?{" "}
-                    <Text as="a" href="/signup" color="tertiary">
+                    <Text as={Link} to="/signup" color="tertiary">
                       Sign Up
                     </Text>
                   </Text>

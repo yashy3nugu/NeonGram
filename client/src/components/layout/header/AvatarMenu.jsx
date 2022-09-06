@@ -10,12 +10,22 @@ import {
 import UserIcon from "../../Shared/icons/UserIcon";
 import SettingsIcon from "../../Shared/icons/SettingsIcon";
 import SearchIcon from "../../Shared/icons/SearchIcon";
+import LogoutIcon from "../../Shared/icons/LogoutIcon";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../store/context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const Avatarmenu = () => {
   const { user } = useContext(AuthContext);
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    history.push("/login");
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -34,7 +44,7 @@ const Avatarmenu = () => {
             as={RouterNavLink}
             to={`/app/user/${user.username}`}
           >
-            Profile
+            {user.username}
           </MenuItem>
           <MenuItem
             icon={<SettingsIcon boxSize={5} />}
@@ -49,6 +59,9 @@ const Avatarmenu = () => {
             to="/app/find"
           >
             Search
+          </MenuItem>
+          <MenuItem onClick={logout} color="crimson" icon={<LogoutIcon boxSize={5} />}>
+            Logout
           </MenuItem>
         </VStack>
       </MenuList>

@@ -99,16 +99,16 @@ const Alert = {
       if(c==="red" ) {
         return {
           container: {
-            bg: "crimsonScheme.500",
-            color: "gray.50",
+            bg: "primary.900",
+            color: "crimson",
           },
         };
       }
       if (c === "green") {
         return {
           container: {
-            bg: "green.500",
-            color: "gray.50",
+            bg: "primary.900",
+            color: "tertiary",
           },
         };
       }
