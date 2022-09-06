@@ -3,7 +3,7 @@ import { Text } from "@chakra-ui/react";
 
 const NeonGramIcon = ({ className }) => {
   return (
-    <Text fontSize="3xl" className={`logo ${className}`}>
+    <Text textShadow="2px 2px #7a27ff" fontSize="3xl">
       NeonGram
     </Text>
   );

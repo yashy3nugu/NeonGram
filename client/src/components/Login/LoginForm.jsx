@@ -54,17 +54,12 @@ const LoginForm = () => {
                 isClosable: true,
               });
 
-              
-
               localStorage.setItem("accessToken", res.data.accessToken);
               localStorage.setItem("refreshToken", res.data.refreshToken);
 
               setTimeout(() => {
                 history.push("/app/feed");
               }, 4000);
-
-              history.push("/app/feed");
-              
             } catch (error) {
               toast({
                 title: "error",
